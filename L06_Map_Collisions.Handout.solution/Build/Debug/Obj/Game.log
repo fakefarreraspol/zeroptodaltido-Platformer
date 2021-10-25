@@ -1,0 +1,13 @@
+﻿  Main.cpp
+  App.cpp
+  Audio.cpp
+  Input.cpp
+  Map.cpp
+  Scene.cpp
+  Render.cpp
+  Textures.cpp
+  Window.cpp
+  Log.cpp
+  pugixml.cpp
+  Generating Code...
+  Game.vcxproj -> C:\Users\farre\Documents\GitHub\zeroptodaltido-Platformer\L06_Map_Collisions.Handout.solution\Build\Debug\Game.exe
