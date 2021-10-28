@@ -63,21 +63,29 @@ void Map::Draw()
 	//app->render->DrawTexture(mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
 	
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-
-	for (int x = 0; x < mapData.maplayers.start->data->width; x++)
+	ListItem<MapLayer*>* mapLayerIterator = mapData.maplayers.start;
+	
+	while (mapLayerIterator != nullptr)
 	{
-		for (int y = 0; y < mapData.maplayers.start->data->height; y++)
+		for (int x = 0; x < mapLayerIterator->data->width; x++)
 		{
-			
-			int gid = mapData.maplayers.start->data->Get(x, y);
-			
-			SDL_Rect rect = mapData.tilesets.start->data->GetTileRect(gid);
-			iPoint screenPos = MapToWorld(x, y);
-	
-			app->render->DrawTexture(mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
-	
+			for (int y = 0; y < mapLayerIterator->data->height; y++)
+			{
+
+				int gid = mapLayerIterator->data->Get(x, y);
+
+				SDL_Rect rect = mapData.tilesets.start->data->GetTileRect(gid);
+				iPoint screenPos = MapToWorld(x, y);
+
+				app->render->DrawTexture(mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
+
+			}
 		}
+
+		mapLayerIterator = mapLayerIterator->next;
+		
 	}
+	
 
 	//L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
 	//Find which tile id is on x, y coordinates 
