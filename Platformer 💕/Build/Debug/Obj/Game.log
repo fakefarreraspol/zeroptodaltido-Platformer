@@ -1,9 +1,5 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Map.cpp
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(24,5): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(35,2): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(110,5): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(149,9): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(193,3): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Map.cpp(252,3): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
-  Game.vcxproj -> C:\Users\polfo\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Build\Debug\Game.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(505,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Scene.cpp
+C:\Users\Brandon AM\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Scene.cpp(25,2): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
+C:\Users\Brandon AM\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Game\Source\Scene.cpp(99,2): warning C4566: el carácter representado por el nombre de carácter universal '\U0001F495' no se puede representar en la página de códigos actual (1252)
+  Game.vcxproj -> C:\Users\Brandon AM\Documents\GitHub\zeroptodaltido-Platformer\Platformer 💕\Build\Debug\Game.exe
