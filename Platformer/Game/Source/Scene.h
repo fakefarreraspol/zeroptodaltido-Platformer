@@ -31,7 +31,7 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+	SDL_Texture* bTexture = nullptr;
 private:
 	SDL_Texture* img;
 };
