@@ -8,6 +8,7 @@
 #include "Log.h"
 
 #include <iostream>
+#include <string.h>
 
 #include <math.h>
 
@@ -65,14 +66,13 @@ void Map::Draw()
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
 	ListItem<MapLayer*>* mapLayerIterator = mapData.maplayers.start;
 	
-	while (mapLayerIterator != nullptr)
-	{
-		for (int x = 0; x < mapLayerIterator->data->width; x++)
+
+		for (int x = 0; x < mapData.maplayers.start->data->width; x++)
 		{
-			for (int y = 0; y < mapLayerIterator->data->height; y++)
+			for (int y = 0; y < mapData.maplayers.start->data->height; y++)
 			{
 
-				int gid = mapLayerIterator->data->Get(x, y);
+				int gid = mapData.maplayers.start->data->Get(x, y);
 
 				SDL_Rect rect = mapData.tilesets.start->data->GetTileRect(gid);
 				iPoint screenPos = MapToWorld(x, y);
@@ -82,10 +82,7 @@ void Map::Draw()
 			}
 		}
 
-		mapLayerIterator = mapLayerIterator->next;
-		
-	}
-	
+
 
 	//L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
 	//Find which tile id is on x, y coordinates 
@@ -232,14 +229,21 @@ bool Map::LoadTileSets(pugi::xml_node mapFile) {
 
 	bool ret = true;
 
+
 	pugi::xml_node tileset;
-	for (tileset = mapFile.child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
-	{
-		TileSet* set = new TileSet();
-		if (ret == true) ret = LoadTilesetDetails(tileset, set);
-		if (ret == true) ret = LoadTilesetImage(tileset, set);
-		mapData.tilesets.add(set);
-	}
+	//pugi::xml_node tilesetIterator = tileset = mapFile.child("tileset");
+
+	//while ( strcmp(tilesetIterator.attribute("name").as_string(), "tileset") == 0)
+	//{
+		for (tileset = mapFile.child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
+		{
+			TileSet* set = new TileSet();
+			if (ret == true) ret = LoadTilesetDetails(tileset, set);
+			if (ret == true) ret = LoadTilesetImage(tileset, set);
+			mapData.tilesets.add(set);
+		}
+		//tilesetIterator = tilesetIterator.next_sibling();
+	//}
 
 	return ret;
 }

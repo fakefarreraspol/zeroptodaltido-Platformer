@@ -33,7 +33,8 @@ public:
 	bool CleanUp();
 	SDL_Texture* bTexture = nullptr;
 private:
-	SDL_Texture* img;
+	SDL_Texture* texBackground;
+	
 };
 
 #endif // __SCENE_H__

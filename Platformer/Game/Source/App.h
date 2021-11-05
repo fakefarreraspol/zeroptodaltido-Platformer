@@ -17,6 +17,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+class Physics;
 
 class App
 {
@@ -52,7 +53,15 @@ public:
     // L02: DONE 1: Create methods to request Load / Save
 	void LoadGameRequest();
 	void SaveGameRequest() const;
+	float DEGTORAD() const
+	{
+		return degtorad;
+	}
 
+	float RADTODEG() const
+	{
+		return radtodeg;
+	}
 private:
 
 	// Load config file
@@ -78,6 +87,8 @@ private:
 	bool LoadGame();
 	bool SaveGame() const;
 
+	
+
 public:
 
 	// Modules
@@ -88,6 +99,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	Physics* physics;
 
 private:
 
@@ -97,6 +109,9 @@ private:
 	SString organization;
 
 	List<Module *> modules;
+
+	float degtorad = 0.0174532925199432957f;
+	float radtodeg = 57.295779513082320876f;
 
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables

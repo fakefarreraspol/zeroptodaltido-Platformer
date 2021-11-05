@@ -13,6 +13,7 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	
 }
 
 // Destructor
@@ -32,6 +33,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
+	texBackground = app->tex->Load("Assets/maps/bg.png");
 	app->map->Load("platform.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -55,20 +57,21 @@ bool Scene::Update(float dt)
 		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += 1;
 
+	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		app->render->camera.y -= 1;
+
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+		app->render->camera.x += 1;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+		app->render->camera.x -= 1;
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
+	app->render->DrawTexture(texBackground, 0, 0, NULL, 0.4f);
 	app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
