@@ -80,7 +80,6 @@ void Map::Draw()
 
 				app->render->DrawTexture(mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
 
-
 			}
 		}
 

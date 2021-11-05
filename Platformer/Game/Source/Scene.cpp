@@ -38,15 +38,15 @@ bool Scene::Start()
 	app->map->Load("platform.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	
-	app->physics->CreateKinematicChain(0, 0,		rightSlope_30_1, 6);
-	app->physics->CreateKinematicChain(48, 0,		rightSlope_30_2, 6);
-	app->physics->CreateKinematicChain(48 * 2, 0,	rightSlope_30_3, 6);
-	app->physics->CreateKinematicChain(48 * 3, 0,		leftSlope_30_1, 6);
-	app->physics->CreateKinematicChain(48 * 4, 0,		leftSlope_30_2, 6);
-	app->physics->CreateKinematicChain(48 * 5, 0,	leftSlope_30_3, 6);
-
-	app->physics->CreateKinematicChain(0, 48, rightSlope_45, 6);
-	app->physics->CreateKinematicChain(48, 48, leftSlope_45, 6);
+	//app->physics->CreateKinematicChain(0, 0,		rightSlope_30_1, 6);
+	//app->physics->CreateKinematicChain(48, 0,		rightSlope_30_2, 6);
+	//app->physics->CreateKinematicChain(48 * 2, 0,	rightSlope_30_3, 6);
+	//app->physics->CreateKinematicChain(48 * 3, 0,		leftSlope_30_1, 6);
+	//app->physics->CreateKinematicChain(48 * 4, 0,		leftSlope_30_2, 6);
+	//app->physics->CreateKinematicChain(48 * 5, 0,	leftSlope_30_3, 6);
+	//
+	//app->physics->CreateKinematicChain(0, 48, rightSlope_45, 6);
+	//app->physics->CreateKinematicChain(48, 48, leftSlope_45, 6);
 
 
 	for (int x = 0; x < app->map->mapData.maplayers.start->data->width; x++)
