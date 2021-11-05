@@ -37,6 +37,132 @@ bool Scene::Start()
 	texBackground = app->tex->Load("Assets/maps/bg.png");
 	app->map->Load("platform.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	
+	app->physics->CreateKinematicChain(0, 0,		rightSlope_30_1, 6);
+	app->physics->CreateKinematicChain(48, 0,		rightSlope_30_2, 6);
+	app->physics->CreateKinematicChain(48 * 2, 0,	rightSlope_30_3, 6);
+	app->physics->CreateKinematicChain(48 * 3, 0,		leftSlope_30_1, 6);
+	app->physics->CreateKinematicChain(48 * 4, 0,		leftSlope_30_2, 6);
+	app->physics->CreateKinematicChain(48 * 5, 0,	leftSlope_30_3, 6);
+
+	app->physics->CreateKinematicChain(0, 48, rightSlope_45, 6);
+	app->physics->CreateKinematicChain(48, 48, leftSlope_45, 6);
+
+
+	for (int x = 0; x < app->map->mapData.maplayers.start->data->width; x++)
+	{
+		for (int y = 0; y < app->map->mapData.maplayers.start->data->height; y++)
+		{
+	
+			int gid = app->map->mapData.maplayers.start->data->Get(x, y);
+	
+			SDL_Rect rect = app->map->mapData.tilesets.start->data->GetTileRect(gid);
+			iPoint screenPos = app->map->MapToWorld(x, y);
+	
+			app->render->DrawTexture(app->map->mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
+			
+
+			for (size_t i = 0; i < 44; i++)
+			{
+				if (gid == squareGround[i])
+				{
+					app->physics->CreateKinematicRectangle(screenPos.x + 24, screenPos.y + 24, 48, 48);
+				}
+			}
+			PhysBody* temp;
+
+			switch (gid)
+			{
+			case 5:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, rightSlope_45, 6);
+				break;
+
+			case 8:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, leftSlope_45, 6);
+
+				break;
+
+			case 22:
+
+				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, leftSlope_45, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
+				break;
+			case 23:
+				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, rightSlope_45, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+
+				break;
+
+			case 47:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, rightSlope_30_1, 6);
+				break;
+
+			case 48:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, rightSlope_30_2, 6);
+
+				break;
+			case 49:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, rightSlope_30_3, 6);
+
+				break;
+			case 50:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, leftSlope_30_1, 6);
+
+				break;
+			case 51:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, leftSlope_30_2, 6);
+
+				break;
+			case 52:
+				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, leftSlope_30_3, 6);
+
+				break;
+			case 28:
+
+				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, leftSlope_45, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
+				break;
+			case 29:
+				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, rightSlope_45, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+
+				break;
+			case 30:
+				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, rightSlope_45, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+
+				break;
+			case 31:
+
+				temp = app->physics->CreateKinematicChain(screenPos.x + 48, screenPos.y + 16, leftSlope_30_1, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
+				break;
+			case 32:
+				temp = app->physics->CreateKinematicChain(screenPos.x + 48, screenPos.y + 48, leftSlope_30_2, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
+
+				break;
+			case 33:
+				temp = app->physics->CreateKinematicChain(screenPos.x + 48, screenPos.y + 48 + 32, leftSlope_30_3, 6);
+				temp->body->SetFixedRotation(true);
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
+
+				break;
+			default:
+				break;
+			}
+
+	
+		}
+	}
+
 
 	return true;
 }
@@ -50,6 +176,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	int cameraSpeed = 10;
+
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
@@ -58,16 +186,16 @@ bool Scene::Update(float dt)
 		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += 1;
+		app->render->camera.y += cameraSpeed;
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= 1;
+		app->render->camera.y -= cameraSpeed;
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+		app->render->camera.x += cameraSpeed;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+		app->render->camera.x -= cameraSpeed;
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 	{
