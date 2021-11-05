@@ -199,7 +199,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 	{
-		app->physics->CreateCircle(app->input->GetMouseX(), app->input->GetMouseY(), 25);
+		app->physics->CreateCircle(app->input->GetMouseX() - app->render->camera.x, app->input->GetMouseY() - app->render->camera.y, 25);
 		LOG("circle created");
 	}
 

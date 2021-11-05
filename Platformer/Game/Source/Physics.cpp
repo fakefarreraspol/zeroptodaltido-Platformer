@@ -1,5 +1,5 @@
 //#include "Globals.h"
-#include "app.h"
+#include "App.h"
 #include "Input.h"
 #include "Input.h"
 #include "Window.h"
@@ -375,7 +375,7 @@ bool Physics::PostUpdate()
 				{
 					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 					b2Vec2 pos = f->GetBody()->GetPosition();
-					app->render->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
+					app->render->DrawCircle(METERS_TO_PIXELS(pos.x + app->render->camera.x) , METERS_TO_PIXELS(pos.y + app->render->camera.y), METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
 				}
 				break;
 
