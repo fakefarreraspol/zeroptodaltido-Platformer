@@ -28,7 +28,7 @@ public:
 
 	// Called before all Updates
 	bool PostUpdate();
-
+	uint jungleMusic = 0;
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* bTexture = nullptr;

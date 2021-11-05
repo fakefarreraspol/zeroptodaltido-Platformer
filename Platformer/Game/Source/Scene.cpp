@@ -36,8 +36,9 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	texBackground = app->tex->Load("Assets/maps/bg.png");
 	app->map->Load("platform.tmx");
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	
+	jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
+	//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
+	app->audio->PlayFx(jungleMusic, 0);
 	//app->physics->CreateKinematicChain(0, 0,		rightSlope_30_1, 6);
 	//app->physics->CreateKinematicChain(48, 0,		rightSlope_30_2, 6);
 	//app->physics->CreateKinematicChain(48 * 2, 0,	rightSlope_30_3, 6);
