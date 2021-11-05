@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -67,6 +68,12 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 1;
+
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
+	{
+		app->physics->CreateCircle(app->input->GetMouseX(), app->input->GetMouseY(), 25);
+		LOG("circle created");
+	}
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 

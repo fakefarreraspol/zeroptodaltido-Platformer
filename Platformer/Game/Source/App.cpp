@@ -123,6 +123,7 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	init = SDL_GetTicks();
 	bool ret = true;
 	PrepareUpdate();
 
@@ -137,6 +138,20 @@ bool App::Update()
 
 	if(ret == true)
 		ret = PostUpdate();
+	end = SDL_GetTicks();
+
+
+	long elapsedTime = (float)(end - init);
+	(float)SDL_GetPerformanceFrequency();
+
+	float frameSpeed = 1000 / limitFrames;
+	currentFPS = 1000.0f / elapsedTime;
+	//LOG("Current FPS: %f", currentFPS);
+	//LOG("time left: %f", frameSpeed - elapsedTime);
+	if ((frameSpeed - elapsedTime) > 0.0f)
+	{
+		SDL_Delay(fabs(floor((long)frameSpeed - elapsedTime)));
+	}
 
 	FinishUpdate();
 	return ret;

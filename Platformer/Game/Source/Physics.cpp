@@ -10,9 +10,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
+#pragma comment( lib, "../Game/Source/External/Box2D/libx86/Debug/Box2D.lib" )
 #else
-#pragma comment( lib, "Box2D/libx86/Release/Box2D.lib" )
+#pragma comment( lib, "../Game/Source/External/Box2D/libx86/Release/Box2D.lib" )
 #endif
 
 Physics::Physics() : Module()
@@ -102,7 +102,7 @@ PhysBody* Physics::CreateCircle(int x, int y, int radius)
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 5.0f;
+	fixture.density = 1.0f;
 	fixture.restitution = 0.25f;
 
 	b->CreateFixture(&fixture);

@@ -113,6 +113,11 @@ private:
 	float degtorad = 0.0174532925199432957f;
 	float radtodeg = 57.295779513082320876f;
 
+	float limitFrames = 60;
+	float init;
+	float end;
+	float currentFPS;
+
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables
 	//pugi::xml_document configFile;

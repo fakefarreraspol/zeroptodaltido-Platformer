@@ -6,6 +6,11 @@
 # Not Ignore External Directories 
 !\Game\Source\External
 
+
+# NOT ignore Box2D library files 
+!\cfg\Box2D\libx86\Debug\Box2D.lib
+!\cfg\Box2D\libx86\Release\Box2D.lib
+
 # User-specific files
 *.rsuser
 *.suo
