@@ -15,18 +15,18 @@
 #pragma comment( lib, "Box2D/libx86/Release/Box2D.lib" )
 #endif
 
-ModulePhysics::ModulePhysics() : Module()
+Physics::Physics() : Module()
 {
 	world = NULL;
 	debug = true;
 }
 
 // Destructor
-ModulePhysics::~ModulePhysics()
+Physics::~Physics()
 {
 }
 
-bool ModulePhysics::Start()
+bool Physics::Start()
 {
 	LOG("Creating Physics 2D environment");
 
@@ -35,7 +35,7 @@ bool ModulePhysics::Start()
 	groundBD.type = b2_staticBody;
 	groundBD.position.Set(100, 100);
 	world->CreateBody(&groundBD);*/
-	// TODO 3: You need to make ModulePhysics class a contact listener
+	// TODO 3: You need to make Physics class a contact listener
 
 	// big static circle as "ground" in the middle of the screen
 	/*int x = SCREEN_WIDTH / 2;
@@ -59,7 +59,7 @@ bool ModulePhysics::Start()
 }
 
 // 
-bool ModulePhysics::PreUpdate()
+bool Physics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
 
@@ -73,7 +73,7 @@ bool ModulePhysics::PreUpdate()
 	return true;
 }
 
-b2RevoluteJoint* ModulePhysics::CreateFlipperJoint(b2Body* ground, b2Vec2 groundAnchor, b2Body* flipper, b2Vec2 flipperAnchor)
+b2RevoluteJoint* Physics::CreateFlipperJoint(b2Body* ground, b2Vec2 groundAnchor, b2Body* flipper, b2Vec2 flipperAnchor)
 {
 	b2RevoluteJointDef FlipperJoint;
 	FlipperJoint.bodyA = ground;
@@ -89,7 +89,7 @@ b2RevoluteJoint* ModulePhysics::CreateFlipperJoint(b2Body* ground, b2Vec2 ground
 }
 
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* Physics::CreateCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -115,7 +115,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius)
+PhysBody* Physics::CreateSensorCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -140,7 +140,7 @@ PhysBody* ModulePhysics::CreateSensorCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius)
+PhysBody* Physics::CreateStaticCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -165,7 +165,7 @@ PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius)
 }
 
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* Physics::CreateRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -189,7 +189,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateKinematicRectangle(int x, int y, int width, int height)
+PhysBody* Physics::CreateKinematicRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;
 	body.type = b2_kinematicBody;
@@ -213,7 +213,7 @@ PhysBody* ModulePhysics::CreateKinematicRectangle(int x, int y, int width, int h
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
+PhysBody* Physics::CreateChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -246,7 +246,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size)
+PhysBody* Physics::CreateStaticChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -280,7 +280,7 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateSensorChain(int x, int y, int* points, int size)
+PhysBody* Physics::CreateSensorChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -314,7 +314,7 @@ PhysBody* ModulePhysics::CreateSensorChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateKinematicChain(int x, int y, int* points, int size)
+PhysBody* Physics::CreateKinematicChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
 	body.type = b2_kinematicBody;
@@ -350,7 +350,7 @@ PhysBody* ModulePhysics::CreateKinematicChain(int x, int y, int* points, int siz
 
 
 // 
-bool ModulePhysics::PostUpdate()
+bool Physics::PostUpdate()
 {
 	if(app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
@@ -496,7 +496,7 @@ bool ModulePhysics::PostUpdate()
 	/*if (clickedBody != NULL)
 	{
 		b2MouseJointDef mJoint;
-		ground = ModulePhysics::CreateStaticCircle(400, 800, 10);
+		ground = Physics::CreateStaticCircle(400, 800, 10);
 		mJoint.bodyA = ground->body;
 		
 		mJoint.bodyB = clickedBody;
@@ -548,7 +548,7 @@ bool ModulePhysics::PostUpdate()
 
 
 // Called before quitting
-bool ModulePhysics::CleanUp()
+bool Physics::CleanUp()
 {
 	LOG("Destroying physics world");
 
