@@ -58,6 +58,7 @@ public:
 
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
+	//PhysBody* CreateKinematicRectangle(int x, int y, int width, int height);
 
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* CreateSensorChain(int x, int y, int* points, int size);
