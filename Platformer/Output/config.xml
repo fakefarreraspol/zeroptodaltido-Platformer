@@ -8,6 +8,7 @@
 
   <renderer>
     <vsync value="false"/>
+    <camera x="0" y="-48 * 14"/>
   </renderer>
 
   <window>
@@ -17,6 +18,11 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+
+  <Scene>
+   
+    
+  </Scene>
 
   <!-- L03: Added maps folder as config option -->
   <map>

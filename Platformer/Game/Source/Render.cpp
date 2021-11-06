@@ -46,7 +46,7 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.w = app->win->screenSurface->w;
 		camera.h = app->win->screenSurface->h;
 		camera.x = 0;
-		camera.y = -48 * 15;
+		camera.y = -48 * 14;
 	}
 
 	return ret;
@@ -92,8 +92,9 @@ bool Render::CleanUp()
 // Load Game State
 bool Render::LoadState(pugi::xml_node& data)
 {
-	//...
-
+	camera.x = data.child("camera").attribute("x").as_int(0);
+	camera.y = data.child("camera").attribute("y").as_int(0);
+	LOG("loading camera pos");
 	return true;
 }
 

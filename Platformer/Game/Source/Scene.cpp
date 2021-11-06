@@ -120,6 +120,12 @@ bool Scene::Start()
 				app->physics->CreateKinematicChain(screenPos.x, screenPos.y, leftSlope_30_3, 6);
 
 				break;
+			case 15:
+				app->physics->CreateKinematicRectangle(screenPos.x + 24, screenPos.y + 10, 48, 16);
+
+				break;
+
+
 			case 28:
 
 				temp = app->physics->CreateKinematicChain(screenPos.x, screenPos.y + 48, leftSlope_45, 6);
@@ -179,6 +185,9 @@ bool Scene::Update(float dt)
 {
 	int cameraSpeed = 10;
 
+	uint screnWidth, screenHeight;
+	app->win->GetWindowSize(screnWidth, screenHeight);
+
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
@@ -189,18 +198,23 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += cameraSpeed;
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y -= cameraSpeed;
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += cameraSpeed;
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= cameraSpeed;
+
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 	{
-		app->physics->CreateCircle(app->input->GetMouseX() - app->render->camera.x, app->input->GetMouseY() - app->render->camera.y, 25);
+		app->physics->CreateCircle(app->input->GetMouseX() - app->render->camera.x, app->input->GetMouseY() - app->render->camera.y, 23);
 		LOG("circle created");
 	}
 
@@ -236,6 +250,21 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+
+bool Scene::LoadState(pugi::xml_node& data)
+{
+
+	return true;
+}
+
+// L02: TODO 8: Create a method to save the state of the renderer
+// Save Game State
+bool Scene::SaveState(pugi::xml_node& data) const
+{
+	//...
 
 	return true;
 }

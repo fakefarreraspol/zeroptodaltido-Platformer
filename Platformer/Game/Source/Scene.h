@@ -31,6 +31,9 @@ public:
 	uint jungleMusic = 0;
 	// Called before quitting
 	bool CleanUp();
+
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 	SDL_Texture* bTexture = nullptr;
 private:
 

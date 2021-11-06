@@ -181,8 +181,10 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 	// L02: DONE 1: This is a good place to call Load / Save methods
-	if (loadGameRequested == true) LoadGame();
-	if (saveGameRequested == true) SaveGame();
+	if (loadGameRequested == true) 
+		LoadGame();
+	if (saveGameRequested == true) 
+		SaveGame();
 }
 
 // Call modules before each loop iteration
@@ -314,8 +316,21 @@ bool App::LoadGame()
 {
 	bool ret = false;
 
-	//...
+	pugi::xml_document configFile;
+	pugi::xml_node config;
+	config = LoadConfig(configFile);
 
+	ListItem<Module*>* item;
+	item = modules.start;
+	//LOG("name: %s", item->data->name.GetString());
+	while (item != NULL)
+	{
+		SString name = item->data->name;
+		LOG("name: %c", name.GetString());
+		ret = item->data->LoadState(config.child(name.GetString()));
+		item = item->next;
+	}
+	
 	loadGameRequested = false;
 
 	return ret;
