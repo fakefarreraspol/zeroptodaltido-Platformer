@@ -5,6 +5,8 @@
 #include "Physics.h"
 #include <math.h>
 
+#include "Animation.h"
+
 class Player : public Module
 {
 public:
@@ -18,6 +20,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+
 
 	PhysBody* GetColHitbox() const
 	{
@@ -36,6 +39,11 @@ public:
 	{
 		return y;
 	}
+	Animation* currentAnimation = nullptr;
+	//void Player::SetAnimation(Animation &toChange)
+	//{
+		
+	//}
 
 private:
 

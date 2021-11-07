@@ -58,6 +58,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
