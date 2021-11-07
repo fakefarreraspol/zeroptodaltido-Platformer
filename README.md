@@ -1,14 +1,13 @@
-# zeroptodaltido-Platformer
+# ZeroptodaltidoTeam's Platformer
+ A basic platform game
+ 
+ ## Controls
+ 
+ AD - horizontal movement
+ Space - jump
 
-Padre nuestro que estás en el cielo, 
-santificado sea tu Nombre;
-venga a nosotros tu Reino;
-hágase tu voluntad 
-en la tierra como en el cielo.
-Danos hoy 
-nuestro pan de cada día;
-perdona nuestras ofensas,
-como también nosotros perdonamos 
-a los que nos ofenden;
-no nos dejes caer en la tentación,
-y líbranos del mal. Amén.
+## Special keys
+- F5 Save the current game state
+- F6 Load the previous state (even across levels)
+- F9 View colliders / logic
+- F10 God Mode (free camera)
