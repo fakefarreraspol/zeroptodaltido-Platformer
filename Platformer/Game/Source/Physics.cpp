@@ -18,7 +18,7 @@
 Physics::Physics() : Module()
 {
 	world = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
@@ -354,7 +354,7 @@ PhysBody* Physics::CreateKinematicChain(int x, int y, int* points, int size)
 // 
 bool Physics::PostUpdate()
 {
-	if(app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
 	if(!debug)

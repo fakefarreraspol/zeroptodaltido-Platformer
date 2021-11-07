@@ -4,6 +4,7 @@
 #include "App.h"
 #include "Physics.h"
 #include <math.h>
+#include "SDL/include/SDL.h"
 
 #include "Animation.h"
 
@@ -19,6 +20,8 @@ public:
 	// Called before the first frame
 	bool Start();
 	bool Update(float dt);
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
 
 
@@ -47,6 +50,11 @@ public:
 
 private:
 
+	
+
+	float startPosX;
+	float startPosY;
+
 	float x, y;
 	b2Vec2 speed;
 	float maxXspeed;
@@ -54,7 +62,7 @@ private:
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
-	
+	SDL_Texture* texture;
 	
 
 };

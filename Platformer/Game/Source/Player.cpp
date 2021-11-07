@@ -6,9 +6,12 @@
 #include "p2List.h"
 #include "Scene.h"
 #include "Physics.h"
+#include "Textures.h"
+#include"Render.h"
 
 Player::Player() : Module()
 {
+	name.Create("player");	
 }
 
 Player::~Player()
@@ -22,9 +25,12 @@ bool Player::Awake()
 // Load assets
 bool Player::Start()
 {
+	//textures
+	texture = app->tex->Load("Assets/textures/idle.png");
+
 	//player stats
-	int startPosX = 48 * 4;
-	int startPosY = 48 * 27;
+	startPosX = 48 * 4;
+	startPosY = 48 * 27;
 	speed = { 2,0 };
 	jumpForce = { 0,-25.f };
 
@@ -63,8 +69,6 @@ bool Player::Update(float dt)
 	bool goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	bool goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
-
-
 	//LOG("v: %f", ColHitbox->body->GetLinearVelocity().x);
 	//ColHitbox->body->ApplyLinearImpulse(goRight * speed, ColHitbox->body->GetPosition(), true);
 
@@ -73,12 +77,6 @@ bool Player::Update(float dt)
 	
 	if (ColHitbox->body->GetLinearVelocity().x > -5.f)
 		ColHitbox->body->ApplyLinearImpulse(-goLeft* speed, ColHitbox->body->GetPosition(), true);
-
-	
-
-	
-
-	
 
 	b2Body* ground;
 	if (ColHitbox->body->GetContactList() != nullptr)
@@ -99,23 +97,33 @@ bool Player::Update(float dt)
 				ColHitbox->body->SetLinearDamping(0);
 			}
 		}
-		
-	}
-	else
-	{
-		LOG("no ground");
-		
-
-
 	}
 
 
-	
+	app->render->DrawTexture(texture, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 23 * 3.5f, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 24 * 3, NULL);
+	//app->render->DrawTexture(texture,300,100, NULL);
 
+	return true;
+}
 
+bool Player::LoadState(pugi::xml_node& data)
+{
+	startPosX = data.child("startPos").attribute("x").as_float(0);
+	startPosY = data.child("startPos").attribute("y").as_float(0);
+
+	b2Vec2 v = { PIXEL_TO_METERS( startPosX), PIXEL_TO_METERS(startPosY )};
+	ColHitbox->body->SetTransform(v, 0);
 
 	return true;
 }
 
 
+bool Player::SaveState(pugi::xml_node& data) const
+{
+
+	LOG("saving camera pos");
+	data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
+	data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
+	return true;
+}
 
