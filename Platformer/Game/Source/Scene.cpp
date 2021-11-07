@@ -177,8 +177,21 @@ bool Scene::Start()
 
 
 	}
-	
-
+	character = app->tex->Load("Assets/textures/adventurer.png");
+	r_characterRun[0]= { 0,37, 50, 37*2 };
+	r_characterRun[1] = { 50,37, 100, 37 * 2 };
+	r_characterRun[2] = { 100,37, 150, 37 * 2 };
+	r_characterRun[3] = { 150,37, 200, 37 * 2 };
+	r_characterRun[4] = { 200,37, 250, 37 * 2 };
+	r_characterRun[5] = { 250,37, 300, 37 * 2 };
+	r_characterRun[6] = { 300,37, 350, 37 * 2 };
+	r_characterJump[0] = { 0,37 * 3, 50, 37 * 4 };
+	r_characterJump[1] = { 50,37 * 3, 100, 37 * 4 };
+	r_characterJump[2] = { 100,37 * 3, 150, 37 * 4 };
+	r_characterJump[3] = { 150,37 * 3, 200, 37 * 4 };
+	r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
+	r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
+	r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
 	return true;
 }
 
@@ -191,6 +204,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
+	
 	int cameraSpeed = 3;
 	
 	
@@ -310,6 +325,7 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->render->DrawTexture(texBackground, 0, 0, NULL, 0.4f);
+	
 	app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info

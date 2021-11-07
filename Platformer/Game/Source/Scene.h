@@ -45,8 +45,11 @@ public:
 private:
 
 	SDL_Texture* texBackground;
+	SDL_Texture* character = nullptr;
 	p2List<PhysBody*> trespasableElements;
 
+	SDL_Rect r_characterRun[7];
+	SDL_Rect r_characterJump[7];
 	int squareGround[44] = {
 		6,7,39,40,42,43,45,46,
 		58,59,60,61,62,63,64,65,
