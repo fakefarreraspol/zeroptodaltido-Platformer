@@ -5,11 +5,11 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<startPos x="724" y="1087" />
+		<startPos x="173" y="1320" />
 	</player>
 	<renderer>
 		<vsync value="false" />
-		<camera x="-434" y="-652" />
+		<camera x="-103" y="-719" />
 	</renderer>
 	<window>
 		<resolution width="1080" height="720" scale="1" />
