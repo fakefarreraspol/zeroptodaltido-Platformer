@@ -7,6 +7,8 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Player.h"
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -69,6 +71,7 @@ bool Scene::Start()
 				{
 					temp = app->physics->CreateRectangle(screenPos.x + 24, screenPos.y + 24, 48, 48);
 					temp->body->SetType(b2_staticBody);
+					
 				}
 			}
 			
@@ -122,8 +125,9 @@ bool Scene::Start()
 
 				break;
 			case 15:
-				app->physics->CreateKinematicRectangle(screenPos.x + 24, screenPos.y + 10, 48, 16);
 
+				temp = app->physics->CreateKinematicRectangle(screenPos.x + 24, screenPos.y + 10, 48, 16);
+				trespasableElements.add(temp);
 				break;
 
 
@@ -231,6 +235,32 @@ bool Scene::Update(float dt)
 		}
 		//app->render->camera.x -= cameraSpeed;
 
+	p2List_item <PhysBody*>* trespasableCounter = trespasableElements.getFirst();
+	while (trespasableCounter != nullptr)
+	{
+
+		if (trespasableCounter->data->body->GetContactList() != nullptr)
+		{
+			b2Body* playerHitbox = trespasableCounter->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
+			
+			if (playerHitbox == app->player->GetColHitbox()->body &&
+				playerHitbox->GetPosition().y + PIXEL_TO_METERS(30) > trespasableCounter->data->body->GetPosition().y)
+			{
+				trespasableCounter->data->body->GetFixtureList()->SetSensor(true);
+
+			}
+			else
+			{
+				if (trespasableCounter->data->body->GetFixtureList()->IsSensor())
+				{
+					
+					trespasableCounter->data->body->GetFixtureList()->SetSensor(false);
+				}
+			}
+		}
+
+		trespasableCounter = trespasableCounter->next;
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 	{

@@ -2,6 +2,9 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "p2List.h"
+#include "p2Point.h"
+#include "Physics.h"
 
 struct SDL_Texture;
 
@@ -35,9 +38,13 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	SDL_Texture* bTexture = nullptr;
+
+
+
 private:
 
 	SDL_Texture* texBackground;
+	p2List<PhysBody*> trespasableElements;
 
 	int squareGround[44] = {
 		6,7,39,40,42,43,45,46,

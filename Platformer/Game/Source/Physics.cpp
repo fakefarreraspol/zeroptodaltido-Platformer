@@ -102,8 +102,8 @@ PhysBody* Physics::CreateCircle(int x, int y, int radius)
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 1.0f;
-	fixture.restitution = 0.25f;
+	fixture.density = 3.f;
+	//fixture.restitution = 0.25f;
 
 	b->CreateFixture(&fixture);
 
@@ -178,6 +178,7 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height)
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
+	
 
 	b->CreateFixture(&fixture);
 
@@ -267,6 +268,7 @@ PhysBody* Physics::CreateStaticChain(int x, int y, int* points, int size)
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
+	fixture.friction = 0.2f;
 	
 
 	b->CreateFixture(&fixture);
@@ -463,20 +465,20 @@ bool Physics::PostUpdate()
 		}
 		
 	}
-	if (mouseBody != nullptr && mouseJoint != nullptr)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-		{
-			// Get new mouse position and re-target mouse_joint there
-			b2Vec2 mousePosition;
-			mousePosition.x = PIXEL_TO_METERS(app->input->GetMouseX());
-			mousePosition.y = PIXEL_TO_METERS(app->input->GetMouseY());
-			mouseJoint->SetTarget(mousePosition);
-
-			// Draw a red line between both anchor points
-			app->render->DrawLine(METERS_TO_PIXELS(mouseBody->GetPosition().x), METERS_TO_PIXELS(mouseBody->GetPosition().y), app->input->GetMouseX(), app->input->GetMouseY(), 255, 0, 0);
-		}
-	}
+	//if (mouseBody != nullptr && mouseJoint != nullptr)
+	//{
+	//	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	//	{
+	//		// Get new mouse position and re-target mouse_joint there
+	//		b2Vec2 mousePosition;
+	//		mousePosition.x = PIXEL_TO_METERS(app->input->GetMouseX());
+	//		mousePosition.y = PIXEL_TO_METERS(app->input->GetMouseY());
+	//		mouseJoint->SetTarget(mousePosition);
+	//
+	//		// Draw a red line between both anchor points
+	//		app->render->DrawLine(METERS_TO_PIXELS(mouseBody->GetPosition().x), METERS_TO_PIXELS(mouseBody->GetPosition().y), app->input->GetMouseX(), app->input->GetMouseY(), 255, 0, 0);
+	//	}
+	//}
 
 	// TODO 4: If the player releases the mouse button, destroy the joint
 	if (mouseBody != nullptr && mouseJoint != nullptr)

@@ -2445,7 +2445,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="44"/>
+   <tile gid="102"/>
    <tile gid="20"/>
    <tile gid="21"/>
    <tile gid="20"/>
@@ -2545,7 +2545,7 @@
    <tile gid="47"/>
    <tile gid="48"/>
    <tile gid="49"/>
-   <tile gid="20"/>
+   <tile gid="44"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
