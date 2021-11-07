@@ -191,7 +191,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	int cameraSpeed = 10;
+	int cameraSpeed = 3;
 
 	uint screnWidth, screenHeight;
 	app->win->GetWindowSize(screnWidth, screenHeight);
@@ -203,7 +203,7 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT))
 		if (app->render->camera.y < (-5))
 		{
 			app->render->camera.y += cameraSpeed;
@@ -220,7 +220,7 @@ bool Scene::Update(float dt)
 		
 
 
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT))
 		if (app->render->camera.x < (0))
 		{
 			app->render->camera.x += cameraSpeed;
@@ -228,7 +228,7 @@ bool Scene::Update(float dt)
 		
 
 
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
 		if (app->render->camera.x > (-48*33))
 		{
 			app->render->camera.x -= cameraSpeed;
