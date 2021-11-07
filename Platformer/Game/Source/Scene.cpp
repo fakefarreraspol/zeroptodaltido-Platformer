@@ -50,7 +50,7 @@ bool Scene::Start()
 	//
 	//app->physics->CreateStaticChain(0, 48, rightSlope_45, 6);
 	//app->physics->CreateStaticChain(48, 48, leftSlope_45, 6);
-
+	
 
 	for (int x = 0; x < app->map->mapData.maplayers.start->data->width; x++)
 	{
@@ -192,48 +192,83 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	int cameraSpeed = 3;
-
+	
+	
 	uint screnWidth, screenHeight;
 	app->win->GetWindowSize(screnWidth, screenHeight);
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	// L02: DONE 3: Request Load / Save when pressing L/S
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
-
-	if((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT))
-		if (app->render->camera.y < (-5))
-		{
-			app->render->camera.y += cameraSpeed;
-		}
-		
-
 	
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		if(!freeCam) freeCam = true;
+		else freeCam = false;
+	}
+	playerX = app->player->GetColHitbox()->body->GetPosition().x;
+	playerY = app->player->GetColHitbox()->body->GetPosition().y;
 
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		if (app->render->camera.y > (-48 * 14))
+	if (!freeCam)
+	{
+		app->render->camera.x = -(playerX * 30);
+		if ((playerY < 24)&& (playerY > 1))
 		{
-			app->render->camera.y -= cameraSpeed;
+			app->render->camera.y = -(playerY * 30);
 		}
+
 		
+	}
+	else
+	{
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT))
+			if (app->render->camera.y < (-5))
+			{
+				app->render->camera.y += cameraSpeed;
+			}
 
 
-	if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT))
-		if (app->render->camera.x < (0))
-		{
-			app->render->camera.x += cameraSpeed;
-		}
-		
 
 
-	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
-		if (app->render->camera.x > (-48*33))
-		{
-			app->render->camera.x -= cameraSpeed;
-		}
-		//app->render->camera.x -= cameraSpeed;
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			if (app->render->camera.y > (-48 * 14))
+			{
+				app->render->camera.y -= cameraSpeed;
+			}
+
+
+
+		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT))
+			if (app->render->camera.x < (0))
+			{
+				app->render->camera.x += cameraSpeed;
+			}
+
+
+
+		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT))
+			if (app->render->camera.x > (-48 * 33))
+			{
+				app->render->camera.x -= cameraSpeed;
+			}
+
+	}
+	
+	//app->render->camera.x -= cameraSpeed;
+	
+	
+	LOG("player position %f", playerX);
+	LOG("player y %f", playerY);
+	LOG("Camera position %i", app->render->camera.x);
+	
+	/*if ((playerX > 10)&& (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
+	{
+		app->render->camera.x -= 2;
+	}*/
+	
 
 	p2List_item <PhysBody*>* trespasableCounter = trespasableElements.getFirst();
 	while (trespasableCounter != nullptr)
@@ -242,6 +277,9 @@ bool Scene::Update(float dt)
 		if (trespasableCounter->data->body->GetContactList() != nullptr)
 		{
 			b2Body* playerHitbox = trespasableCounter->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
+			
+			
+			
 			
 			if (playerHitbox == app->player->GetColHitbox()->body &&
 				playerHitbox->GetPosition().y + PIXEL_TO_METERS(30) > trespasableCounter->data->body->GetPosition().y)

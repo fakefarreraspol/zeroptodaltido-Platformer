@@ -28,6 +28,14 @@ public:
 	{
 		return ColSensor;
 	}
+	const float getX()
+	{
+		return x;
+	}
+	const float getY()
+	{
+		return y;
+	}
 
 private:
 

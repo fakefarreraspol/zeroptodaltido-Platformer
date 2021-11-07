@@ -39,8 +39,9 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 	SDL_Texture* bTexture = nullptr;
 
-
-
+	float playerX = 0.0f;
+	float playerY = 0.0f;
+	bool freeCam = false;
 private:
 
 	SDL_Texture* texBackground;

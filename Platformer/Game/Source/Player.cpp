@@ -16,7 +16,7 @@ Player::~Player()
 
 bool Player::Awake()
 {
-
+	return true;
 }
 
 // Load assets
