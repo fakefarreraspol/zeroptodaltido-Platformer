@@ -31,7 +31,7 @@ bool Player::Start()
 	//player stats
 	startPosX = 48 * 4;
 	startPosY = 48 * 27;
-	speed = { 2,0 };
+	speed = { 7.f,0 };
 	jumpForce = { 0,-25.f };
 
 
@@ -69,20 +69,15 @@ bool Player::Update(float dt)
 	bool goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	bool goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
-	//LOG("v: %f", ColHitbox->body->GetLinearVelocity().x);
-	//ColHitbox->body->ApplyLinearImpulse(goRight * speed, ColHitbox->body->GetPosition(), true);
 
-	if (ColHitbox->body->GetLinearVelocity().x < 5.f)
-		ColHitbox->body->ApplyLinearImpulse(goRight * speed, ColHitbox->body->GetPosition(), true);
-	
-	if (ColHitbox->body->GetLinearVelocity().x > -5.f)
-		ColHitbox->body->ApplyLinearImpulse(-goLeft* speed, ColHitbox->body->GetPosition(), true);
+	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
+	ColHitbox->body->SetLinearVelocity(movement);
 
 	b2Body* ground;
 	if (ColHitbox->body->GetContactList() != nullptr)
 	{
 		ground = ColHitbox->body->GetContactList()->contact->GetFixtureA()->GetBody();
-		
+
 		if (ground != nullptr)
 		{
 
@@ -101,7 +96,7 @@ bool Player::Update(float dt)
 
 
 	app->render->DrawTexture(texture, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 23 * 3.5f, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 24 * 3, NULL);
-	//app->render->DrawTexture(texture,300,100, NULL);
+
 
 	return true;
 }

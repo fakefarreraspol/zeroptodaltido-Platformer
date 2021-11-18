@@ -37,7 +37,7 @@ bool Scene::Start()
 {
 	// L03: DONE: Load map
 	texBackground = app->tex->Load("Assets/maps/bg.png");
-	app->map->Load("platform.tmx");
+	app->map->Load("platform_test.tmx");
 	jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
 	//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
 	app->audio->PlayFx(jungleMusic, 0);
@@ -133,20 +133,20 @@ bool Scene::Start()
 
 			case 28:
 
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y + 48, leftSlope_45, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_3, 6);
 				temp->body->SetFixedRotation(true);
-				temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
+				//temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
 				break;
 			case 29:
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y + 48, rightSlope_45, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_2, 6);
 				temp->body->SetFixedRotation(true);
-				temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+				//temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
 
 				break;
 			case 30:
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y + 48, rightSlope_45, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_1, 6);
 				temp->body->SetFixedRotation(true);
-				temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+				//temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
 
 				break;
 			case 31:
