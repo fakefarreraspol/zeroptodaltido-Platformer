@@ -44,6 +44,9 @@ public:
 	bool freeCam = false;
 private:
 
+	int marginX;
+	int marginY;
+
 	SDL_Texture* texBackground;
 	SDL_Texture* character = nullptr;
 	p2List<PhysBody*> trespasableElements;

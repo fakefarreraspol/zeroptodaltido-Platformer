@@ -42,7 +42,18 @@ public:
 	{
 		return y;
 	}
+	const b2Vec2 GetSpeed()
+	{
+		return speed;
+	}
+
+	const int GetDirection()
+	{
+		return goRight - goLeft;
+	}
+
 	Animation* currentAnimation = nullptr;
+
 	//void Player::SetAnimation(Animation &toChange)
 	//{
 		
@@ -50,7 +61,7 @@ public:
 
 private:
 
-	
+	bool goLeft, goRight;
 
 	float startPosX;
 	float startPosY;

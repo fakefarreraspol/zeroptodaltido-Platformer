@@ -47,6 +47,9 @@ bool Player::Start()
 	//ColSensor->body->GetFixtureList()->SetSensor(true);
 	//ColSensor->body->SetType(b2_kinematicBody);
 
+	goLeft = false;
+	goRight = false;
+
 	LOG("Loading player");
 	return true;
 }
@@ -66,8 +69,8 @@ bool Player::Update(float dt)
 
 	b2Vec2 pos = { x,y };
 
-	bool goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
-	bool goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
+	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
+	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
 
 	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
@@ -93,6 +96,20 @@ bool Player::Update(float dt)
 			}
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	app->render->DrawTexture(texture, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 23 * 3.5f, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 24 * 3, NULL);

@@ -192,6 +192,10 @@ bool Scene::Start()
 	r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
 	r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 	r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
+
+	marginX = 5;
+	marginX = 5;
+
 	return true;
 }
 
@@ -229,13 +233,20 @@ bool Scene::Update(float dt)
 
 	if (!freeCam)
 	{
-		app->render->camera.x = -(playerX * 30);
+		//app->render->camera.x = -(playerX );
 		if ((playerY < 24)&& (playerY > 1))
 		{
 			app->render->camera.y = -(playerY * 30);
 		}
 
+
+		if (playerX > marginX && playerX < 100 * 48)
+		{
+			app->render->camera.x = -playerX * 48 * 1.042f + marginX * 48;
+		}
 		
+
+
 	}
 	else
 	{
@@ -273,12 +284,14 @@ bool Scene::Update(float dt)
 	}
 	
 	//app->render->camera.x -= cameraSpeed;
+	LOG("player x %f", playerX * 48);
+
 	
-	
-	LOG("player position %f", playerX);
-	LOG("player y %f", playerY);
+	//LOG("player position %f", playerX);
+	//LOG("player y %f", playerY);
 	LOG("Camera position %i", app->render->camera.x);
-	
+	LOG("difference: %f", (float)app->render->camera.x - playerX * 48);
+
 	/*if ((playerX > 10)&& (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
 	{
 		app->render->camera.x -= 2;
