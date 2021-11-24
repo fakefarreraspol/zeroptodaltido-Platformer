@@ -73,7 +73,8 @@ private:
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
-	SDL_Texture* texture;
+	SDL_Texture* gorila;
+	SDL_Rect r_gorilaWalk[4];
 	
 
 };

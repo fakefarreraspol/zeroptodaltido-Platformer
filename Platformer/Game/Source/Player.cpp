@@ -26,8 +26,11 @@ bool Player::Awake()
 bool Player::Start()
 {
 	//textures
-	texture = app->tex->Load("Assets/textures/idle.png");
-
+	gorila = app->tex->Load("Assets/textures/gorila.png");
+	r_gorilaWalk[0] = { 4, 4, 62, 60};
+	r_gorilaWalk[1] = {80,4,72,60};
+	r_gorilaWalk[2] = {166,4,62,60};
+	r_gorilaWalk[3] = {246,4,76,60};
 	//player stats
 	startPosX = 48 * 4;
 	startPosY = 48 * 27;
@@ -112,8 +115,8 @@ bool Player::Update(float dt)
 
 
 
-	app->render->DrawTexture(texture, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 23 * 3.5f, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 24 * 3, NULL);
-
+	app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0], SDL_FLIP_HORIZONTAL);
+	
 
 	return true;
 }
