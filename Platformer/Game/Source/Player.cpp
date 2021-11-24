@@ -102,7 +102,8 @@ bool Player::Update(float dt)
 
 
 
-
+	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
+	else characterWalking = false;
 
 
 	
@@ -154,7 +155,7 @@ bool Player::Update(float dt)
 		}
 		
 	}
-	else
+	if(!characterWalking)
 	{
 		if (lastDirection)
 		{
