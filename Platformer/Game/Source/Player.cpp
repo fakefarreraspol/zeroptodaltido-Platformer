@@ -117,7 +117,7 @@ bool Player::Update(float dt)
 		
 		if (lastTime + 300 > currentTime)
 		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[currentGorilaWalk]);
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[currentGorilaWalk]);
 		}
 		else
 		{
@@ -139,7 +139,7 @@ bool Player::Update(float dt)
 		
 		if (lastTime + 300>currentTime)
 		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
 		}
 		else
 		{
@@ -159,11 +159,11 @@ bool Player::Update(float dt)
 	{
 		if (lastDirection)
 		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0], SDL_FLIP_HORIZONTAL);
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[0], SDL_FLIP_HORIZONTAL);
 		}
 		else if(!lastDirection)
 		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0]);
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[0]);
 		}
 	}
 	
