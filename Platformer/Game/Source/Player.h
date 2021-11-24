@@ -65,7 +65,8 @@ private:
 
 	float startPosX;
 	float startPosY;
-
+	int currentTime = 0;
+	int lastTime = 0;
 	float x, y;
 	b2Vec2 speed;
 	float maxXspeed;
@@ -75,6 +76,7 @@ private:
 	PhysBody* ColSensor;
 	SDL_Texture* gorila;
 	SDL_Rect r_gorilaWalk[4];
-	
-
+	int currentGorilaWalk = 2;
+	bool lastDirection=true;
+	bool characterWalking = false;
 };

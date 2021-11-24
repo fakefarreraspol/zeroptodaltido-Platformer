@@ -37,7 +37,7 @@ bool Player::Start()
 	speed = { 7.f,0 };
 	jumpForce = { 0,-25.f };
 
-
+	
 	ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
 	
 	
@@ -69,7 +69,7 @@ bool Player::CleanUp()
 bool Player::Update(float dt)
 {
 	//ColSensor->body->SetTransform(ColHitbox->body->GetPosition(), 0);
-
+	currentTime = SDL_GetTicks();
 	b2Vec2 pos = { x,y };
 
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
@@ -105,17 +105,67 @@ bool Player::Update(float dt)
 
 
 
+	
 
 
+	
+
+	LOG("current time %i", currentTime);
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		
+		if (lastTime + 300 > currentTime)
+		{
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[currentGorilaWalk]);
+		}
+		else
+		{
+			currentGorilaWalk++;
+			lastTime = currentTime;
+
+		}
+		lastDirection = false;
+
+		if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+		{
+			currentGorilaWalk = 0;
+		}
+	}
 
 
-
-
-
-
-
-
-	app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0], SDL_FLIP_HORIZONTAL);
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		
+		if (lastTime + 300>currentTime)
+		{
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			currentGorilaWalk++;
+			lastTime = currentTime;
+			
+		}
+		lastDirection = true;
+		
+		if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+		{
+			currentGorilaWalk = 0;
+		}
+		
+	}
+	else
+	{
+		if (lastDirection)
+		{
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0], SDL_FLIP_HORIZONTAL);
+		}
+		else if(!lastDirection)
+		{
+			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x), METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), &r_gorilaWalk[0]);
+		}
+	}
+	
 	
 
 	return true;
