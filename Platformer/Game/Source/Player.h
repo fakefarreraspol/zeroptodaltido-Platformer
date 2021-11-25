@@ -53,7 +53,10 @@ public:
 	}
 
 	Animation* currentAnimation = nullptr;
-
+	void RestartGorilaIdle()
+	{
+		currentGorilaIdle = 0;
+	}
 	//void Player::SetAnimation(Animation &toChange)
 	//{
 		
@@ -76,7 +79,11 @@ private:
 	PhysBody* ColSensor;
 	SDL_Texture* gorila;
 	SDL_Rect r_gorilaWalk[4];
-	int currentGorilaWalk = 2;
+	SDL_Rect r_gorilaIdle[5];
+	SDL_Rect r_gorilaJump[4];
+	SDL_Rect r_gorilaPunch[2];
+	int currentGorilaWalk = 0;
+	int currentGorilaIdle = 0;
 	bool lastDirection=true;
 	bool characterWalking = false;
 };
