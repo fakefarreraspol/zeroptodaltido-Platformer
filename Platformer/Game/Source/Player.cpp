@@ -28,10 +28,10 @@ bool Player::Start()
 	//textures
 	gorila = app->tex->Load("Assets/textures/gorila.png");
 	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
-	r_gorilaWalk[0] = { 4, 4, 62, 60};
-	r_gorilaWalk[1] = {80,4,72,60};
+	r_gorilaWalk[0] = { 2, 4, 62, 60};
+	r_gorilaWalk[1] = {74,4,78,60};
 	r_gorilaWalk[2] = {166,4,62,60};
-	r_gorilaWalk[3] = {246,4,76,60};
+	r_gorilaWalk[3] = {242,4,82,60};
 	
 	r_gorilaPunch[0] = { 4, 116, 72, 64};
 	r_gorilaPunch[1] = {92,116,86,72};
@@ -155,14 +155,23 @@ bool Player::Update(float dt)
 		
 		
 	}*/
-	
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		playerHit = true;
+		
+		
+	}
+	if (playerHit)
+	{
+		HitAnimation();
+	}
 	LOG("current time %i", currentTime);
-	if (!inAir)
+	if ((!onAir)&& (!playerHit))
 	{
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
 		{
 			RestartGorilaIdle();
-			if (lastTime + 300 > currentTime)
+			if ((lastTime + 300 > currentTime) && (currentGorilaWalk >= 0))
 			{
 				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk]);
 			}
@@ -174,9 +183,9 @@ bool Player::Update(float dt)
 			}
 			lastDirection = false;
 
-			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 3))
 			{
-				currentGorilaWalk = 0;
+				currentGorilaWalk = -1;
 			}
 		}
 
@@ -184,7 +193,7 @@ bool Player::Update(float dt)
 		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)&& (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 		{
 			RestartGorilaIdle();
-			if (lastTime + 300 > currentTime)
+			if ((lastTime + 300 > currentTime)&&(currentGorilaWalk>=0))
 			{
 				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
 			}
@@ -194,11 +203,12 @@ bool Player::Update(float dt)
 				lastTime = currentTime;
 
 			}
+			
 			lastDirection = true;
 
-			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 3))
 			{
-				currentGorilaWalk = 0;
+				currentGorilaWalk = -1;
 			}
 
 		}
@@ -286,4 +296,5 @@ bool Player::SaveState(pugi::xml_node& data) const
 	data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
 	return true;
 }
+
 

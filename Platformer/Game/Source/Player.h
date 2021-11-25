@@ -5,7 +5,7 @@
 #include "Physics.h"
 #include <math.h>
 #include "SDL/include/SDL.h"
-
+#include "Render.h"
 #include "Animation.h"
 
 class Player : public Module
@@ -55,7 +55,7 @@ public:
 	Animation* currentAnimation = nullptr;
 	void RestartGorilaIdle()
 	{
-		currentGorilaIdle = 0;
+		currentGorilaIdle = -1;
 	}
 	
 	//void Player::SetAnimation(Animation &toChange)
@@ -65,6 +65,46 @@ public:
 
 private:
 
+	void HitAnimation()
+	{
+		if (currentGorilaHit < 2)
+		{
+			if (!lastDirection)
+			{
+				if (lastTime + 200 > currentTime)
+				{
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				}
+				else
+				{
+					currentGorilaHit++;
+					lastTime = currentTime;
+
+				}
+
+			}
+			else
+			{
+				if (lastTime + 200 > currentTime)
+				{
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+				}
+				else
+				{
+					currentGorilaHit++;
+					lastTime = currentTime;
+
+				}
+			}
+
+		}
+		else
+		{
+			currentGorilaHit = -1;
+			playerHit = false;
+		}
+		
+	}
 	bool goLeft, goRight;
 
 	float startPosX;
@@ -85,11 +125,12 @@ private:
 	SDL_Rect r_gorilaIdle[5];
 	SDL_Rect r_gorilaJump[4];
 	SDL_Rect r_gorilaPunch[2];
-	int currentGorilaWalk = 0;
-	int currentGorilaIdle = 0;
-	int currentGorilaJump = 0;
+	int currentGorilaWalk = -1;
+	int currentGorilaIdle = -1;
+	int currentGorilaJump = -1;
+	int currentGorilaHit = -1;
 	bool lastDirection=true;
 	bool characterWalking = false;
-	bool inAir = false;
-	
+	bool onAir = false;
+	bool playerHit = false;
 };
