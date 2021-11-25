@@ -159,7 +159,7 @@ bool Player::Update(float dt)
 	LOG("current time %i", currentTime);
 	if (!inAir)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
 		{
 			RestartGorilaIdle();
 			if (lastTime + 300 > currentTime)
@@ -181,7 +181,7 @@ bool Player::Update(float dt)
 		}
 
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)&& (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 		{
 			RestartGorilaIdle();
 			if (lastTime + 300 > currentTime)
@@ -201,6 +201,10 @@ bool Player::Update(float dt)
 				currentGorilaWalk = 0;
 			}
 
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT))
+		{
+			characterWalking = false;
 		}
 		if (!characterWalking)
 		{
