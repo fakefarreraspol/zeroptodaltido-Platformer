@@ -80,6 +80,7 @@ private:
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
 	SDL_Texture* gorila;
+	SDL_Texture* sleep;
 	SDL_Rect r_gorilaWalk[4];
 	SDL_Rect r_gorilaIdle[5];
 	SDL_Rect r_gorilaJump[4];

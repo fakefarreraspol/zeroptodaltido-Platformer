@@ -27,6 +27,7 @@ bool Player::Start()
 {
 	//textures
 	gorila = app->tex->Load("Assets/textures/gorila.png");
+	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
 	r_gorilaWalk[0] = { 4, 4, 62, 60};
 	r_gorilaWalk[1] = {80,4,72,60};
 	r_gorilaWalk[2] = {166,4,62,60};
@@ -219,6 +220,7 @@ bool Player::Update(float dt)
 					else
 					{
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-19*2 , METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4 );
 					}
 
 
@@ -231,6 +233,7 @@ bool Player::Update(float dt)
 				if (lastTime + 1000 > currentTime)
 				{
 					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
+					
 				}
 				else
 				{
@@ -242,6 +245,7 @@ bool Player::Update(float dt)
 					else
 					{
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
+						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)+10, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4);
 					}
 
 
