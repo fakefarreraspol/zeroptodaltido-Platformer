@@ -47,7 +47,7 @@ bool Player::Start()
 	r_gorilaIdle[4] = { 622,0,104,64};
 	//player stats
 	startPosX = 48 * 4;
-	startPosY = 48 * 27;
+	startPosY = 48 * 22;
 	speed = { 7.f,0 };
 	jumpForce = { 0,-25.f };
 
@@ -119,7 +119,7 @@ bool Player::Update(float dt)
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
 	else characterWalking = false;
 
-
+	
 	/*if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
 		inAir = true;
