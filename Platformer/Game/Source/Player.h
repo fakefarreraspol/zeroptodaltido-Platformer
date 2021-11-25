@@ -57,6 +57,7 @@ public:
 	{
 		currentGorilaIdle = 0;
 	}
+	
 	//void Player::SetAnimation(Animation &toChange)
 	//{
 		
@@ -70,6 +71,7 @@ private:
 	float startPosY;
 	int currentTime = 0;
 	int lastTime = 0;
+	int airTime = 0;
 	float x, y;
 	b2Vec2 speed;
 	float maxXspeed;
@@ -84,6 +86,9 @@ private:
 	SDL_Rect r_gorilaPunch[2];
 	int currentGorilaWalk = 0;
 	int currentGorilaIdle = 0;
+	int currentGorilaJump = 0;
 	bool lastDirection=true;
 	bool characterWalking = false;
+	bool inAir = false;
+	
 };

@@ -120,103 +120,139 @@ bool Player::Update(float dt)
 	else characterWalking = false;
 
 
-	
-
-
-	
-
-	LOG("current time %i", currentTime);
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	/*if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		RestartGorilaIdle();
-		if (lastTime + 300 > currentTime)
+		inAir = true;
+		airTime = currentTime + 1000;
+		if (airTime > currentTime)
 		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[currentGorilaWalk]);
-		}
-		else
-		{
-			currentGorilaWalk++;
-			lastTime = currentTime;
-
-		}
-		lastDirection = false;
-
-		if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
-		{
-			currentGorilaWalk = 0;
-		}
-	}
-
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		RestartGorilaIdle();
-		if (lastTime + 300>currentTime)
-		{
-			app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-20*2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
-		}
-		else
-		{
-			currentGorilaWalk++;
-			lastTime = currentTime;
-			
-		}
-		lastDirection = true;
-		
-		if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
-		{
-			currentGorilaWalk = 0;
-		}
-		
-	}
-	if(!characterWalking)
-	{
-		if (lastDirection)
-		{
-			if (lastTime + 1000 > currentTime)
+			if (lastTime + 200 > currentTime)
 			{
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
-			}
-			else
-			{
-				if (currentGorilaIdle < 4)
+				if (!lastDirection)
 				{
-					currentGorilaIdle++;
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
+				}
+				else app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump], SDL_FLIP_HORIZONTAL);
+			}
+			else 
+			{
+				if (currentGorilaJump < 4)
+				{
+					currentGorilaJump++;
 					lastTime = currentTime;
 				}
 				else
+				{
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
+				}
+			}
+		}
+		else
+		{
+			inAir = false;
+		}
+		
+		
+	}*/
+	
+	LOG("current time %i", currentTime);
+	if (!inAir)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			RestartGorilaIdle();
+			if (lastTime + 300 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk]);
+			}
+			else
+			{
+				currentGorilaWalk++;
+				lastTime = currentTime;
+
+			}
+			lastDirection = false;
+
+			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+			{
+				currentGorilaWalk = 0;
+			}
+		}
+
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			RestartGorilaIdle();
+			if (lastTime + 300 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
+			}
+			else
+			{
+				currentGorilaWalk++;
+				lastTime = currentTime;
+
+			}
+			lastDirection = true;
+
+			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+			{
+				currentGorilaWalk = 0;
+			}
+
+		}
+		if (!characterWalking)
+		{
+			if (lastDirection)
+			{
+				if (lastTime + 1000 > currentTime)
 				{
 					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
 				}
-				
+				else
+				{
+					if (currentGorilaIdle < 4)
+					{
+						currentGorilaIdle++;
+						lastTime = currentTime;
+					}
+					else
+					{
+						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+					}
+
+
+				}
+
 
 			}
-			
-			
-		}
-		else if(!lastDirection)
-		{
-			if (lastTime + 1000 > currentTime)
+			else if (!lastDirection)
 			{
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
-			}
-			else
-			{
-				if (currentGorilaIdle < 4)
-				{
-					currentGorilaIdle++;
-					lastTime = currentTime;
-				}
-				else
+				if (lastTime + 1000 > currentTime)
 				{
 					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
 				}
+				else
+				{
+					if (currentGorilaIdle < 4)
+					{
+						currentGorilaIdle++;
+						lastTime = currentTime;
+					}
+					else
+					{
+						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
+					}
 
 
+				}
 			}
 		}
+
 	}
+
 	
+
 	
 
 	return true;
