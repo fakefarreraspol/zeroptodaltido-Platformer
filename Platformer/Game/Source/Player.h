@@ -65,7 +65,9 @@ public:
 
 private:
 
+
 	void HitAnimation();
+
 	bool goLeft, goRight;
 
 	float startPosX;
@@ -80,7 +82,9 @@ private:
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
+	PhysBody* BananaBox;
 	SDL_Texture* gorila;
+	SDL_Texture* throwBanana;
 	SDL_Texture* sleep;
 	SDL_Rect r_gorilaWalk[4];
 	SDL_Rect r_gorilaIdle[5];
@@ -91,6 +95,7 @@ private:
 	int currentGorilaJump = -1;
 	int currentGorilaHit = -1;
 	bool lastDirection=true;
+	bool bananaOnMap = false;
 	bool characterWalking = false;
 	bool onAir = false;
 	bool playerHit = false;
