@@ -91,8 +91,23 @@ bool Player::Update(float dt)
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
-	if (bananaOnMap) app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x)-15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y)-25, NULL, SDL_FLIP_HORIZONTAL);;
-	
+	if (bananaOnMap)
+	{
+		app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
+		
+		if (lastBananaDirection)
+		{
+			
+			b2Vec2 bananaMovement{ 12, 0 };
+			BananaBox->body->SetLinearVelocity(bananaMovement);
+		}
+		else
+		{
+			b2Vec2 bananaMovement{ -12, 0 };
+			BananaBox->body->SetLinearVelocity(bananaMovement);
+		}
+		
+	}
 	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
 	ColHitbox->body->SetLinearVelocity(movement);
 

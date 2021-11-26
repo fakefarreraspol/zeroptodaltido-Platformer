@@ -102,10 +102,14 @@ private:
 		{
 			if (!lastDirection) {
 				BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
-				
+				lastBananaDirection = false;
 			}
-			else BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
-		
+			else
+			{
+				BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+				lastBananaDirection = true;
+			}
+			BananaBox->body->SetType(b2_kinematicBody);
 			currentGorilaHit = -1;
 			bananaOnMap = true;
 			playerHit = false;
@@ -143,4 +147,5 @@ private:
 	bool characterWalking = false;
 	bool onAir = false;
 	bool playerHit = false;
+	bool lastBananaDirection = true;
 };
