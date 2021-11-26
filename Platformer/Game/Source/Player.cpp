@@ -56,6 +56,7 @@ bool Player::Start()
 	ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
 	
 	
+	
 
 	int x_ = (int)x;
 	int y_ = (int)y;
@@ -92,7 +93,12 @@ bool Player::Update(float dt)
 
 
 	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
-	ColHitbox->body->SetLinearVelocity(movement);
+	if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
+	else {
+		b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
+		ColHitbox->body->SetLinearVelocity(v);
+
+	}
 
 	b2Body* ground;
 	if (ColHitbox->body->GetContactList() != nullptr)
@@ -315,3 +321,45 @@ bool Player::SaveState(pugi::xml_node& data) const
 }
 
 
+void Player::HitAnimation()
+{
+	if (currentGorilaHit < 2)
+	{
+		if (!lastDirection)
+		{
+			if (lastTime + 200 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+			}
+			else
+			{
+				currentGorilaHit++;
+				lastTime = currentTime;
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+
+			}
+
+		}
+		else
+		{
+			if (lastTime + 200 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+			}
+			else
+			{
+				currentGorilaHit++;
+				lastTime = currentTime;
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+
+			}
+		}
+
+	}
+	else
+	{
+		currentGorilaHit = -1;
+		playerHit = false;
+	}
+
+}

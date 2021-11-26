@@ -115,7 +115,7 @@ private:
 	float degtorad = 0.0174532925199432957f;
 	float radtodeg = 57.295779513082320876f;
 
-	float limitFrames = 60;
+	float limitFrames = 15;
 	float init;
 	float end;
 	float currentFPS;
