@@ -28,6 +28,7 @@ bool Player::Start()
 	//textures
 	gorila = app->tex->Load("Assets/textures/gorila.png");
 	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
+	throwBanana = app->tex->Load("Assets/textures/throw_banana.png");
 	r_gorilaWalk[0] = { 2, 4, 62, 60};
 	r_gorilaWalk[1] = {74,4,78,60};
 	r_gorilaWalk[2] = {166,4,62,60};

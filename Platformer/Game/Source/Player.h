@@ -100,6 +100,9 @@ private:
 		}
 		else
 		{
+			if (!lastDirection) BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			else BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			
 			currentGorilaHit = -1;
 			playerHit = false;
 		}
@@ -119,7 +122,9 @@ private:
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
+	PhysBody* BananaBox;
 	SDL_Texture* gorila;
+	SDL_Texture* throwBanana;
 	SDL_Texture* sleep;
 	SDL_Rect r_gorilaWalk[4];
 	SDL_Rect r_gorilaIdle[5];
