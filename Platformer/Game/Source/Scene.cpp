@@ -349,6 +349,18 @@ bool Scene::Update(float dt)
 	
 	app->win->SetTitle(title.GetString());
 
+	p2List_item<PhysBody*>* c = app->player->getBananasThrown().getFirst();
+	//while (c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//
+	//
+	//	app->render->DrawTexture(app->player->getBananaThrowTexture(), x / app->win->GetScale(), y / app->win->GetScale(), NULL);
+	//
+	//	c = c->next;
+	//}
+
 	return true;
 }
 
@@ -357,7 +369,12 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	
+
+
+	
+
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;

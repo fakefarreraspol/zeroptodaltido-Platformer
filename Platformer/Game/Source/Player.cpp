@@ -93,7 +93,7 @@ bool Player::Update(float dt)
 
 	if (bananaOnMap)
 	{
-		app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
+		//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
 		
 		if (lastBananaDirection)
 		{
@@ -245,6 +245,12 @@ bool Player::Update(float dt)
 		//	characterWalking = false;
 		//}
 
+		
+
+
+
+
+
 		int gorilaSleepFrameSpeed = 2000;
 
 		if (!characterWalking)
@@ -332,4 +338,57 @@ bool Player::SaveState(pugi::xml_node& data) const
 	return true;
 }
 
+void Player::HitAnimation()
+{
+	if (currentGorilaHit < 2)
+	{
+		if (!lastDirection)
+		{
+			if (lastTime + 200 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+			}
+			else
+			{
+				currentGorilaHit++;
+				lastTime = currentTime;
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
 
+			}
+
+		}
+		else
+		{
+			if (lastTime + 200 > currentTime)
+			{
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+			}
+			else
+			{
+				currentGorilaHit++;
+				lastTime = currentTime;
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+
+			}
+		}
+
+	}
+	else
+	{
+		if (!lastDirection) {
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			lastBananaDirection = false;
+		}
+		else
+		{
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			lastBananaDirection = true;
+		}
+		BananaBox->body->SetType(b2_kinematicBody);
+		bananasThrown.add(BananaBox);
+		currentGorilaHit = -1;
+		bananaOnMap = true;
+		playerHit = false;
+	}
+
+}

@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "p2Point.h"
+#include "p2List.h"
 #include "App.h"
 #include "Physics.h"
 #include <math.h>
@@ -63,59 +64,19 @@ public:
 		
 	//}
 
+	p2List<PhysBody*> getBananasThrown()
+	{
+		return bananasThrown;
+	}
+
+	SDL_Texture* getBananaThrowTexture()
+	{
+		return throwBanana;
+	}
 private:
 
-	void HitAnimation()
-	{
-		if (currentGorilaHit < 2)
-		{
-			if (!lastDirection)
-			{
-				if (lastTime + 200 > currentTime)
-				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
-				}
-				else
-				{
-					currentGorilaHit++;
-					lastTime = currentTime;
-
-				}
-
-			}
-			else
-			{
-				if (lastTime + 200 > currentTime)
-				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
-				}
-				else
-				{
-					currentGorilaHit++;
-					lastTime = currentTime;
-
-				}
-			}
-
-		}
-		else
-		{
-			if (!lastDirection) {
-				BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
-				lastBananaDirection = false;
-			}
-			else
-			{
-				BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
-				lastBananaDirection = true;
-			}
-			BananaBox->body->SetType(b2_kinematicBody);
-			currentGorilaHit = -1;
-			bananaOnMap = true;
-			playerHit = false;
-		}
-		
-	}
+	void HitAnimation();
+	p2List<PhysBody*> bananasThrown;
 	bool goLeft, goRight;
 
 	float startPosX;
