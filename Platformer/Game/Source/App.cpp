@@ -148,6 +148,16 @@ bool App::Update()
 	long elapsedTime = (float)(end - init);
 	(float)SDL_GetPerformanceFrequency();
 
+	if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		limitFrames /= 2;
+	}
+	if (input->GetKey(SDL_SCANCODE_L) == KEY_UP)
+	{
+		limitFrames *= 2;
+	}
+
+
 	float frameSpeed = 1000 / limitFrames;
 	currentFPS = 1000.0f / elapsedTime;
 	//LOG("Current FPS: %f", currentFPS);

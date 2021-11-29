@@ -8,6 +8,7 @@
 #include "Physics.h"
 #include "Textures.h"
 #include"Render.h"
+#include "Window.h"
 
 Player::Player() : Module()
 {
@@ -247,7 +248,7 @@ bool Player::Update(float dt)
 
 		
 
-
+		
 
 
 
@@ -310,7 +311,17 @@ bool Player::Update(float dt)
 
 	}
 
-	
+	p2List_item<PhysBody*>* c = bananasThrown.getFirst();
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+
+
+		app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+
+		c = c->next;
+	}
 
 	
 
@@ -340,19 +351,21 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 void Player::HitAnimation()
 {
+	LOG("true");
+	int dist = 24;
 	if (currentGorilaHit < 2)
 	{
 		if (!lastDirection)
 		{
 			if (lastTime + 200 > currentTime)
 			{
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
 			}
 			else
 			{
 				currentGorilaHit++;
 				lastTime = currentTime;
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
 
 			}
 
