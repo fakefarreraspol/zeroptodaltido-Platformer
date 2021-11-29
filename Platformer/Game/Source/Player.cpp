@@ -9,6 +9,7 @@
 #include "Textures.h"
 #include"Render.h"
 #include "Window.h"
+#include "Audio.h";
 
 Player::Player() : Module()
 {
@@ -26,6 +27,8 @@ bool Player::Awake()
 // Load assets
 bool Player::Start()
 {
+	playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
+	bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
 	//textures
 	gorila = app->tex->Load("Assets/textures/gorila.png");
 	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
@@ -91,8 +94,8 @@ bool Player::Update(float dt)
 
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
-
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	LOG("player Y %2.2f", ColHitbox->body->GetPosition().y);
+	if ((app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN))
 	{
 		RestartPlayer();
 
@@ -191,6 +194,7 @@ bool Player::Update(float dt)
 	{
 		HitAnimation();
 		
+		
 	}
 	LOG("current time %i", currentTime);
 
@@ -202,9 +206,10 @@ bool Player::Update(float dt)
 			playerHP = playerHP-50;
 		}
 
-		if (playerHP <= 0)
+		if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
 		{
 			PlayerDeath();
+			app->audio->PlayFx(playerDeath);
 			app->LoadGameRequest();
 		}
 
@@ -415,6 +420,8 @@ void Player::HitAnimation()
 		}
 		BananaBox->body->SetType(b2_kinematicBody);
 		bananasThrown.add(BananaBox);
+		app->audio->PlayFx(bananaThrow);
+		
 		currentGorilaHit = -1;
 		bananaOnMap = true;
 		playerHit = false;
