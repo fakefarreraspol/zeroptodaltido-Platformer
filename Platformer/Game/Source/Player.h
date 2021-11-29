@@ -73,6 +73,11 @@ public:
 	{
 		return throwBanana;
 	}
+	void PlayerDeath()
+	{
+		playerLifes--;
+		playerHP = 100;
+	}
 private:
 
 	void HitAnimation();
@@ -103,6 +108,8 @@ private:
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
 	int currentGorilaHit = -1;
+	int playerHP = 100;
+	int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;
 	bool characterWalking = false;
