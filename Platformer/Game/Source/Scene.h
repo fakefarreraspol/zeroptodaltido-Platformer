@@ -38,17 +38,36 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	SDL_Texture* bTexture = nullptr;
-
+	void createMushroom(int x, int y, int size)
+	{
+		startMushroom temp;
+		temp.x = x;
+		temp.y = y;
+		temp.body = app->physics->CreateCircle(x, y, size);
+		mushrooms.add(EnemyMushroomHitbox);
+	}
 	float playerX = 0.0f;
 	float playerY = 0.0f;
 	bool freeCam = false;
 private:
 
+	p2List<PhysBody*> mushrooms;
+
 	int marginX;
 	int marginY;
-
+	
+	struct startMushroom
+	{
+		PhysBody* body;
+		int x;
+		int y;
+	};
+	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
 	SDL_Texture* character = nullptr;
+	SDL_Texture* mushroom = nullptr;
+	SDL_Rect r_mushroomIdle[9];
+	SDL_Rect r_mushroomWalk[4];
 	p2List<PhysBody*> trespasableElements;
 
 	SDL_Rect r_characterRun[7];

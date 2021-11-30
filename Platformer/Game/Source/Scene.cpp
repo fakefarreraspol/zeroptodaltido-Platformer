@@ -178,6 +178,7 @@ bool Scene::Start()
 
 	}
 	character = app->tex->Load("Assets/textures/adventurer.png");
+/*
 	r_characterRun[0]= { 0,37, 50, 37*2 };
 	r_characterRun[1] = { 50,37, 100, 37 * 2 };
 	r_characterRun[2] = { 100,37, 150, 37 * 2 };
@@ -192,10 +193,19 @@ bool Scene::Start()
 	r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
 	r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 	r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
-
+	r_mushroomWalk[0] = { 0,0,48,48 };
+	r_mushroomWalk[1] = { 48,0,48,48 };
+	r_mushroomWalk[2] = { 48*2,0,48,48 };
+	r_mushroomWalk[3] = { 48*3,0,48,48 };
+	*/
+//Mushroom 01
+	startMushroom Mushroom;
+	Mushroom.x = 48 * 22;
+	Mushroom.y = 48*19;
+	createMushroom(48 * 22, 48 * 19,40);
 	marginX = 5;
 	marginX = 5;
-
+	
 	return true;
 }
 
