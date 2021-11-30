@@ -93,6 +93,12 @@ bool Player::Update(float dt)
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		RestartPlayer();
+
+	}
+
 	if (bananaOnMap)
 	{
 		//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
@@ -132,6 +138,7 @@ bool Player::Update(float dt)
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
+				RestartGorilaIdle();
 				b2Vec2 yVel = { ColHitbox->body->GetLinearVelocity().y,0 };
 				ColHitbox->body->SetLinearVelocity(yVel);
 				ColHitbox->body->ApplyLinearImpulse(jumpForce, ColHitbox->body->GetPosition(), true);
@@ -199,6 +206,18 @@ bool Player::Update(float dt)
 	int gorilaWalkFrameSpeed = 180;
 	if ((!onAir)&& (!playerHit))
 	{
+
+		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
+		{
+			playerHP = playerHP - 50;
+		}
+
+		if (playerHP <= 0)
+		{
+			PlayerDeath();
+			app->LoadGameRequest();
+		}
+
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
 		{
 			
@@ -354,6 +373,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 void Player::HitAnimation()
 {
+	RestartGorilaIdle();
 	int dist = 48;
 	if (currentGorilaHit < 2)
 	{

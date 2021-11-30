@@ -59,10 +59,22 @@ public:
 		currentGorilaIdle = 0;
 	}
 	
-	//void Player::SetAnimation(Animation &toChange)
-	//{
-		
-	//}
+	void PlayerDeath()
+	{
+		playerLifes--;
+		playerHP = 100;
+	}
+
+	void RestartPlayer()
+	{
+		app->render->camera.x = 0;
+		app->render->camera.y = -48 * 14;
+
+		b2Vec2 v = { PIXEL_TO_METERS(gorilaStartX), PIXEL_TO_METERS(gorilaStartY) };
+		ColHitbox->body->SetTransform(v, 0);
+		playerHP = 100;
+		playerLifes = 3;
+	}
 
 private:
 
@@ -81,6 +93,9 @@ private:
 	float maxXspeed;
 	b2Vec2 jumpForce;
 
+	int gorilaStartX = 48 * 4;
+	int gorilaStartY = 48 * 22;
+
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
 	PhysBody* BananaBox;
@@ -95,6 +110,8 @@ private:
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
 	int currentGorilaHit = 0;
+	int playerHP = 100;
+	int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;
 	bool characterWalking = false;
