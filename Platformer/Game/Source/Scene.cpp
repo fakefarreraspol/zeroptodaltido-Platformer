@@ -192,10 +192,14 @@ bool Scene::Start()
 	r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
 	r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 	r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
+//Mushroom 01
+	startMushroom Mushroom;
+	Mushroom.x = 48 * 22;
+	Mushroom.y = 48*19;
 
 	marginX = 5;
 	marginX = 5;
-
+	EnemyMushroomHitbox = app->physics->CreateCircle(Mushroom.x, Mushroom.y, 23);
 	return true;
 }
 

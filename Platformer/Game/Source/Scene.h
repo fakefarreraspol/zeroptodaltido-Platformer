@@ -46,9 +46,17 @@ private:
 
 	int marginX;
 	int marginY;
-
+	struct startMushroom
+	{
+		int x;
+		int y;
+	};
+	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
 	SDL_Texture* character = nullptr;
+	SDL_Texture* mushroom = nullptr;
+	SDL_Rect r_mushroomIdle[9];
+	
 	p2List<PhysBody*> trespasableElements;
 
 	SDL_Rect r_characterRun[7];
