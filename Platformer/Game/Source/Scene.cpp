@@ -89,7 +89,7 @@ bool Scene::Start()
 
 			case 22:
 
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y + 48, leftSlope_45, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x + 48, screenPos.y, leftSlope_45, 6);
 				temp->body->SetFixedRotation(true);
 				temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
 				break;
@@ -133,20 +133,20 @@ bool Scene::Start()
 
 			case 28:
 
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_3, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x + 48, screenPos.y + 16*5, rightSlope_30_1, 6);
 				temp->body->SetFixedRotation(true);
-				//temp->body->SetTransform(temp->body->GetPosition(), 90.f * app->DEGTORAD());
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
 				break;
 			case 29:
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_2, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x + 48, screenPos.y + 16 * 3, rightSlope_30_2, 6);
 				temp->body->SetFixedRotation(true);
-				//temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
 
 				break;
 			case 30:
-				temp = app->physics->CreateStaticChain(screenPos.x, screenPos.y , leftSlope_30_1, 6);
+				temp = app->physics->CreateStaticChain(screenPos.x + 48, screenPos.y + 16, rightSlope_30_3, 6);
 				temp->body->SetFixedRotation(true);
-				//temp->body->SetTransform(temp->body->GetPosition(), -90.f * app->DEGTORAD());
+				temp->body->SetTransform(temp->body->GetPosition(), 180.f * app->DEGTORAD());
 
 				break;
 			case 31:
@@ -210,7 +210,7 @@ bool Scene::Update(float dt)
 {
 	
 	
-	int cameraSpeed = 3;
+	int cameraSpeed = 10;
 	
 	
 	uint screnWidth, screenHeight;
@@ -349,6 +349,8 @@ bool Scene::Update(float dt)
 	
 	app->win->SetTitle(title.GetString());
 
+	
+
 	return true;
 }
 
@@ -357,7 +359,12 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	
+
+
+	
+
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;
