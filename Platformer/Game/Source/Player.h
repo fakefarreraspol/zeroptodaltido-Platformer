@@ -94,9 +94,14 @@ private:
 	b2Vec2 speed;
 	float maxXspeed;
 	b2Vec2 jumpForce;
+
 	const int gorilaStartX = 48 * 4;
 	const int gorilaStartY = 48 * 22;
 	
+
+	int gorilaStartX = 48 * 4;
+	int gorilaStartY = 48 * 22;
+
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
 	PhysBody* BananaBox;
@@ -111,8 +116,8 @@ private:
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
 	int currentGorilaHit = -1;
-	unsigned int playerHP = 100;
-	unsigned int playerLifes = 3;
+	int playerHP = 100;
+	int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;
 	bool characterWalking = false;

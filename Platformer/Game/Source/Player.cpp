@@ -9,6 +9,9 @@
 #include "Textures.h"
 #include"Render.h"
 #include "Audio.h"
+#include "Window.h"
+
+
 Player::Player() : Module()
 {
 	name.Create("player");	
@@ -25,8 +28,6 @@ bool Player::Awake()
 // Load assets
 bool Player::Start()
 {
-	playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
-	bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
 	//textures
 	
 	gorila = app->tex->Load("Assets/textures/gorila.png");
@@ -95,6 +96,7 @@ bool Player::Update(float dt)
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
+
 	if (bananaOnMap) app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x)-15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y)-25, NULL, SDL_FLIP_HORIZONTAL);;
 	
 	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
@@ -102,6 +104,11 @@ bool Player::Update(float dt)
 	else {
 		b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
 		ColHitbox->body->SetLinearVelocity(v);
+
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		RestartPlayer();
+
 
 	}
 	if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
@@ -199,7 +206,7 @@ bool Player::Update(float dt)
 			playerHP = playerHP - 50;
 		}
 
-		if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
+		if (playerHP <= 0)
 		{
 			PlayerDeath();
 			app->LoadGameRequest();
@@ -385,6 +392,18 @@ void Player::HitAnimation()
 	}
 	else
 	{
+
+		if (!lastDirection) {
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			lastBananaDirection = false;
+		}
+		else
+		{
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			lastBananaDirection = true;
+		}
+		BananaBox->body->SetType(b2_kinematicBody);
+		bananasThrown.add(BananaBox);
 		currentGorilaHit = -1;
 		app->audio->PlayFx(bananaThrow);
 		playerHit = false;
