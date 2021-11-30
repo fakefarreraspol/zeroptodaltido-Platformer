@@ -8,9 +8,7 @@
 #include "Physics.h"
 #include "Textures.h"
 #include"Render.h"
-#include "Audio.h"
 #include "Window.h"
-
 
 Player::Player() : Module()
 {
@@ -29,7 +27,6 @@ bool Player::Awake()
 bool Player::Start()
 {
 	//textures
-	
 	gorila = app->tex->Load("Assets/textures/gorila.png");
 	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
 	throwBanana = app->tex->Load("Assets/textures/throw_banana.png");
@@ -96,8 +93,23 @@ bool Player::Update(float dt)
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
+	if (bananaOnMap)
+	{
+		//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
 
-	if (bananaOnMap) app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x)-15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y)-25, NULL, SDL_FLIP_HORIZONTAL);;
+		if (lastBananaDirection)
+		{
+
+			b2Vec2 bananaMovement{ 12, 0 };
+			BananaBox->body->SetLinearVelocity(bananaMovement);
+		}
+		else
+		{
+			b2Vec2 bananaMovement{ -12, 0 };
+			BananaBox->body->SetLinearVelocity(bananaMovement);
+		}
+
+	}
 	
 	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
 	if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
@@ -105,18 +117,8 @@ bool Player::Update(float dt)
 		b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
 		ColHitbox->body->SetLinearVelocity(v);
 
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		RestartPlayer();
-
-
 	}
-	if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
-	{
-		PlayerDeath();
-		app->audio->PlayFx(playerDeath);
-		app->LoadGameRequest();
-	}
+
 	b2Body* ground;
 	if (ColHitbox->body->GetContactList() != nullptr)
 	{
@@ -137,12 +139,8 @@ bool Player::Update(float dt)
 			}
 		}
 	}
-	LOG("player Y %2.2f", ColHitbox->body->GetPosition().y);
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		RestartPlayer();
 
-	}
+
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ^ (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
 	else
@@ -201,18 +199,6 @@ bool Player::Update(float dt)
 	int gorilaWalkFrameSpeed = 180;
 	if ((!onAir)&& (!playerHit))
 	{
-		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
-		{
-			playerHP = playerHP - 50;
-		}
-
-		if (playerHP <= 0)
-		{
-			PlayerDeath();
-			app->LoadGameRequest();
-			app->audio->PlayFx(playerDeath);
-		}
-
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
 		{
 			
@@ -282,14 +268,15 @@ bool Player::Update(float dt)
 				{
 					if (currentGorilaIdle < 4)
 					{
-						currentGorilaIdle++;
+						
 						lastTime = currentTime;
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+						currentGorilaIdle++;
 					}
 					else
 					{
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
-						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)-19*2 , METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4 );
+						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)- 19 * 2 , METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4 );
 					}
 
 
@@ -327,7 +314,17 @@ bool Player::Update(float dt)
 	}
 
 	
+	p2List_item<PhysBody*>* c = bananasThrown.getFirst();
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
 
+
+		app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+
+		c = c->next;
+	}
 	
 
 	return true;
@@ -357,19 +354,22 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 void Player::HitAnimation()
 {
+	int dist = 48;
 	if (currentGorilaHit < 2)
 	{
+		
 		if (!lastDirection)
 		{
 			if (lastTime + 200 > currentTime)
 			{
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				
 			}
 			else
 			{
 				currentGorilaHit++;
 				lastTime = currentTime;
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit]);
 
 			}
 
@@ -378,13 +378,13 @@ void Player::HitAnimation()
 		{
 			if (lastTime + 200 > currentTime)
 			{
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
 			}
 			else
 			{
 				currentGorilaHit++;
 				lastTime = currentTime;
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
+				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaPunch[currentGorilaHit], SDL_FLIP_HORIZONTAL);
 
 			}
 		}
@@ -392,20 +392,19 @@ void Player::HitAnimation()
 	}
 	else
 	{
-
 		if (!lastDirection) {
-			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
 			lastBananaDirection = false;
 		}
 		else
 		{
-			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 20 * 4, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
+			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
 			lastBananaDirection = true;
 		}
 		BananaBox->body->SetType(b2_kinematicBody);
 		bananasThrown.add(BananaBox);
-		currentGorilaHit = -1;
-		app->audio->PlayFx(bananaThrow);
+		currentGorilaHit = 0;
+		bananaOnMap = true;
 		playerHit = false;
 	}
 

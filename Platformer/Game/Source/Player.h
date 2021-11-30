@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "p2Point.h"
+#include "p2List.h"
 #include "App.h"
 #include "Physics.h"
 #include <math.h>
@@ -55,23 +56,9 @@ public:
 	Animation* currentAnimation = nullptr;
 	void RestartGorilaIdle()
 	{
-		currentGorilaIdle = -1;
+		currentGorilaIdle = 0;
 	}
-	void PlayerDeath()
-	{
-		playerLifes--;
-		playerHP = 100;
-	}
-	void RestartPlayer()
-	{
-		app->render->camera.x = 0;
-		app->render->camera.y = -48 * 14;
-
-		b2Vec2 v = { PIXEL_TO_METERS(gorilaStartX), PIXEL_TO_METERS(gorilaStartY) };
-		ColHitbox->body->SetTransform(v, 0);
-		playerHP = 100;
-		playerLifes = 3;
-	}
+	
 	//void Player::SetAnimation(Animation &toChange)
 	//{
 		
@@ -81,10 +68,9 @@ private:
 
 
 	void HitAnimation();
-
+	p2List<PhysBody*> bananasThrown;
 	bool goLeft, goRight;
-	uint bananaThrow = 0;
-	uint playerDeath = 0;
+
 	float startPosX;
 	float startPosY;
 	int currentTime = 0;
@@ -94,13 +80,6 @@ private:
 	b2Vec2 speed;
 	float maxXspeed;
 	b2Vec2 jumpForce;
-
-	const int gorilaStartX = 48 * 4;
-	const int gorilaStartY = 48 * 22;
-	
-
-	int gorilaStartX = 48 * 4;
-	int gorilaStartY = 48 * 22;
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
@@ -115,12 +94,11 @@ private:
 	int currentGorilaWalk = -1;
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
-	int currentGorilaHit = -1;
-	int playerHP = 100;
-	int playerLifes = 3;
+	int currentGorilaHit = 0;
 	bool lastDirection=true;
 	bool bananaOnMap = false;
 	bool characterWalking = false;
 	bool onAir = false;
 	bool playerHit = false;
+	bool lastBananaDirection = true;
 };
