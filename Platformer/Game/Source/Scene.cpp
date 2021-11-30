@@ -193,16 +193,15 @@ bool Scene::Start()
 	r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
 	r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 	r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
+	*/
 	r_mushroomWalk[0] = { 0,0,48,48 };
 	r_mushroomWalk[1] = { 48,0,48,48 };
 	r_mushroomWalk[2] = { 48*2,0,48,48 };
 	r_mushroomWalk[3] = { 48*3,0,48,48 };
-	*/
+	
 //Mushroom 01
-	startMushroom Mushroom;
-	Mushroom.x = 48 * 22;
-	Mushroom.y = 48*19;
-	createMushroom(48 * 22, 48 * 19,40);
+	mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
+	createMushroom(48 * 22, 48 * 19, 40);
 	marginX = 5;
 	marginX = 5;
 	
@@ -222,7 +221,67 @@ bool Scene::Update(float dt)
 	
 	int cameraSpeed = 10;
 	
-	
+	currentTime = SDL_GetTicks();
+
+	int mushroomIdleFrameSpeed = 500;
+
+	if (!isMushroomWalking)
+	{
+		EnemyMushroomHitbox = mushrooms.getFirst()->data;
+		if (lastMushroomDirection)
+		{
+			if (lastTime + mushroomIdleFrameSpeed > currentTime)
+			{
+				app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
+			}
+			else
+			{
+				if (currentMushroomIdle < 3)
+				{
+
+					lastTime = currentTime;
+					app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
+					currentMushroomIdle++;
+				}
+				else currentMushroomIdle = 0;
+
+
+			}
+
+
+		}
+		else if (!lastMushroomDirection)
+		{
+			if (lastTime + mushroomIdleFrameSpeed > currentTime)
+			{
+				app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
+
+			}
+			else
+			{
+				if (currentMushroomIdle < 3)
+				{
+					currentMushroomIdle++;
+					lastTime = currentTime;
+					app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
+
+				}
+				else currentMushroomIdle = 0;
+					
+				
+
+
+			}
+		}
+	}
+
+
+
+
+
+
+
+
 	uint screnWidth, screenHeight;
 	app->win->GetWindowSize(screnWidth, screenHeight);
 

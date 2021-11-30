@@ -44,7 +44,7 @@ public:
 		temp.x = x;
 		temp.y = y;
 		temp.body = app->physics->CreateCircle(x, y, size);
-		mushrooms.add(EnemyMushroomHitbox);
+		mushrooms.add(temp.body);
 	}
 	float playerX = 0.0f;
 	float playerY = 0.0f;
@@ -69,7 +69,12 @@ private:
 	SDL_Rect r_mushroomIdle[9];
 	SDL_Rect r_mushroomWalk[4];
 	p2List<PhysBody*> trespasableElements;
-
+	int currentTime = 0;
+	int lastTime = 0;
+	bool isMushroomWalking = false;
+	bool lastMushroomDirection = true;
+	unsigned int currentMushroomWalk = 0;
+	unsigned int currentMushroomIdle = 0;
 	SDL_Rect r_characterRun[7];
 	SDL_Rect r_characterJump[7];
 	int squareGround[44] = {
