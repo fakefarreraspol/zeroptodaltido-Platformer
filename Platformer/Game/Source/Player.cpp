@@ -90,8 +90,8 @@ bool Player::Update(float dt)
 	currentTime = SDL_GetTicks();
 	b2Vec2 pos = { x,y };
 
-	LOG("player X %f", ColHitbox->body->GetPosition().x);
-	LOG("player y %f", ColHitbox->body->GetPosition().y);
+	//LOG("player X %f", ColHitbox->body->GetPosition().x);
+	//LOG("player y %f", ColHitbox->body->GetPosition().y);
 	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
@@ -203,7 +203,7 @@ bool Player::Update(float dt)
 		HitAnimation();
 		
 	}
-	LOG("current time %i", currentTime);
+	//LOG("current time %i", currentTime);
 
 	int gorilaWalkFrameSpeed = 180;
 	if ((!onAir)&& (!playerHit))

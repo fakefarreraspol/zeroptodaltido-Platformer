@@ -158,10 +158,14 @@ bool App::Update()
 	}
 
 
-	float frameSpeed = 1000 / limitFrames;
-	currentFPS = 1000.0f / elapsedTime;
-	//LOG("Current FPS: %f", currentFPS);
+	currentFPS = limitFrames - (float)elapsedTime;
+	float frameSpeed = 1000 / currentFPS;
+	dt = 1.f / currentFPS;
+
+
+	LOG("Current FPS: %f", currentFPS);
 	//LOG("time left: %f", frameSpeed - elapsedTime);
+	
 	if ((frameSpeed - elapsedTime) > 0.0f)
 	{
 		SDL_Delay(fabs(floor((long)frameSpeed - elapsedTime)));
@@ -188,6 +192,8 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+
+
 }
 
 // ---------------------------------------------

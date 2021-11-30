@@ -353,13 +353,13 @@ bool Scene::Update(float dt)
 	}
 	
 	//app->render->camera.x -= cameraSpeed;
-	LOG("player x %f", playerX * 48);
+	//LOG("player x %f", playerX * 48);
 
 	
 	//LOG("player position %f", playerX);
 	//LOG("player y %f", playerY);
-	LOG("Camera position %i", app->render->camera.x);
-	LOG("difference: %f", (float)app->render->camera.x - playerX * 48);
+	//LOG("Camera position %i", app->render->camera.x);
+	//LOG("difference: %f", (float)app->render->camera.x - playerX * 48);
 
 	/*if ((playerX > 10)&& (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
 	{

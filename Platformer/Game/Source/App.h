@@ -103,7 +103,14 @@ public:
 	Physics* physics;
 	Player* player;
 
+	float DeltaTime()
+	{
+		return dt;
+	}
+
 private:
+
+	
 
 	int argc;
 	char** args;
