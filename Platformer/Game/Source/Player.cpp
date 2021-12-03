@@ -27,57 +27,61 @@ bool Player::Awake()
 // Load assets
 bool Player::Start()
 {
-	playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
-	bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
-	//textures
-	gorila = app->tex->Load("Assets/textures/gorila.png");
-	panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
-	gorilaFace = app->tex->Load("Assets/textures/gorila_face_icon.png");
-	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
-	throwBanana = app->tex->Load("Assets/textures/throw_banana.png");
-	mango = app->tex->Load("Assets/textures/mango.png");
-	r_gorilaWalk[0] = { 2, 4, 62, 60};
-	r_gorilaWalk[1] = {74,4,78,60};
-	r_gorilaWalk[2] = {166,4,62,60};
-	r_gorilaWalk[3] = {242,4,82,60};
-	
-	r_gorilaPunch[0] = { 4, 116, 72, 64};
-	r_gorilaPunch[1] = {92,116,86,72};
-	
-	r_gorilaJump[0] = {628,248,62,64};
-	r_gorilaJump[1] = {538,248,76,64};
-	r_gorilaJump[2] = {412,248,110,64};
-	r_gorilaJump[3] = { 344,236,54,76 };
+	if (app->scene->state == app->scene->GAMEPLAY)
+	{
+		playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
+		bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
+		//textures
+		gorila = app->tex->Load("Assets/textures/gorila.png");
+		panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
+		gorilaFace = app->tex->Load("Assets/textures/gorila_face_icon.png");
+		sleep = app->tex->Load("Assets/textures/mini_zzz.png");
+		throwBanana = app->tex->Load("Assets/textures/throw_banana.png");
+		mango = app->tex->Load("Assets/textures/mango.png");
+		r_gorilaWalk[0] = { 2, 4, 62, 60 };
+		r_gorilaWalk[1] = { 74,4,78,60 };
+		r_gorilaWalk[2] = { 166,4,62,60 };
+		r_gorilaWalk[3] = { 242,4,82,60 };
 
-	r_gorilaIdle[0] = { 348,0,60,64 };
-	r_gorilaIdle[1] = { 408,0,60,64 };
-	r_gorilaIdle[2] = { 471,0,60,64 };
-	r_gorilaIdle[3] = { 540,0,74,64 };
-	r_gorilaIdle[4] = { 622,0,104,64};
-	//player stats
-	startPosX = 48 * 4;
-	startPosY = 48 * 22;
-	speed = { 7.f,0 };
-	jumpForce = { 0,-25.f };
+		r_gorilaPunch[0] = { 4, 116, 72, 64 };
+		r_gorilaPunch[1] = { 92,116,86,72 };
 
+		r_gorilaJump[0] = { 628,248,62,64 };
+		r_gorilaJump[1] = { 538,248,76,64 };
+		r_gorilaJump[2] = { 412,248,110,64 };
+		r_gorilaJump[3] = { 344,236,54,76 };
+
+		r_gorilaIdle[0] = { 348,0,60,64 };
+		r_gorilaIdle[1] = { 408,0,60,64 };
+		r_gorilaIdle[2] = { 471,0,60,64 };
+		r_gorilaIdle[3] = { 540,0,74,64 };
+		r_gorilaIdle[4] = { 622,0,104,64 };
+		//player stats
+		startPosX = 48 * 4;
+		startPosY = 48 * 22;
+		speed = { 7.f,0 };
+		jumpForce = { 0,-25.f };
+
+
+		ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
+
+
+
+
+		int x_ = (int)x;
+		int y_ = (int)y;
+		ColHitbox->GetPosition(x_, y_);
+
+		//ColSensor = app->physics->CreateRectangle(x, y, 46, 50);
+		//ColSensor->body->GetFixtureList()->SetSensor(true);
+		//ColSensor->body->SetType(b2_kinematicBody);
+
+		goLeft = false;
+		goRight = false;
+
+		LOG("Loading player");
+	}
 	
-	ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
-	
-	
-	
-
-	int x_ = (int)x;
-	int y_ = (int)y;
-	ColHitbox->GetPosition(x_, y_);
-
-	//ColSensor = app->physics->CreateRectangle(x, y, 46, 50);
-	//ColSensor->body->GetFixtureList()->SetSensor(true);
-	//ColSensor->body->SetType(b2_kinematicBody);
-
-	goLeft = false;
-	goRight = false;
-
-	LOG("Loading player");
 	return true;
 }
 
@@ -92,277 +96,281 @@ bool Player::CleanUp()
 // Update: draw background
 bool Player::Update(float dt)
 {
-	//ColSensor->body->SetTransform(ColHitbox->body->GetPosition(), 0);
-	currentTime = SDL_GetTicks();
-	b2Vec2 pos = { x,y };
-
-	//LOG("player X %f", ColHitbox->body->GetPosition().x);
-	//LOG("player y %f", ColHitbox->body->GetPosition().y);
-	goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
-	goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
-
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	if (app->scene->state == app->scene->GAMEPLAY)
 	{
-		RestartPlayer();
+		//ColSensor->body->SetTransform(ColHitbox->body->GetPosition(), 0);
+		currentTime = SDL_GetTicks();
+		b2Vec2 pos = { x,y };
 
-	}
+		//LOG("player X %f", ColHitbox->body->GetPosition().x);
+		//LOG("player y %f", ColHitbox->body->GetPosition().y);
+		goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
+		goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
-	if (bananaOnMap)
-	{
-		//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
-
-		if (lastBananaDirection)
+		if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
+			RestartPlayer();
 
-			b2Vec2 bananaMovement{ 12, 0 };
-			BananaBox->body->SetLinearVelocity(bananaMovement);
-		}
-		else
-		{
-			b2Vec2 bananaMovement{ -12, 0 };
-			BananaBox->body->SetLinearVelocity(bananaMovement);
 		}
 
-	}
-
-	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
-	if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
-	else {
-		b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
-		ColHitbox->body->SetLinearVelocity(v);
-
-	}
-
-	b2Body* ground;
-	if (ColHitbox->body->GetContactList() != nullptr)
-	{
-		ground = ColHitbox->body->GetContactList()->contact->GetFixtureA()->GetBody();
-
-		if (ground != nullptr)
+		if (bananaOnMap)
 		{
+			//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
 
-			b2Vec2 xVel = { 0,ColHitbox->body->GetLinearVelocity().y };
-			if (!goLeft && !goRight) ColHitbox->body->SetLinearVelocity(xVel);
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (lastBananaDirection)
 			{
-				RestartGorilaIdle();
-				b2Vec2 yVel = { ColHitbox->body->GetLinearVelocity().y,0 };
-				ColHitbox->body->SetLinearVelocity(yVel);
-				ColHitbox->body->ApplyLinearImpulse(jumpForce, ColHitbox->body->GetPosition(), true);
-				ColHitbox->body->SetLinearDamping(0);
-			}
-		}
-	}
 
-
-
-	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ^ (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
-	else
-	{
-
-		characterWalking = false;
-	}
-
-	/*if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		inAir = true;
-		airTime = currentTime + 1000;
-		if (airTime > currentTime)
-		{
-			if (lastTime + 200 > currentTime)
-			{
-				if (!lastDirection)
-				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
-				}
-				else app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump], SDL_FLIP_HORIZONTAL);
+				b2Vec2 bananaMovement{ 12, 0 };
+				BananaBox->body->SetLinearVelocity(bananaMovement);
 			}
 			else
 			{
-				if (currentGorilaJump < 4)
+				b2Vec2 bananaMovement{ -12, 0 };
+				BananaBox->body->SetLinearVelocity(bananaMovement);
+			}
+
+		}
+
+		b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
+		if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
+		else {
+			b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
+			ColHitbox->body->SetLinearVelocity(v);
+
+		}
+
+		b2Body* ground;
+		if (ColHitbox->body->GetContactList() != nullptr)
+		{
+			ground = ColHitbox->body->GetContactList()->contact->GetFixtureA()->GetBody();
+
+			if (ground != nullptr)
+			{
+
+				b2Vec2 xVel = { 0,ColHitbox->body->GetLinearVelocity().y };
+				if (!goLeft && !goRight) ColHitbox->body->SetLinearVelocity(xVel);
+
+				if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 				{
-					currentGorilaJump++;
+					RestartGorilaIdle();
+					b2Vec2 yVel = { ColHitbox->body->GetLinearVelocity().y,0 };
+					ColHitbox->body->SetLinearVelocity(yVel);
+					ColHitbox->body->ApplyLinearImpulse(jumpForce, ColHitbox->body->GetPosition(), true);
+					ColHitbox->body->SetLinearDamping(0);
+				}
+			}
+		}
+
+
+
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ^ (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
+		else
+		{
+
+			characterWalking = false;
+		}
+
+		/*if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		{
+			inAir = true;
+			airTime = currentTime + 1000;
+			if (airTime > currentTime)
+			{
+				if (lastTime + 200 > currentTime)
+				{
+					if (!lastDirection)
+					{
+						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
+					}
+					else app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump], SDL_FLIP_HORIZONTAL);
+				}
+				else
+				{
+					if (currentGorilaJump < 4)
+					{
+						currentGorilaJump++;
+						lastTime = currentTime;
+					}
+					else
+					{
+						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
+					}
+				}
+			}
+			else
+			{
+				inAir = false;
+			}
+
+
+		}*/
+		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+		{
+			playerHit = true;
+
+
+		}
+		if (playerHit)
+		{
+			HitAnimation();
+
+		}
+		//LOG("current time %i", currentTime);
+
+		int gorilaWalkFrameSpeed = 180;
+		if ((!onAir) && (!playerHit))
+		{
+
+			if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
+			{
+				playerHP = playerHP - 50;
+			}
+
+			if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
+			{
+				PlayerDeath();
+				app->audio->PlayFx(playerDeath);
+				app->LoadGameRequest();
+			}
+
+			if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
+			{
+
+				if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
+				{
+					currentGorilaWalk++;
 					lastTime = currentTime;
 				}
+
+				if (currentGorilaWalk <= 3)
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk]);
 				else
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk - 1]);
+
+				lastDirection = false;
+
+				if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
 				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump]);
+					currentGorilaWalk = -1;
 				}
-			}
-		}
-		else
-		{
-			inAir = false;
-		}
-
-
-	}*/
-	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-	{
-		playerHit = true;
-
-
-	}
-	if (playerHit)
-	{
-		HitAnimation();
-
-	}
-	//LOG("current time %i", currentTime);
-
-	int gorilaWalkFrameSpeed = 180;
-	if ((!onAir) && (!playerHit))
-	{
-
-		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
-		{
-			playerHP = playerHP - 50;
-		}
-
-		if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
-		{
-			PlayerDeath();
-			app->audio->PlayFx(playerDeath);
-			app->LoadGameRequest();
-		}
-
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
-		{
-
-			if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
-			{
-				currentGorilaWalk++;
-				lastTime = currentTime;
+				RestartGorilaIdle();
 			}
 
-			if (currentGorilaWalk <= 3)
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk]);
-			else
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk - 1]);
 
-			lastDirection = false;
-
-			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
+			if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 			{
-				currentGorilaWalk = -1;
-			}
-			RestartGorilaIdle();
-		}
 
+				if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
 
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
-		{
-
-			if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
-
-			{
-				//app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
-				currentGorilaWalk++;
-				lastTime = currentTime;
-
-			}
-			if (currentGorilaWalk <= 3)
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 24 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
-			else
-				app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 24 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk - 1], SDL_FLIP_HORIZONTAL);
-
-			lastDirection = true;
-
-			if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
-			{
-				currentGorilaWalk = -1;
-			}
-			RestartGorilaIdle();
-		}
-
-		//if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT))
-		//{
-		//	characterWalking = false;
-		//}
-
-		int gorilaSleepFrameSpeed = 2000;
-
-		if (!characterWalking)
-		{
-
-			if (lastDirection)
-			{
-				if (lastTime + gorilaSleepFrameSpeed > currentTime)
 				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+					//app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
+					currentGorilaWalk++;
+					lastTime = currentTime;
+
 				}
+				if (currentGorilaWalk <= 3)
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 24 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
 				else
+					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 24 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk - 1], SDL_FLIP_HORIZONTAL);
+
+				lastDirection = true;
+
+				if ((currentGorilaWalk <= -1) || (currentGorilaWalk >= 4))
 				{
-					if (currentGorilaIdle < 4)
+					currentGorilaWalk = -1;
+				}
+				RestartGorilaIdle();
+			}
+
+			//if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT))
+			//{
+			//	characterWalking = false;
+			//}
+
+			int gorilaSleepFrameSpeed = 2000;
+
+			if (!characterWalking)
+			{
+
+				if (lastDirection)
+				{
+					if (lastTime + gorilaSleepFrameSpeed > currentTime)
 					{
-
-						lastTime = currentTime;
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
-						currentGorilaIdle++;
 					}
 					else
 					{
-						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
-						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 19 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
+						if (currentGorilaIdle < 4)
+						{
+
+							lastTime = currentTime;
+							app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+							currentGorilaIdle++;
+						}
+						else
+						{
+							app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
+							app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 19 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
+						}
+
+
 					}
 
 
 				}
-
-
-			}
-			else if (!lastDirection)
-			{
-				if (lastTime + gorilaSleepFrameSpeed > currentTime)
+				else if (!lastDirection)
 				{
-					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
-
-				}
-				else
-				{
-					if (currentGorilaIdle < 4)
+					if (lastTime + gorilaSleepFrameSpeed > currentTime)
 					{
-						currentGorilaIdle++;
-						lastTime = currentTime;
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
 
 					}
 					else
 					{
-						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
-						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 10, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
+						if (currentGorilaIdle < 4)
+						{
+							currentGorilaIdle++;
+							lastTime = currentTime;
+							app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
+
+						}
+						else
+						{
+							app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
+							app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 10, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
+						}
+
+
 					}
-
-
 				}
 			}
+
 		}
 
+
+		p2List_item<PhysBody*>* c = bananasThrown.getFirst();
+		while (c != NULL)
+		{
+			int x, y;
+			c->data->GetPosition(x, y);
+
+
+			app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+
+			c = c->next;
+		}
+
+		SDL_Rect panelRec = { 0,0,16,16 };
+		panelRec.w *= 16;
+		panelRec.h *= 5;
+		app->render->DrawTexture(panel, 0, 0, &panelRec, SDL_FLIP_NONE, 0);
+
+		//UI
+		app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
+		app->render->DrawTexture(gorilaFace, 10, 10, NULL, SDL_FLIP_NONE, 0);
+
 	}
-
-
-	p2List_item<PhysBody*>* c = bananasThrown.getFirst();
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-
-
-		app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
-
-		c = c->next;
-	}
-
-	SDL_Rect panelRec = { 0,0,16,16 };
-	panelRec.w *= 16;
-	panelRec.h *= 5;
-	app->render->DrawTexture(panel, 0, 0, &panelRec, SDL_FLIP_NONE, 0);
-
-	//UI
-	app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
-	app->render->DrawTexture(gorilaFace, 10, 10, NULL, SDL_FLIP_NONE, 0);
-
+	
 
 
 

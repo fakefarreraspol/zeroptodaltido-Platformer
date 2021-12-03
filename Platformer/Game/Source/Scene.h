@@ -56,7 +56,7 @@ public:
 		END
 	};
 
-	GameState state;
+	GameState state = INTRO;
 
 private:
 
