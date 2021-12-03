@@ -102,6 +102,9 @@ private:
 
 	int gorilaStartX = 48 * 4;
 	int gorilaStartY = 48 * 22;
+	
+	uint bananaThrow = 0;
+	uint playerDeath = 0;
 
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
@@ -120,8 +123,8 @@ private:
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
 	int currentGorilaHit = 0;
-	int playerHP = 100;
-	int playerLifes = 3;
+	unsigned int playerHP = 100;
+	unsigned int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;
 	bool characterWalking = false;
