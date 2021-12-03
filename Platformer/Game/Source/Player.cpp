@@ -28,8 +28,11 @@ bool Player::Start()
 {
 	//textures
 	gorila = app->tex->Load("Assets/textures/gorila.png");
+	panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
+	gorilaFace = app->tex->Load("Assets/textures/gorila_face_icon.png");
 	sleep = app->tex->Load("Assets/textures/mini_zzz.png");
 	throwBanana = app->tex->Load("Assets/textures/throw_banana.png");
+	mango = app->tex->Load("Assets/textures/mango.png");
 	r_gorilaWalk[0] = { 2, 4, 62, 60};
 	r_gorilaWalk[1] = {74,4,78,60};
 	r_gorilaWalk[2] = {166,4,62,60};
@@ -347,11 +350,17 @@ bool Player::Update(float dt)
 		c = c->next;
 	}
 
-	
-		
-	
-	
-	
+	SDL_Rect panelRec = { 0,0,16,16 };
+	panelRec.w *= 16;
+	panelRec.h *= 5;
+	app->render->DrawTexture(panel, 0, 0, &panelRec, SDL_FLIP_NONE, 0);
+
+	//UI
+	app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
+	app->render->DrawTexture(gorilaFace, 10, 10, NULL, SDL_FLIP_NONE, 0);
+
+
+
 
 	return true;
 }

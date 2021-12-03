@@ -106,7 +106,10 @@ private:
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
 	PhysBody* BananaBox;
+	SDL_Texture* mango;
+	SDL_Texture* panel;
 	SDL_Texture* gorila;
+	SDL_Texture* gorilaFace;
 	SDL_Texture* throwBanana;
 	SDL_Texture* sleep;
 	SDL_Rect r_gorilaWalk[4];

@@ -35,23 +35,13 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	state == INTRO;
+	//state == INTRO;
 	// L03: DONE: Load map
 	texBackground = app->tex->Load("Assets/maps/bg.png");
 	app->map->Load("platform_test.tmx");
 	jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
 	//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
-	app->audio->PlayFx(jungleMusic, 0);
-	//app->physics->CreateStaticChain(0, 0,		rightSlope_30_1, 6);
-	//app->physics->CreateStaticChain(48, 0,		rightSlope_30_2, 6);
-	//app->physics->CreateStaticChain(48 * 2, 0,	rightSlope_30_3, 6);
-	//app->physics->CreateStaticChain(48 * 3, 0,		leftSlope_30_1, 6);
-	//app->physics->CreateStaticChain(48 * 4, 0,		leftSlope_30_2, 6);
-	//app->physics->CreateStaticChain(48 * 5, 0,	leftSlope_30_3, 6);
-	//
-	//app->physics->CreateStaticChain(0, 48, rightSlope_45, 6);
-	//app->physics->CreateStaticChain(48, 48, leftSlope_45, 6);
-	
+	app->audio->PlayFx(jungleMusic, 0);	
 
 	for (int x = 0; x < app->map->mapData.maplayers.start->data->width; x++)
 	{
