@@ -35,6 +35,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	state == INTRO;
 	// L03: DONE: Load map
 	texBackground = app->tex->Load("Assets/maps/bg.png");
 	app->map->Load("platform_test.tmx");
@@ -178,6 +179,8 @@ bool Scene::Start()
 
 	}
 	character = app->tex->Load("Assets/textures/adventurer.png");
+	intro01 = app->tex->Load("Assets/maps/intro_1.png");
+	intro02 = app->tex->Load("Assets/maps/intro_2.png");
 /*
 	r_characterRun[0]= { 0,37, 50, 37*2 };
 	r_characterRun[1] = { 50,37, 100, 37 * 2 };
@@ -217,11 +220,10 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	
-	
-	int cameraSpeed = 10;
-	
 	currentTime = SDL_GetTicks();
+	int cameraSpeed = 10;
+
+
 
 	int mushroomIdleFrameSpeed = 500;
 
@@ -267,8 +269,8 @@ bool Scene::Update(float dt)
 
 				}
 				else currentMushroomIdle = 0;
-					
-				
+
+
 
 
 			}
@@ -291,10 +293,10 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->SaveGameRequest();
-	
+
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		if(!freeCam) freeCam = true;
+		if (!freeCam) freeCam = true;
 		else freeCam = false;
 	}
 	playerX = app->player->GetColHitbox()->body->GetPosition().x;
@@ -303,7 +305,7 @@ bool Scene::Update(float dt)
 	if (!freeCam)
 	{
 		//app->render->camera.x = -(playerX );
-		if ((playerY < 24)&& (playerY > 1))
+		if ((playerY < 24) && (playerY > 1))
 		{
 			app->render->camera.y = -(playerY * 30);
 		}
@@ -313,7 +315,7 @@ bool Scene::Update(float dt)
 		{
 			app->render->camera.x = -playerX * 48 * 1.042f + marginX * 48;
 		}
-		
+
 
 
 	}
@@ -351,11 +353,11 @@ bool Scene::Update(float dt)
 			}
 
 	}
-	
+
 	//app->render->camera.x -= cameraSpeed;
 	//LOG("player x %f", playerX * 48);
 
-	
+
 	//LOG("player position %f", playerX);
 	//LOG("player y %f", playerY);
 	//LOG("Camera position %i", app->render->camera.x);
@@ -365,7 +367,7 @@ bool Scene::Update(float dt)
 	{
 		app->render->camera.x -= 2;
 	}*/
-	
+
 
 	p2List_item <PhysBody*>* trespasableCounter = trespasableElements.getFirst();
 	while (trespasableCounter != nullptr)
@@ -374,10 +376,10 @@ bool Scene::Update(float dt)
 		if (trespasableCounter->data->body->GetContactList() != nullptr)
 		{
 			b2Body* playerHitbox = trespasableCounter->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
-			
-			
-			
-			
+
+
+
+
 			if (playerHitbox == app->player->GetColHitbox()->body &&
 				playerHitbox->GetPosition().y + PIXEL_TO_METERS(30) > trespasableCounter->data->body->GetPosition().y)
 			{
@@ -388,7 +390,7 @@ bool Scene::Update(float dt)
 			{
 				if (trespasableCounter->data->body->GetFixtureList()->IsSensor())
 				{
-					
+
 					trespasableCounter->data->body->GetFixtureList()->SetSensor(false);
 				}
 			}
@@ -407,17 +409,20 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->render->DrawTexture(texBackground, 0, 0, NULL, SDL_FLIP_NONE, 0.4f);
-	
+
 	app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->mapData.width, app->map->mapData.height,
-				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-				   app->map->mapData.tilesets.count());
-	
-	app->win->SetTitle(title.GetString());
+		app->map->mapData.width, app->map->mapData.height,
+		app->map->mapData.tileWidth, app->map->mapData.tileHeight,
+		app->map->mapData.tilesets.count());
 
+	app->win->SetTitle(title.GetString());
+		
+
+	
+	
 	
 
 	return true;

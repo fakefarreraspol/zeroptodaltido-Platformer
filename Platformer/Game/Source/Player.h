@@ -75,7 +75,14 @@ public:
 		playerHP = 100;
 		playerLifes = 3;
 	}
-
+	/*enum GameState
+	{
+		INTRO = 0,
+		GAMEPLAY,
+		END
+	};
+	GameState state;
+	*/
 private:
 
 

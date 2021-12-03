@@ -118,8 +118,8 @@ bool Player::Update(float dt)
 		}
 
 	}
-	
-	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y};
+
+	b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
 	if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
 	else {
 		b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
@@ -154,10 +154,10 @@ bool Player::Update(float dt)
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ^ (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
 	else
 	{
-		
+
 		characterWalking = false;
 	}
-	
+
 	/*if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
 		inAir = true;
@@ -172,7 +172,7 @@ bool Player::Update(float dt)
 				}
 				else app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaJump[currentGorilaJump], SDL_FLIP_HORIZONTAL);
 			}
-			else 
+			else
 			{
 				if (currentGorilaJump < 4)
 				{
@@ -189,24 +189,24 @@ bool Player::Update(float dt)
 		{
 			inAir = false;
 		}
-		
-		
+
+
 	}*/
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 	{
 		playerHit = true;
-		
-		
+
+
 	}
 	if (playerHit)
 	{
 		HitAnimation();
-		
+
 	}
 	//LOG("current time %i", currentTime);
 
 	int gorilaWalkFrameSpeed = 180;
-	if ((!onAir)&& (!playerHit))
+	if ((!onAir) && (!playerHit))
 	{
 
 		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
@@ -222,10 +222,10 @@ bool Player::Update(float dt)
 
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))
 		{
-			
+
 			if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
 			{
-				 currentGorilaWalk++;
+				currentGorilaWalk++;
 				lastTime = currentTime;
 			}
 
@@ -244,11 +244,11 @@ bool Player::Update(float dt)
 		}
 
 
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)&& (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 		{
-			
-			if (!((lastTime + gorilaWalkFrameSpeed > currentTime)&&(currentGorilaWalk>=0)))
-			
+
+			if (!((lastTime + gorilaWalkFrameSpeed > currentTime) && (currentGorilaWalk >= 0)))
+
 			{
 				//app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaWalk[currentGorilaWalk], SDL_FLIP_HORIZONTAL);
 				currentGorilaWalk++;
@@ -278,7 +278,7 @@ bool Player::Update(float dt)
 
 		if (!characterWalking)
 		{
-			
+
 			if (lastDirection)
 			{
 				if (lastTime + gorilaSleepFrameSpeed > currentTime)
@@ -289,7 +289,7 @@ bool Player::Update(float dt)
 				{
 					if (currentGorilaIdle < 4)
 					{
-						
+
 						lastTime = currentTime;
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
 						currentGorilaIdle++;
@@ -297,7 +297,7 @@ bool Player::Update(float dt)
 					else
 					{
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle], SDL_FLIP_HORIZONTAL);
-						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)- 19 * 2 , METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4 );
+						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 19 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
 					}
 
 
@@ -310,7 +310,7 @@ bool Player::Update(float dt)
 				if (lastTime + gorilaSleepFrameSpeed > currentTime)
 				{
 					app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
-					
+
 				}
 				else
 				{
@@ -324,7 +324,7 @@ bool Player::Update(float dt)
 					else
 					{
 						app->render->DrawTexture(gorila, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 2, &r_gorilaIdle[currentGorilaIdle]);
-						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x)+10, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y)-19*4);
+						app->render->DrawTexture(sleep, METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + 10, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y) - 19 * 4);
 					}
 
 
@@ -334,7 +334,7 @@ bool Player::Update(float dt)
 
 	}
 
-	
+
 	p2List_item<PhysBody*>* c = bananasThrown.getFirst();
 	while (c != NULL)
 	{
@@ -346,6 +346,11 @@ bool Player::Update(float dt)
 
 		c = c->next;
 	}
+
+	
+		
+	
+	
 	
 
 	return true;

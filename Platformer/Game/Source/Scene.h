@@ -49,10 +49,20 @@ public:
 	float playerX = 0.0f;
 	float playerY = 0.0f;
 	bool freeCam = false;
+	enum GameState
+	{
+		INTRO = 0,
+		GAMEPLAY,
+		END
+	};
+
+	GameState state;
+
 private:
 
 	p2List<PhysBody*> mushrooms;
-
+	
+	
 	int marginX;
 	int marginY;
 	
@@ -64,8 +74,11 @@ private:
 	};
 	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
+	SDL_Texture* intro01;
+	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
 	SDL_Texture* mushroom = nullptr;
+	bool lastIntro = false;
 	SDL_Rect r_mushroomIdle[9];
 	SDL_Rect r_mushroomWalk[4];
 	p2List<PhysBody*> trespasableElements;
