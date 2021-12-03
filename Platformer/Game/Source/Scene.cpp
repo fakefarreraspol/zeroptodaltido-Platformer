@@ -42,6 +42,9 @@ bool Scene::Start()
 	{
 		intro01 = app->tex->Load("Assets/maps/intro_1.png");
 		intro02 = app->tex->Load("Assets/maps/intro_2.png");
+		titleMusic = app->audio->LoadFx("Assets/audio/music/title.wav");
+		
+		app->audio->PlayFx(titleMusic, 0);
 	}break;
 	case GAMEPLAY:
 	{
@@ -50,6 +53,7 @@ bool Scene::Start()
 		texBackground = app->tex->Load("Assets/maps/bg.png");
 		app->map->Load("platform_test.tmx");
 		jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
+		
 		//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
 		app->audio->PlayFx(jungleMusic, 0);
 
@@ -242,9 +246,11 @@ bool Scene::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
+			app->audio->clearAudio();
 			state = GAMEPLAY;
 			Start();
 			app->player->Start();
+
 		}
 	}break;
 	case GAMEPLAY:

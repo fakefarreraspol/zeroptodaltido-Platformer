@@ -32,6 +32,7 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 	uint jungleMusic = 0;
+	uint titleMusic = 0;
 	// Called before quitting
 	bool CleanUp();
 
