@@ -67,7 +67,8 @@ void Map::Draw()
 	// L04: TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
 	ListItem<MapLayer*>* mapLayerIterator = mapData.maplayers.start;
 	
-
+	while (mapLayerIterator != nullptr)
+	{
 		for (int x = 0; x < mapData.maplayers.start->data->width; x++)
 		{
 			for (int y = 0; y < mapData.maplayers.start->data->height; y++)
@@ -83,7 +84,8 @@ void Map::Draw()
 			}
 		}
 
-
+		mapLayerIterator = mapLayerIterator->next;
+	}
 
 	//L04: TODO 9: Complete the draw function (inside the loop from TODO 5)
 	//Find which tile id is on x, y coordinates 
