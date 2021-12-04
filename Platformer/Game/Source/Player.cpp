@@ -223,7 +223,7 @@ bool Player::Update(float dt)
 
 			if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
 			{
-				playerHP = playerHP - 50;
+				playerHP = playerHP--;
 			}
 
 			if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
@@ -361,12 +361,18 @@ bool Player::Update(float dt)
 		}
 
 		SDL_Rect panelRec = { 0,0,16,16 };
-		panelRec.w *= 16;
+		panelRec.w *= 26;
 		panelRec.h *= 5;
 		app->render->DrawTexture(panel, 0, 0, &panelRec, SDL_FLIP_NONE, 0);
 
 		//UI
-		app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
+		
+		for (int i = 0; i < playerHP; i++)
+		{
+			app->render->DrawTexture(mango, 100 + (48 + 16) * (i), 20, NULL, SDL_FLIP_NONE,0);
+
+		}
+		//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
 		app->render->DrawTexture(gorilaFace, 10, 10, NULL, SDL_FLIP_NONE, 0);
 
 	}

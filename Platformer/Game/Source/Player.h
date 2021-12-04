@@ -9,6 +9,8 @@
 #include "Render.h"
 #include "Animation.h"
 
+#define PLAYER_MAX_HP 5
+
 class Player : public Module
 {
 public:
@@ -62,7 +64,7 @@ public:
 	void PlayerDeath()
 	{
 		playerLifes--;
-		playerHP = 100;
+		playerHP = PLAYER_MAX_HP;
 	}
 
 	void RestartPlayer()
@@ -72,7 +74,7 @@ public:
 
 		b2Vec2 v = { PIXEL_TO_METERS(gorilaStartX), PIXEL_TO_METERS(gorilaStartY) };
 		ColHitbox->body->SetTransform(v, 0);
-		playerHP = 100;
+		playerHP = PLAYER_MAX_HP;
 		playerLifes = 3;
 	}
 	/*enum GameState
@@ -123,7 +125,7 @@ private:
 	int currentGorilaIdle = -1;
 	int currentGorilaJump = -1;
 	int currentGorilaHit = 0;
-	unsigned int playerHP = 100;
+	unsigned int playerHP = PLAYER_MAX_HP;
 	unsigned int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;

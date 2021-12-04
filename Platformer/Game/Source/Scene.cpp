@@ -443,7 +443,8 @@ bool Scene::Update(float dt)
 		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 		// Draw map
-		app->render->DrawTexture(texBackground, 0, 0, NULL, SDL_FLIP_NONE, 0.4f);
+		app->render->DrawTexture(texBackground, 0, 0, NULL, SDL_FLIP_NONE, 0.6f);
+		app->render->DrawTexture(texBackground, 2304, 0, NULL, SDL_FLIP_NONE, 0.6f);
 
 		app->map->Draw();
 
