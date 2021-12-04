@@ -107,7 +107,10 @@ private:
 	
 	uint bananaThrow = 0;
 	uint playerDeath = 0;
-
+	uint playerHurt = 0;
+	uint playerHurt2 = 0;
+	uint playerHurt3 = 0;
+	unsigned int audioHurt= 0;
 	PhysBody* ColHitbox;
 	PhysBody* ColSensor;
 	PhysBody* BananaBox;
@@ -126,6 +129,7 @@ private:
 	int currentGorilaJump = -1;
 	int currentGorilaHit = 0;
 	unsigned int playerHP = PLAYER_MAX_HP;
+	unsigned int lastPlayerHP = PLAYER_MAX_HP;
 	unsigned int playerLifes = 3;
 	bool lastDirection=true;
 	bool bananaOnMap = false;

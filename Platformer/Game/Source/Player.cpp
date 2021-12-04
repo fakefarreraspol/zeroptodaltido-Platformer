@@ -31,6 +31,9 @@ bool Player::Start()
 	{
 		playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
 		bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
+		playerHurt = app->audio->LoadFx("Assets/audio/fx/monkey_hurt.wav");
+		playerHurt2 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_2.wav");
+		playerHurt3 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_3.wav");
 		//textures
 		gorila = app->tex->Load("Assets/textures/gorila.png");
 		panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
@@ -160,7 +163,23 @@ bool Player::Update(float dt)
 				}
 			}
 		}
-
+		if (lastPlayerHP != playerHP)
+		{
+			audioHurt = currentTime % 3;
+			if (audioHurt == 0)
+			{
+				app->audio->PlayFx(playerHurt);
+			}
+			else if (audioHurt == 1)
+			{
+				app->audio->PlayFx(playerHurt2);
+			}
+			else
+			{
+				app->audio->PlayFx(playerHurt3);
+			}
+			lastPlayerHP = playerHP;
+		}
 
 
 		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ^ (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) characterWalking = true;
