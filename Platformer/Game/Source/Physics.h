@@ -15,14 +15,16 @@
 enum BodyType
 {
 	TYPE_NULL = 0,
-	TYPE_SCORE,
-	TYPE_BALL,
+	TYPE_ENEMY,
+	TYPE_BULLET,
+	TYPE_PLAYER,
+	TYPE_SOLID_TILE
 
 };
 class PhysBody
 {
 public:
-	PhysBody() : body(NULL)
+	PhysBody() : body(NULL), type(TYPE_NULL)
 	{}
 
 	void GetPosition(int& x, int &y) const;
@@ -72,6 +74,7 @@ public:
 	{
 		return world;
 	}
+
 
 private:
 

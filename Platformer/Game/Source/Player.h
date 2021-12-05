@@ -33,10 +33,7 @@ public:
 		return ColHitbox;
 	}
 
-	PhysBody* GetColSensor() const
-	{
-		return ColSensor;
-	}
+
 	const float getX()
 	{
 		return x;
@@ -123,7 +120,6 @@ private:
 	uint playerHurt3 = 0;
 	unsigned int audioHurt= 0;
 	PhysBody* ColHitbox;
-	PhysBody* ColSensor;
 	PhysBody* BananaBox;
 	SDL_Texture* mango;
 	SDL_Texture* panel;

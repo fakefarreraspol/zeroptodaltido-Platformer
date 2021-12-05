@@ -76,6 +76,8 @@ bool Scene::Start()
 					{
 						temp = app->physics->CreateRectangle(screenPos.x + 24, screenPos.y + 24, 48, 48);
 						temp->body->SetType(b2_staticBody);
+						temp->type = TYPE_SOLID_TILE;
+						temp->body->SetUserData((void*)temp);
 
 					}
 				}
@@ -132,6 +134,8 @@ bool Scene::Start()
 				case 15:
 
 					temp = app->physics->CreateKinematicRectangle(screenPos.x + 24, screenPos.y + 10, 48, 16);
+					temp->type = TYPE_SOLID_TILE;
+					temp->body->SetUserData((void*)temp);
 					trespasableElements.add(temp);
 					break;
 

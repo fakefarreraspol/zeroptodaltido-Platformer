@@ -103,7 +103,7 @@ PhysBody* Physics::CreateCircle(int x, int y, int radius)
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	fixture.density = 3.f;
+	fixture.density = 0;
 	//fixture.restitution = 0.25f;
 
 	b->CreateFixture(&fixture);

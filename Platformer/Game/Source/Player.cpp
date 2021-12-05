@@ -67,7 +67,9 @@ bool Player::Start()
 
 
 		ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
-
+		ColHitbox->type = TYPE_PLAYER;
+		ColHitbox->body->GetFixtureList()->SetDensity(3.0f);
+		ColHitbox->body->ResetMassData();
 
 
 
@@ -116,23 +118,7 @@ bool Player::Update(float dt)
 
 		}
 
-		if (bananaOnMap)
-		{
-			//app->render->DrawTexture(throwBanana, METERS_TO_PIXELS(BananaBox->body->GetPosition().x) - 15, METERS_TO_PIXELS(BananaBox->body->GetPosition().y) - 25, NULL, SDL_FLIP_HORIZONTAL);;
-
-			if (lastBananaDirection)
-			{
-
-				b2Vec2 bananaMovement{ 12, 0 };
-				BananaBox->body->SetLinearVelocity(bananaMovement);
-			}
-			else
-			{
-				b2Vec2 bananaMovement{ -12, 0 };
-				BananaBox->body->SetLinearVelocity(bananaMovement);
-			}
-
-		}
+		
 
 		b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
 		if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
@@ -248,14 +234,14 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 		{
 			playerHit = true;
-
+			
 
 		}
 		if (playerHit)
 		{
 			HitAnimation();
-
 		}
+
 		//LOG("current time %i", currentTime);
 		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
 		{
@@ -388,17 +374,66 @@ bool Player::Update(float dt)
 
 		}
 
+		
 
-		p2List_item<PhysBody*>* c = bananasThrown.getFirst();
-		while (c != NULL)
+		p2List_item<PhysBody*>* currentBanana = bananasThrown.getFirst();
+		while (currentBanana != NULL)
 		{
+			if (bananaOnMap)
+			{
+				b2Vec2 v(currentBanana->data->body->GetLinearVelocity().x, -0.408f);
+				currentBanana->data->body->SetLinearVelocity(v);
+
+			}
+
+			b2Body* bananaHit;
+			if (currentBanana->data->body->GetContactList() != nullptr)
+			{
+				LOG("true");
+				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
+			
+				if (bananaHit != nullptr)
+				{
+					LOG("type: %i", bananaHit->GetType());
+					LOG("type dynamic: %i", b2_dynamicBody);
+					LOG("type stat: %i", b2_staticBody);
+					LOG("type kin: %i", b2_kinematicBody);
+					
+						
+						app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+						bananasThrown.del(currentBanana);
+					
+					//switch (bananaHit->type)
+					//{
+					//
+					//case TYPE_SOLID_TILE:
+					//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+					//	//banana hit sound
+					//	break;
+					//
+					//	/*
+					//	case ENEMY:
+					//		damage enemy
+					//		destroy banana
+					//		sound
+					//	
+					//	*/
+					//
+					//default:
+					//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+					//	break;
+					//}
+			
+					
+				}
+			}
+
+
 			int x, y;
-			c->data->GetPosition(x, y);
-
-
+			currentBanana->data->GetPosition(x, y);
 			app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
 
-			c = c->next;
+			currentBanana = currentBanana->next;
 		}
 
 		SDL_Rect panelRec = { 0,0,16,16 };
@@ -496,7 +531,20 @@ void Player::HitAnimation()
 			BananaBox = app->physics->CreateCircle(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x) + dist, METERS_TO_PIXELS(ColHitbox->body->GetPosition().y), 10);
 			lastBananaDirection = true;
 		}
-		BananaBox->body->SetType(b2_kinematicBody);
+		BananaBox->body->SetType(b2_dynamicBody);
+		BananaBox->type = TYPE_BULLET;
+		b2Vec2 bananaMovement{ 12, 0 };
+		if (lastBananaDirection)
+		{
+
+
+			BananaBox->body->SetLinearVelocity(bananaMovement);
+		}
+		else
+		{
+
+			BananaBox->body->SetLinearVelocity(-bananaMovement);
+		}
 		bananasThrown.add(BananaBox);
 		app->audio->PlayFx(bananaThrow);
 		currentGorilaHit = 0;
