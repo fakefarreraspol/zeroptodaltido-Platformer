@@ -77,6 +77,13 @@ public:
 		playerHP = PLAYER_MAX_HP;
 		playerLifes = 3;
 	}
+
+	void HurtGorila(int damage)
+	{
+		iFramesActive = true;
+		currentIFrameTime = 0;
+		playerHP -= damage;
+	}
 	/*enum GameState
 	{
 		INTRO = 0,
@@ -94,6 +101,10 @@ private:
 
 	float startPosX;
 	float startPosY;
+	int currentIFrameTime = 0;
+	int iFrameReference = 120;
+	bool iFramesActive = false;
+	bool drawGorila = true;
 	int currentTime = 0;
 	int lastTime = 0;
 	int airTime = 0;

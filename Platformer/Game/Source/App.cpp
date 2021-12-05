@@ -163,7 +163,7 @@ bool App::Update()
 	dt = 1.f / currentFPS;
 
 
-	LOG("Current FPS: %f", currentFPS);
+	//LOG("Current FPS: %f", currentFPS);
 	//LOG("time left: %f", frameSpeed - elapsedTime);
 	
 	if ((frameSpeed - elapsedTime) > 0.0f)
