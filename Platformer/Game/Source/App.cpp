@@ -8,6 +8,10 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
+#include "EnemyHandler.h"
+#include "EnemySnake.h"
+#include "EnemyMushroom.h"
+#include "EnemyBird.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -29,6 +33,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	physics = new Physics();
 	player = new Player();
+	enemyMaster = new EnemyHandler();
+	enemyBird = new EnemyBird();
+	enemySnake = new EnemySnake();
+	enemyMushroom = new EnemyMushroom();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +48,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
+	AddModule(enemyMaster);
+	//AddModule(enemyBird);
+	//AddModule(enemyMushroom);
+	//AddModule(enemySnake);
+	
 	
 
 	// Render last to swap buffer

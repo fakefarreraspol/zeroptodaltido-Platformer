@@ -1,4 +1,7 @@
-#pragma once
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
+
+#define PLAYER_MAX_HP 5
 #include "Module.h"
 #include "p2Point.h"
 #include "p2List.h"
@@ -9,7 +12,7 @@
 #include "Render.h"
 #include "Animation.h"
 
-#define PLAYER_MAX_HP 5
+
 
 class Player : public Module
 {
@@ -145,3 +148,5 @@ private:
 	bool playerHit = false;
 	bool lastBananaDirection = true;
 };
+
+#endif // !__PLAYER_H__

@@ -19,6 +19,10 @@ class Scene;
 class Map;
 class Physics;
 class Player;
+class EnemyHandler;
+class EnemySnake;
+class EnemyMushroom;
+class EnemyBird;
 
 class App
 {
@@ -102,6 +106,10 @@ public:
 	Map* map;
 	Physics* physics;
 	Player* player;
+	EnemyHandler* enemyMaster;
+	EnemySnake* enemySnake;
+	EnemyMushroom* enemyMushroom;
+	EnemyBird* enemyBird;
 
 	float DeltaTime()
 	{

@@ -8,6 +8,10 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
+#include "EnemyHandler.h"
+#include "EnemyMushroom.h"
+#include "EnemySnake.h"
+#include "EnemyBird.h"
 
 
 #include "Defs.h"
@@ -186,7 +190,7 @@ bool Scene::Start()
 
 
 		}
-		character = app->tex->Load("Assets/textures/adventurer.png");
+		
 		
 		/*
 			r_characterRun[0]= { 0,37, 50, 37*2 };
@@ -211,9 +215,11 @@ bool Scene::Start()
 
 		//Mushroom 01
 		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
-		createMushroom(48 * 22, 48 * 19, 40);
+		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM,48 * 22, 48 * 19);
 		marginX = 5;
 		marginX = 5;
+
+		
 	}break;
 	}
 	
@@ -264,64 +270,69 @@ bool Scene::Update(float dt)
 
 
 
-		int mushroomIdleFrameSpeed = 500;
+		//int mushroomIdleFrameSpeed = 500;
+		//
+		//if (!isMushroomWalking)
+		//{
+		//	EnemyMushroomHitbox = mushrooms.getFirst()->data;
+		//	if (lastMushroomDirection)
+		//	{
+		//		if (lastTime + mushroomIdleFrameSpeed > currentTime)
+		//		{
+		//			app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
+		//		}
+		//		else
+		//		{
+		//			if (currentMushroomIdle < 3)
+		//			{
+		//
+		//				lastTime = currentTime;
+		//				app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
+		//				currentMushroomIdle++;
+		//			}
+		//			else currentMushroomIdle = 0;
+		//
+		//
+		//		}
+		//
+		//
+		//	}
+		//	else if (!lastMushroomDirection)
+		//	{
+		//		if (lastTime + mushroomIdleFrameSpeed > currentTime)
+		//		{
+		//			app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
+		//
+		//		}
+		//		else
+		//		{
+		//			if (currentMushroomIdle < 3)
+		//			{
+		//				currentMushroomIdle++;
+		//				lastTime = currentTime;
+		//				app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
+		//
+		//			}
+		//			else currentMushroomIdle = 0;
+		//
+		//
+		//
+		//
+		//		}
+		//	}
+		//}
 
-		if (!isMushroomWalking)
+
+
+
+
+
+		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		{
-			EnemyMushroomHitbox = mushrooms.getFirst()->data;
-			if (lastMushroomDirection)
-			{
-				if (lastTime + mushroomIdleFrameSpeed > currentTime)
-				{
-					app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
-				}
-				else
-				{
-					if (currentMushroomIdle < 3)
-					{
-
-						lastTime = currentTime;
-						app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle], SDL_FLIP_HORIZONTAL);
-						currentMushroomIdle++;
-					}
-					else currentMushroomIdle = 0;
-
-
-				}
-
-
-			}
-			else if (!lastMushroomDirection)
-			{
-				if (lastTime + mushroomIdleFrameSpeed > currentTime)
-				{
-					app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
-
-				}
-				else
-				{
-					if (currentMushroomIdle < 3)
-					{
-						currentMushroomIdle++;
-						lastTime = currentTime;
-						app->render->DrawTexture(mushroom, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().x) - 20 * 2, METERS_TO_PIXELS(EnemyMushroomHitbox->body->GetPosition().y) - 19 * 2, &r_mushroomIdle[currentMushroomIdle]);
-
-					}
-					else currentMushroomIdle = 0;
-
-
-
-
-				}
-			}
+			LOG("spawning enemy");
+			app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 22, 48 * 19);
+			LOG("finished");
 		}
-
-
-
-
-
-
-
 
 		uint screnWidth, screenHeight;
 		app->win->GetWindowSize(screnWidth, screenHeight);

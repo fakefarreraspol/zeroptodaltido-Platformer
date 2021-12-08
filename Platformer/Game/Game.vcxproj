@@ -93,6 +93,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\EnemyBird.cpp" />
+    <ClCompile Include="Source\EnemyHandler.cpp" />
+    <ClCompile Include="Source\EnemyMushroom.cpp" />
+    <ClCompile Include="Source\EnemySnake.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -105,6 +109,10 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Source\EnemyBird.h" />
+    <ClInclude Include="Source\EnemyHandler.h" />
+    <ClInclude Include="Source\EnemyMushroom.h" />
+    <ClInclude Include="Source\EnemySnake.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Physics.h" />

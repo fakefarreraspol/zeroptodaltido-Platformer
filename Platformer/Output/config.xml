@@ -9,7 +9,7 @@
 	</player>
 	<renderer>
 		<vsync value="false" />
-		<camera x="-13" y="-619" />
+		<camera x="-11" y="-619" />
 	</renderer>
 	<window>
 		<resolution width="1080" height="720" scale="1" />

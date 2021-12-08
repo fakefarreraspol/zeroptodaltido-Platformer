@@ -390,7 +390,7 @@ bool Player::Update(float dt)
 			if (currentBanana->data->body->GetContactList() != nullptr)
 			{
 				LOG("true");
-				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
+				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
 			
 				if (bananaHit != nullptr)
 				{
