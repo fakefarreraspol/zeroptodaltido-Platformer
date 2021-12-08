@@ -18,7 +18,7 @@
 class EnemyBird : public Module
 {
 public:
-	EnemyBird();
+	EnemyBird(b2Vec2 startPosition, int health);
 	virtual ~EnemyBird();
 
 	// Called before render is available
@@ -31,11 +31,27 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
 
+
+	PhysBody* GetPhysBody() const
+	{
+		return Hitbox;
+	}
+
+	void setPosition(int x, int y)
+	{
+		b2Vec2 v(x, y);
+		Hitbox->body->SetTransform(v, 0);
+	}
+
+
+
 private:
 
-	SDL_Texture* enemyTexture;
-	List<PhysBody*> allEnemies;
 
+	PhysBody* Hitbox;
+	b2Vec2 spawnPosition;
+
+	int health;
 
 };
 

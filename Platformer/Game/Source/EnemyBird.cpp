@@ -11,9 +11,13 @@
 #include "EnemyBird.h"
 
 
-EnemyBird::EnemyBird() : Module()
+EnemyBird::EnemyBird(b2Vec2 startPosition, int health) : Module()
 {
+	spawnPosition = startPosition;
 	name.Create("enemyBird");
+	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 30);
+	this->health = health;
+
 }
 
 EnemyBird::~EnemyBird()
@@ -27,6 +31,8 @@ bool EnemyBird::Awake()
 bool EnemyBird::Start()
 {
 
+
+
 	return true;
 }
 bool EnemyBird::CleanUp()
@@ -38,7 +44,11 @@ bool EnemyBird::CleanUp()
 
 bool EnemyBird::Update(float dt)
 {
-	LOG("enemy bird active");
+
+
+
+
+	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
 
 
 	return true;
@@ -46,7 +56,7 @@ bool EnemyBird::Update(float dt)
 
 bool EnemyBird::LoadState(pugi::xml_node& data)
 {
-	
+
 	//startPosX = data.child("startPos").attribute("x").as_float(0);
 	//startPosY = data.child("startPos").attribute("y").as_float(0);
 

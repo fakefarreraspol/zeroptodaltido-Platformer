@@ -10,10 +10,15 @@
 #include "Audio.h";
 #include "EnemySnake.h"
 
-EnemySnake::EnemySnake() : Module()
+EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Module()
 {
+	spawnPosition = startPosition;
 	name.Create("enemySnake");
+	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 30);
+	this->health = health;
+
 }
+
 
 EnemySnake::~EnemySnake()
 {}
@@ -26,6 +31,8 @@ bool EnemySnake::Awake()
 bool EnemySnake::Start()
 {
 
+
+
 	return true;
 }
 bool EnemySnake::CleanUp()
@@ -37,7 +44,10 @@ bool EnemySnake::CleanUp()
 
 bool EnemySnake::Update(float dt)
 {
-	LOG("enemy handler active");
+
+
+
+	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
 
 
 	return true;
@@ -45,7 +55,7 @@ bool EnemySnake::Update(float dt)
 
 bool EnemySnake::LoadState(pugi::xml_node& data)
 {
-	
+
 	//startPosX = data.child("startPos").attribute("x").as_float(0);
 	//startPosY = data.child("startPos").attribute("y").as_float(0);
 

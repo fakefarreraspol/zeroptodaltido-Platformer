@@ -19,7 +19,7 @@ class EnemyMushroom : public Module
 {
 public:
 	EnemyMushroom(b2Vec2 startPosition, int health);
-	EnemyMushroom();
+
 	virtual ~EnemyMushroom();
 
 	// Called before render is available

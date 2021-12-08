@@ -107,9 +107,7 @@ public:
 	Physics* physics;
 	Player* player;
 	EnemyHandler* enemyMaster;
-	EnemySnake* enemySnake;
-	EnemyMushroom* enemyMushroom;
-	EnemyBird* enemyBird;
+
 
 	float DeltaTime()
 	{

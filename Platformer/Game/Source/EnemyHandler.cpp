@@ -32,24 +32,31 @@ bool EnemyHandler::CleanUp()
 {
 	LOG("Unloading eHandler");
 
-	p2List_item<EnemyMushroom*>* iteratorMushroom = enemiesMushroom.getFirst();
-	if (iteratorMushroom != NULL)
+	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
-		iteratorMushroom->data->CleanUp();
+
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+		iteratorMushroom->CleanUp();
 	}
 
-	p2List_item<EnemyBird*>* iteratorBird = enemiesBird.getFirst();
-	if (iteratorBird != NULL)
+	for (int i = 0; i < enemiesBird.count(); i++)
 	{
-		iteratorBird->data->CleanUp();
 
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+		iteratorBird->CleanUp();
 	}
 
-	p2List_item<EnemySnake*>* iteratorSnake = enemiesSnake.getFirst();
-	if (iteratorSnake != NULL)
+	for (int i = 0; i < enemiesSnake.count(); i++)
 	{
-		iteratorSnake->data->CleanUp();
 
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		iteratorSnake->CleanUp();
 	}
 
 
@@ -94,22 +101,31 @@ bool EnemyHandler::Update(float dt)
 bool EnemyHandler::LoadState(pugi::xml_node& data)
 {
 	
-	p2List_item<EnemyMushroom*>* iteratorMushroom = enemiesMushroom.getFirst();
-	if (iteratorMushroom != NULL)
+	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
-		iteratorMushroom->data->LoadState(data);
+
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+		iteratorMushroom->LoadState(data);
 	}
 
-	p2List_item<EnemyBird*>* iteratorBird = enemiesBird.getFirst();
-	if (iteratorBird != NULL)
+	for (int i = 0; i < enemiesBird.count(); i++)
 	{
-		iteratorBird->data->LoadState(data);
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+		iteratorBird->LoadState(data);
 	}
 
-	p2List_item<EnemySnake*>* iteratorSnake = enemiesSnake.getFirst();
-	if (iteratorSnake != NULL)
+	for (int i = 0; i < enemiesSnake.count(); i++)
 	{
-		iteratorSnake->data->LoadState(data);
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		iteratorSnake->LoadState(data);
 	}
 
 	return true;
@@ -119,22 +135,31 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 bool EnemyHandler::SaveState(pugi::xml_node& data) const
 {
 
-	p2List_item<EnemyMushroom*>* iteratorMushroom = enemiesMushroom.getFirst();
-	if (iteratorMushroom != NULL)
+	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
-		iteratorMushroom->data->SaveState(data);
+
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+		iteratorMushroom->SaveState(data);
 	}
 
-	p2List_item<EnemyBird*>* iteratorBird = enemiesBird.getFirst();
-	if (iteratorBird != NULL)
+	for (int i = 0; i < enemiesBird.count(); i++)
 	{
-		iteratorBird->data->SaveState(data);
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+		iteratorBird->SaveState(data);
 	}
 
-	p2List_item<EnemySnake*>* iteratorSnake = enemiesSnake.getFirst();
-	if (iteratorSnake != NULL)
+	for (int i = 0; i < enemiesSnake.count(); i++)
 	{
-		iteratorSnake->data->SaveState(data);
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		iteratorSnake->SaveState(data);
 	}
 	return true;
 }
@@ -147,7 +172,7 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	case ENEMY_MUSHROOM:
 	{
 		b2Vec2 pos(x, y);
-		EnemyMushroom* newMushroom = new EnemyMushroom(pos,30);
+		EnemyMushroom* newMushroom = new EnemyMushroom(pos, 30);
 		enemiesMushroom.add(newMushroom);
 		newMushroom->Start();
 	}

@@ -34,9 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics();
 	player = new Player();
 	enemyMaster = new EnemyHandler();
-	enemyBird = new EnemyBird();
-	enemySnake = new EnemySnake();
-	enemyMushroom = new EnemyMushroom();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -49,9 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(player);
 	AddModule(enemyMaster);
-	//AddModule(enemyBird);
-	//AddModule(enemyMushroom);
-	//AddModule(enemySnake);
+
 	
 	
 

@@ -20,10 +20,6 @@ EnemyMushroom::EnemyMushroom(b2Vec2 startPosition, int health) : Module()
 
 }
 
-EnemyMushroom::EnemyMushroom() : Module()
-{
-	name.Create("enemyMushroom");
-}
 
 EnemyMushroom::~EnemyMushroom()
 {}
@@ -51,10 +47,7 @@ bool EnemyMushroom::Update(float dt)
 {
 
 
-	
-	LOG("pos x: %i", METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x));
-	LOG("pos y: %i", METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y));
-	LOG("-----");
+
 	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
 	
 
