@@ -3,6 +3,7 @@
 #include "SDL/include/SDL.h"
 #include "p2List.h"
 #include "Scene.h"
+
 #include "Physics.h"
 #include "Textures.h"
 #include"Render.h"
@@ -33,6 +34,10 @@ bool EnemyBird::Start()
 {
 	Hitbox->body->ResetMassData();
 	posCheckTime = 15;
+	
+	
+	
+	
 
 	return true;
 }
@@ -45,6 +50,20 @@ bool EnemyBird::CleanUp()
 
 bool EnemyBird::Update(float dt)
 {
+	iPoint myPosWorld(
+		METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
+		METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
+	);
+	iPoint playerPosWorld(
+		METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().x),
+		METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y)
+	);
+	
+	iPoint myPosMap(app->map->WorldToMap(myPosWorld.x,myPosWorld.y));
+	iPoint playerPosMap(app->map->WorldToMap(playerPosWorld.x, playerPosWorld.y));
+
+	int ret = app->pathfinding->CreatePath(myPosMap, playerPosMap);
+
 	if (checkTimer == posCheckTime)
 	{
 		LOG("timer working");
@@ -56,6 +75,21 @@ bool EnemyBird::Update(float dt)
 	checkTimer++;
 
 
+
+	//draw
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	SDL_Rect pathRect = { 48 * 2,0,48,48 };
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->enemyMaster->texturePath, pos.x, pos.y, &pathRect);
+	}
+
+	LOG("paths: %i", ret);
+
+	app->render->DrawTexture(app->enemyMaster->texturePath, myPosWorld.x, myPosWorld.y, &pathRect);
+	
 	app->render->DrawTexture(
 		app->enemyMaster->textureBird,
 		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,

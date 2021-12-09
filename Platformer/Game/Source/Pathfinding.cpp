@@ -118,11 +118,7 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
 uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
-{
-	
-	
-	
-	
+{	
 	uint before = listToFill.list.count();
 
 	// north
@@ -174,10 +170,11 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	int ret = -1;
 	int iterations = 0;
-
+	
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
 	if (IsWalkable(origin) && IsWalkable(destination))
 	{
+		
 		// L12b: TODO 2: Create two lists: open, close
 		PathList open;
 		PathList closed;

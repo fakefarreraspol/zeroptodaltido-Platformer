@@ -13,6 +13,7 @@
 #include "Animation.h"
 #include "Log.h"
 #include "EnemyHandler.h"
+#include "Pathfinding.h"
 
 
 class EnemyBird : public Module
@@ -47,12 +48,7 @@ public:
 
 private:
 
-	iPoint currentMapTilePosition;
-	iPoint lastMapTilePosition;
-	bool direction;
-
-	int posCheckTime;
-	int checkTimer;
+	
 
 
 	PhysBody* Hitbox;
@@ -60,6 +56,16 @@ private:
 
 	int health;
 
+	//navegation AI
+	iPoint currentMapTilePosition;
+	iPoint lastMapTilePosition;
+	bool direction;
+
+	int posCheckTime;
+	int checkTimer;
+
+	PathFinding* pathToPlayer;
+	int pathIndex;
 
 
 };

@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
 #include "EnemyHandler.h"
@@ -40,6 +41,8 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	
+
+
 	switch (state)
 	{
 	case INTRO:
@@ -55,7 +58,17 @@ bool Scene::Start()
 		//state == INTRO;
 	// L03: DONE: Load map
 		texBackground = app->tex->Load("Assets/maps/bg.png");
-		app->map->Load("platform_test.tmx");
+		if (app->map->Load("platform_test.tmx") == true)
+		{
+			int w, h;
+			uchar* data = NULL;
+
+			if (app->map->CreateWalkabilityMap(w, h, &data)) 
+				app->pathfinding->SetMap(w, h, data);
+
+			RELEASE_ARRAY(data);
+		}
+
 		jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
 		
 		//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
@@ -216,6 +229,7 @@ bool Scene::Start()
 		//Mushroom 01
 		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 15 - 24, 48 * 13 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 24, 48 * 14 - 24);
 		marginX = 5;

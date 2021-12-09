@@ -53,6 +53,7 @@ public:
 	SDL_Texture* attention;
 	SDL_Texture* textureMushroom;
 	SDL_Texture* textureBird;
+	SDL_Texture* texturePath;
 private:
 
 	bool spawnEnemyRequest = false;

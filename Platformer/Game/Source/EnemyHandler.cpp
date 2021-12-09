@@ -28,6 +28,7 @@ bool EnemyHandler::Start()
 	textureMushroom = app->tex->Load("Assets/textures/mushroom_idle.png");
 	textureBird = app->tex->Load("Assets/textures/bird.png");
 	attention = app->tex->Load("Assets/textures/attention_sign.png");
+	texturePath = app->tex->Load("Assets/maps/meta.png");
 	return true;
 }
 bool EnemyHandler::CleanUp()
