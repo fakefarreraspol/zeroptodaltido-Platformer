@@ -16,7 +16,10 @@ EnemyMushroom::EnemyMushroom(b2Vec2 startPosition, int health) : Module()
 	spawnPosition = startPosition;
 	name.Create("enemyMushroom");
 	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 20);
+	Hitbox->body->SetGravityScale(10);
+	
 	this->health = health;
+	lastMapTilePosition = app->map->WorldToMap(startPosition.x, startPosition.y);
 
 }
 
@@ -31,9 +34,13 @@ bool EnemyMushroom::Awake()
 
 bool EnemyMushroom::Start()
 {
-	
-
-	
+	Hitbox->body->ResetMassData();
+	checkTimer = 0;
+	posCheckTime = 15;
+	speed.x = 3.f;
+	speed.y = 0.f;
+	currentSpeed = -speed;
+	Hitbox->body->SetLinearVelocity(currentSpeed);
 	return true;
 }
 bool EnemyMushroom::CleanUp()
@@ -48,11 +55,70 @@ bool EnemyMushroom::Update(float dt)
 	//navegation AI
 
 
+	if (checkTimer == posCheckTime)
+	{
+		currentMapTilePosition = app->map->WorldToMap(
+			METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
+			METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
+		);
+
+		if (currentMapTilePosition != lastMapTilePosition)
+		{
+			lastMapTilePosition = currentMapTilePosition;
+		}
+		iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
+
+		uint leftCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
+		uint leftDownCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
+
+		uint rightCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y);
+		uint rightDownCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y + 1);
+
+		bool leftCheck = false;
+		bool leftDownCheck = false;
+
+		bool rightCheck = false;
+		bool rightDownCheck = false;
+
+		for (int i = 0; i < 60; i++)
+		{
+			if (leftCheckPos == arTilesToCheck[i]) leftCheck = true;
+			if (rightCheckPos == arTilesToCheck[i]) rightCheck = true;
+			if (leftDownCheckPos == arTilesToCheck[i]) leftDownCheck = true;
+			if (rightDownCheckPos == arTilesToCheck[i]) rightDownCheck= true;
+		}
 
 
 
+		if (leftCheck || !leftDownCheck)
+		{
+			LOG("here");
+			currentSpeed = speed;
+			LOG("here");
+		}
 
 
+		if (rightCheck || !rightDownCheck)
+		{
+			currentSpeed = -speed;
+
+		}
+		
+
+
+		LOG("map: %i, %i", lastMapTilePosition.x, lastMapTilePosition.y);
+		LOG("left check pos: %i", leftCheck);
+		LOG("left down check pos: %i", leftDownCheck);
+		LOG("right check pos: %i", rightCheck);
+		LOG("right down check pos: %i", rightDownCheck);
+
+
+		checkTimer = 0;
+	}
+	checkTimer++;
+
+	Hitbox->body->SetLinearVelocity(currentSpeed);
+	LOG("speed x: %f", currentSpeed.x);
 	//Draw
 	int Yoffset = -28 + 6;
 	int Xoffset = -24;

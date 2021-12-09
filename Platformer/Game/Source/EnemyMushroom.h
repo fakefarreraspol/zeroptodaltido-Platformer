@@ -12,6 +12,7 @@
 #include "Animation.h"
 #include "Log.h"
 #include "EnemyHandler.h"
+#include "Map.h"
 
 
 
@@ -47,19 +48,42 @@ public:
 
 private:
 
+	void UpdateCheckBoxes()
+	{
+		
+
+	}
 
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
 
 	int health;
 	SDL_Rect mushroomTemp;
-
+	b2Vec2 speed;
+	b2Vec2 currentSpeed;
 
 	//navegation AI
 
 	iPoint currentMapTilePosition;
 	iPoint lastMapTilePosition;
 	bool direction;
+
+	int posCheckTime;
+	int checkTimer;
+
+	int arTilesToCheck[60] = {
+
+		6,7,39,40,42,43,45,46,
+		58,59,60,61,62,63,64,65,
+		77,78,79,80,81,82,83,84,
+		85,86,87,88,96,97,100,101,
+		102,103,104,105,206,107,
+		108,109,116,117,119,120,
+
+		5,8,22,23,28,29,30,31,32,
+		33,47,48,49,50,51,52
+	};
+
 
 
 };
