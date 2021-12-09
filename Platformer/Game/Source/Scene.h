@@ -75,6 +75,7 @@ private:
 	};
 	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
+	SDL_Texture* loadingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
@@ -85,6 +86,7 @@ private:
 	p2List<PhysBody*> trespasableElements;
 	int currentTime = 0;
 	int lastTime = 0;
+	bool loadingScreenActive = false;
 	bool isMushroomWalking = false;
 	bool lastMushroomDirection = true;
 	unsigned int currentMushroomWalk = 0;

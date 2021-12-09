@@ -50,6 +50,8 @@ bool Scene::Start()
 		intro01 = app->tex->Load("Assets/maps/intro_1.png");
 		intro02 = app->tex->Load("Assets/maps/intro_2.png");
 		titleMusic = app->audio->LoadFx("Assets/audio/music/title.wav");
+		//loadingScreen = app->tex->Load("Assets/maps/Loading_screen.png");
+		loadingScreen = app->tex->Load("Assets/maps/mini_Loading_screen.png");
 		
 		app->audio->PlayFx(titleMusic, 0);
 	}break;
@@ -257,26 +259,39 @@ bool Scene::Update(float dt)
 	{
 	case INTRO:
 	{
-		if (lastTime + 300 > currentTime)
+		if ((lastTime + 300 > currentTime)&&(!loadingScreenActive))
 		{
 			app->render->DrawTexture(intro01, -50, 500);
 		}
-		else if ((lastTime + 300 < currentTime) && (lastTime + 600 > currentTime))
+		else if ((lastTime + 300 < currentTime) && (lastTime + 600 > currentTime) && (!loadingScreenActive))
 		{
 			app->render->DrawTexture(intro02, -50, 500);
 		}
 		else
 		{
-			app->render->DrawTexture(intro02, -50, 500);
-			lastTime = currentTime;
+			if (!loadingScreenActive)
+			{
+				app->render->DrawTexture(intro02, -50, 500);
+				lastTime = currentTime;
+			}
+			else
+			{
+				app->render->DrawTexture(loadingScreen, 55, 800);
+				if (lastTime + 300 <= currentTime)
+				{
+					app->audio->clearAudio();
+					state = GAMEPLAY;
+					Start();
+					app->player->Start();
+
+				}
+
+			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
-			app->audio->clearAudio();
-			state = GAMEPLAY;
-			Start();
-			app->player->Start();
-
+			loadingScreenActive = true;
+			lastTime = currentTime;
 		}
 	}break;
 	case GAMEPLAY:
