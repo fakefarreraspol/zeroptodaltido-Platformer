@@ -68,6 +68,7 @@ public:
 
 	SDL_Rect mushroomTemp = { 0,0,48,48 };
 
+	SDL_Texture* attention;
 private:
 
 	bool spawnEnemyRequest = false;
@@ -75,6 +76,7 @@ private:
 	iPoint requestPoint;
 
 	SDL_Texture* textureMushroom;
+	
 	
 
 };

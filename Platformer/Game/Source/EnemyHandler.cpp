@@ -26,6 +26,7 @@ bool EnemyHandler::Awake()
 bool EnemyHandler::Start()
 {
 	textureMushroom = app->tex->Load("Assets/textures/mushroom_idle.png");
+	attention = app->tex->Load("Assets/textures/attention_sign.png");
 	return true;
 }
 bool EnemyHandler::CleanUp()

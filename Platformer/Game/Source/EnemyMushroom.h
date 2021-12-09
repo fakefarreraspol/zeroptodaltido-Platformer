@@ -45,14 +45,16 @@ public:
 	}
 
 
+	int CheckDistanceToPhysBody(PhysBody* PhysPos)
+	{
+		b2Vec2 dist = PhysPos->body->GetPosition() - Hitbox->body->GetPosition();
+
+		return (abs(dist.x) + abs(dist.y));
+	}
 
 private:
 
-	void UpdateCheckBoxes()
-	{
-		
 
-	}
 
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
@@ -84,7 +86,8 @@ private:
 		33,47,48,49,50,51,52
 	};
 
-
+	bool agroTowardsPlayer;
+	int maxDistanceAgro;
 
 };
 

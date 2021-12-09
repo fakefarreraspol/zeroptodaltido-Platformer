@@ -35,12 +35,21 @@ bool EnemyMushroom::Awake()
 bool EnemyMushroom::Start()
 {
 	Hitbox->body->ResetMassData();
-	checkTimer = 0;
+
+	//permanent values
 	posCheckTime = 15;
 	speed.x = 3.f;
 	speed.y = 0.f;
-	currentSpeed = -speed;
+	maxDistanceAgro = 4;
+
+
+	//initial values
+	currentSpeed = speed;
+	direction = true;
 	Hitbox->body->SetLinearVelocity(currentSpeed);
+	agroTowardsPlayer = false;
+	checkTimer = 0;
+
 	return true;
 }
 bool EnemyMushroom::CleanUp()
@@ -88,24 +97,58 @@ bool EnemyMushroom::Update(float dt)
 			if (rightDownCheckPos == arTilesToCheck[i]) rightDownCheck= true;
 		}
 
-
-
-		if (leftCheck || !leftDownCheck)
+		if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro)
 		{
-			LOG("here");
-			currentSpeed = speed;
-			LOG("here");
+			agroTowardsPlayer = true;
+		}
+		else {
+			agroTowardsPlayer = false;
 		}
 
-
-		if (rightCheck || !rightDownCheck)
+		if (!agroTowardsPlayer)
 		{
-			currentSpeed = -speed;
+			if ((leftCheck || !leftDownCheck) && direction == false)
+			{
 
+				currentSpeed = speed;
+				direction = true;
+
+			}
+
+
+			if ((rightCheck || !rightDownCheck) && direction == true)
+			{
+				currentSpeed = -speed;
+				direction = false;
+
+			}
+		}
+		else
+		{
+
+			b2Vec2 v0(0,0);
+			if (leftCheck && direction == false || rightCheck && direction == true)
+			{
+				currentSpeed = v0;
+			}
+			else {
+				if (app->player->GetColHitbox()->body->GetPosition().x < Hitbox->body->GetPosition().x)
+				{
+					currentSpeed = -speed;
+					direction = false;
+				}
+
+				if (app->player->GetColHitbox()->body->GetPosition().x >= Hitbox->body->GetPosition().x)
+				{
+					currentSpeed = speed;
+					direction = true;
+				}
+			}
 		}
 		
 
-
+		LOG("distance agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
+		LOG("agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro);
 		LOG("map: %i, %i", lastMapTilePosition.x, lastMapTilePosition.y);
 		LOG("left check pos: %i", leftCheck);
 		LOG("left down check pos: %i", leftDownCheck);
@@ -118,15 +161,22 @@ bool EnemyMushroom::Update(float dt)
 	checkTimer++;
 
 	Hitbox->body->SetLinearVelocity(currentSpeed);
-	LOG("speed x: %f", currentSpeed.x);
 	//Draw
 	int Yoffset = -28 + 6;
 	int Xoffset = -24;
+
 	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(),
 		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 		&app->enemyMaster->mushroomTemp);
 	
+	if (agroTowardsPlayer)
+	{
+		app->render->DrawTexture(app->enemyMaster->attention,
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+			NULL);
+	}
 
 	return true;
 }
