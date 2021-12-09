@@ -215,7 +215,7 @@ bool Scene::Start()
 
 		//Mushroom 01
 		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
-		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM,48 * 22, 48 * 19);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 21 - 24, 48 * 19 - 24);
 		marginX = 5;
 		marginX = 5;
 
@@ -327,12 +327,7 @@ bool Scene::Update(float dt)
 
 
 
-		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			LOG("spawning enemy");
-			app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 22, 48 * 19);
-			LOG("finished");
-		}
+
 
 		uint screnWidth, screenHeight;
 		app->win->GetWindowSize(screnWidth, screenHeight);

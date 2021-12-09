@@ -15,7 +15,7 @@ EnemyMushroom::EnemyMushroom(b2Vec2 startPosition, int health) : Module()
 {
 	spawnPosition = startPosition;
 	name.Create("enemyMushroom");
-	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 30);
+	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 20);
 	this->health = health;
 
 }
@@ -45,10 +45,21 @@ bool EnemyMushroom::CleanUp()
 
 bool EnemyMushroom::Update(float dt)
 {
+	//navegation AI
 
 
 
-	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
+
+
+
+
+	//Draw
+	int Yoffset = -28 + 6;
+	int Xoffset = -24;
+	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(),
+		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+		&app->enemyMaster->mushroomTemp);
 	
 
 	return true;

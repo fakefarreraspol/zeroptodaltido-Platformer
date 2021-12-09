@@ -172,7 +172,7 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	case ENEMY_MUSHROOM:
 	{
 		b2Vec2 pos(x, y);
-		EnemyMushroom* newMushroom = new EnemyMushroom(pos, 30);
+		EnemyMushroom* newMushroom = new EnemyMushroom(pos, 5);
 		enemiesMushroom.add(newMushroom);
 		newMushroom->Start();
 	}

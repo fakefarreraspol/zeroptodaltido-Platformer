@@ -390,9 +390,9 @@ bool Player::Update(float dt)
 			if (currentBanana->data->body->GetContactList() != nullptr)
 			{
 				LOG("true");
-				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
+				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
 			
-				if (bananaHit != nullptr)
+				if (bananaHit != nullptr && bananaHit != ColHitbox->body)
 				{
 					LOG("type: %i", bananaHit->GetType());
 					LOG("type dynamic: %i", b2_dynamicBody);
@@ -546,6 +546,7 @@ void Player::HitAnimation()
 			BananaBox->body->SetLinearVelocity(-bananaMovement);
 		}
 		bananasThrown.add(BananaBox);
+		BananaBox->body->GetFixtureList()->SetSensor(true);
 		app->audio->PlayFx(bananaThrow);
 		currentGorilaHit = 0;
 		bananaOnMap = true;

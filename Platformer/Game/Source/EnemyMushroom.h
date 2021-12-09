@@ -43,7 +43,7 @@ public:
 		Hitbox->body->SetTransform(v, 0);
 	}
 
-	
+
 
 private:
 
@@ -52,6 +52,15 @@ private:
 	b2Vec2 spawnPosition;
 
 	int health;
+	SDL_Rect mushroomTemp;
+
+
+	//navegation AI
+
+	iPoint currentMapTilePosition;
+	iPoint lastMapTilePosition;
+	bool direction;
+
 
 };
 
