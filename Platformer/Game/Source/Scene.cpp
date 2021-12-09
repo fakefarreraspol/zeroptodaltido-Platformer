@@ -215,7 +215,8 @@ bool Scene::Start()
 
 		//Mushroom 01
 		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
+		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 24, 48 * 14 - 24);
 		marginX = 5;
 		marginX = 5;
@@ -508,7 +509,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 	return true;
 }
 
-// L02: TODO 8: Create a method to save the state of the renderer
+// L02: TODO 8: create a method to save the state of the renderer
 // Save Game State
 bool Scene::SaveState(pugi::xml_node& data) const
 {

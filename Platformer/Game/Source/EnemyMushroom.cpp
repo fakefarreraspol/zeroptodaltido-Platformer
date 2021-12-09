@@ -40,7 +40,7 @@ bool EnemyMushroom::Start()
 	posCheckTime = 15;
 	speed.x = 3.f;
 	speed.y = 0.f;
-	maxDistanceAgro = 4;
+	maxDistanceAgro = 5;
 
 
 	//initial values
@@ -147,13 +147,13 @@ bool EnemyMushroom::Update(float dt)
 		}
 		
 
-		LOG("distance agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
-		LOG("agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro);
-		LOG("map: %i, %i", lastMapTilePosition.x, lastMapTilePosition.y);
-		LOG("left check pos: %i", leftCheck);
-		LOG("left down check pos: %i", leftDownCheck);
-		LOG("right check pos: %i", rightCheck);
-		LOG("right down check pos: %i", rightDownCheck);
+		//LOG("distance agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
+		//LOG("agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro);
+		//LOG("map: %i, %i", lastMapTilePosition.x, lastMapTilePosition.y);
+		//LOG("left check pos: %i", leftCheck);
+		//LOG("left down check pos: %i", leftDownCheck);
+		//LOG("right check pos: %i", rightCheck);
+		//LOG("right down check pos: %i", rightDownCheck);
 
 
 		checkTimer = 0;
@@ -165,7 +165,7 @@ bool EnemyMushroom::Update(float dt)
 	int Yoffset = -28 + 6;
 	int Xoffset = -24;
 
-	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(),
+	app->render->DrawTexture(app->enemyMaster->textureMushroom,
 		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 		&app->enemyMaster->mushroomTemp);

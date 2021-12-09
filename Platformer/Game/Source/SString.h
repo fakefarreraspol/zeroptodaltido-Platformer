@@ -23,7 +23,7 @@ public:
 	SString()
 	{
 		Alloc(1);
-		Clear();
+		clear();
 	}
 
 	SString(unsigned int size)
@@ -33,7 +33,7 @@ public:
 		else
 			Alloc(1);
 
-		Clear();
+		clear();
 	}
 
 	SString(const SString& string)
@@ -66,7 +66,7 @@ public:
 		if(size == 0)
 		{
 			Alloc(1);
-			Clear();
+			clear();
 		}
 	}
 
@@ -101,7 +101,7 @@ public:
 		if(size == 0)
 		{
 			Alloc(1);
-			Clear();
+			clear();
 		}
 
 		return *this;
@@ -140,7 +140,7 @@ public:
 			Alloc(string.Length() + 1);
 		}
 		else
-			Clear();
+			clear();
 
 		strcpy_s(str, size, string.str);
 
@@ -161,13 +161,13 @@ public:
 				Alloc(strlen(string)+1);
 			}
 			else
-				Clear();
+				clear();
 
 			strcpy_s(str, size, string);
 		}
 		else
 		{
-			Clear();
+			clear();
 		}
 
 		return(*this);
@@ -216,7 +216,7 @@ public:
 		return strlen(str);
 	}
 
-	void Clear()
+	void clear()
 	{
 		str[0] = '\0';
 	}

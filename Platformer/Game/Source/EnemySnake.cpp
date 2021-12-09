@@ -14,7 +14,7 @@ EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Module()
 {
 	spawnPosition = startPosition;
 	name.Create("enemySnake");
-	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 30);
+	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 10);
 	this->health = health;
 
 }
@@ -47,7 +47,7 @@ bool EnemySnake::Update(float dt)
 
 
 
-	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
+	app->render->DrawTexture(app->enemyMaster->textureMushroom, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
 
 
 	return true;

@@ -459,7 +459,7 @@ bool Physics::PostUpdate()
 					def.frequencyHz = 2.0f; // Play with this value
 					def.maxForce = 200.0f * mouseBody->GetMass(); // Play with this value
 					
-					// Add the new mouse joint into the World
+					// add the new mouse joint into the World
 					mouseJoint = (b2MouseJoint*)world->CreateJoint(&def);
 				}
 			}

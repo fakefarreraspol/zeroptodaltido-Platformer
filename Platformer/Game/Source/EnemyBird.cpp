@@ -15,7 +15,8 @@ EnemyBird::EnemyBird(b2Vec2 startPosition, int health) : Module()
 {
 	spawnPosition = startPosition;
 	name.Create("enemyBird");
-	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 30);
+	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 10);
+	Hitbox->body->SetGravityScale(0);
 	this->health = health;
 
 }
@@ -30,8 +31,8 @@ bool EnemyBird::Awake()
 
 bool EnemyBird::Start()
 {
-
-
+	Hitbox->body->ResetMassData();
+	posCheckTime = 15;
 
 	return true;
 }
@@ -44,11 +45,23 @@ bool EnemyBird::CleanUp()
 
 bool EnemyBird::Update(float dt)
 {
+	if (checkTimer == posCheckTime)
+	{
+		LOG("timer working");
 
 
 
+		checkTimer = 0;
+	}
+	checkTimer++;
 
-	app->render->DrawTexture(app->enemyMaster->GetMushroomTexture(), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
+
+	app->render->DrawTexture(
+		app->enemyMaster->textureBird,
+		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+		&app->enemyMaster->birdTemp
+	);
 
 
 	return true;

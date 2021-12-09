@@ -17,6 +17,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+class PathFinding;
 class Physics;
 class Player;
 class EnemyHandler;
@@ -46,7 +47,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
+	// add a new module to handle
 	void AddModule(Module* module);
 
 	// Exposing some properties for reading
@@ -107,6 +108,7 @@ public:
 	Physics* physics;
 	Player* player;
 	EnemyHandler* enemyMaster;
+	PathFinding* pathfinding;
 
 
 	float DeltaTime()

@@ -37,7 +37,7 @@ public:
 	int width, height;
 	b2Body* body;
 	BodyType type;
-	// TODO 6: Add a pointer to a module that might want to listen to a collision from this body
+	// TODO 6: add a pointer to a module that might want to listen to a collision from this body
 };
 
 // Module --------------------------------------

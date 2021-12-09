@@ -47,11 +47,20 @@ public:
 
 private:
 
+	iPoint currentMapTilePosition;
+	iPoint lastMapTilePosition;
+	bool direction;
+
+	int posCheckTime;
+	int checkTimer;
+
 
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
 
 	int health;
+
+
 
 };
 

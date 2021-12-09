@@ -26,6 +26,7 @@ bool EnemyHandler::Awake()
 bool EnemyHandler::Start()
 {
 	textureMushroom = app->tex->Load("Assets/textures/mushroom_idle.png");
+	textureBird = app->tex->Load("Assets/textures/bird.png");
 	attention = app->tex->Load("Assets/textures/attention_sign.png");
 	return true;
 }
@@ -66,7 +67,6 @@ bool EnemyHandler::CleanUp()
 
 bool EnemyHandler::Update(float dt)
 {
-
 
 	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
@@ -179,8 +179,16 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	}
 		break;
 	case ENEMY_SNAKE:
+
+		
 		break;
 	case ENEMY_BIRD:
+	{
+		b2Vec2 pos(x, y);
+		EnemyBird* newBird = new EnemyBird(pos, 5);
+		enemiesBird.add(newBird);
+		newBird->Start();
+	}
 		break;
 	default:
 		break;

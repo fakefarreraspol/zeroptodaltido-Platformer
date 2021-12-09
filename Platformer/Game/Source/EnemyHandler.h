@@ -41,41 +41,24 @@ public:
 	bool CleanUp();
 	void CreateEnemy(EnemyType type, int x, int y);
 
-	p2List<EnemyMushroom*> getMushroomList() const
-	{
-		return enemiesMushroom;
-	}
-
-	p2List<EnemySnake*> getSnakeList() const
-	{
-		return enemiesSnake;
-	}
-
-	p2List<EnemyBird*> getBirdList() const
-	{
-		return enemiesBird;
-	}
-
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;
 	p2List<EnemyBird*> enemiesBird;
 
-	SDL_Texture* GetMushroomTexture()
-	{
-		return textureMushroom;
-	}
 
 
 	SDL_Rect mushroomTemp = { 0,0,48,48 };
+	SDL_Rect birdTemp = { 48,16,16,16};
 
 	SDL_Texture* attention;
+	SDL_Texture* textureMushroom;
+	SDL_Texture* textureBird;
 private:
 
 	bool spawnEnemyRequest = false;
 	EnemyType requestType;
 	iPoint requestPoint;
 
-	SDL_Texture* textureMushroom;
 	
 	
 

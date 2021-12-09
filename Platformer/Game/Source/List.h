@@ -56,7 +56,7 @@ public:
 		return size;
 	}
 
-	// Add new item
+	// add new item
 	ListItem<tdata>* add(const tdata& item)
 	{
 		ListItem<tdata>* dataItem;
