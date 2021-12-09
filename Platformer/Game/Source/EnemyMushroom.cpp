@@ -77,11 +77,11 @@ bool EnemyMushroom::Update(float dt)
 		}
 		iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
 
-		uint leftCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
-		uint leftDownCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
+		uint leftCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
+		uint leftDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
 
-		uint rightCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y);
-		uint rightDownCheckPos = app->map->mapData.maplayers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y + 1);
+		uint rightCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y);
+		uint rightDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y + 1);
 
 		bool leftCheck = false;
 		bool leftDownCheck = false;

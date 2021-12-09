@@ -61,17 +61,17 @@ bool Scene::Start()
 		//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
 		app->audio->PlayFx(jungleMusic, 0);
 
-		for (int x = 0; x < app->map->mapData.maplayers.start->data->width; x++)
+		for (int x = 0; x < app->map->data.layers.start->data->width; x++)
 		{
-			for (int y = 0; y < app->map->mapData.maplayers.start->data->height; y++)
+			for (int y = 0; y < app->map->data.layers.start->data->height; y++)
 			{
 
-				int gid = app->map->mapData.maplayers.start->data->Get(x, y);
+				int gid = app->map->data.layers.start->data->Get(x, y);
 
-				SDL_Rect rect = app->map->mapData.tilesets.start->data->GetTileRect(gid);
+				SDL_Rect rect = app->map->data.tilesets.start->data->GetTileRect(gid);
 				iPoint screenPos = app->map->MapToWorld(x, y);
 
-				app->render->DrawTexture(app->map->mapData.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
+				app->render->DrawTexture(app->map->data.tilesets.start->data->texture, screenPos.x, screenPos.y, &rect);
 				PhysBody* temp;
 
 				for (size_t i = 0; i < 44; i++)
@@ -462,9 +462,9 @@ bool Scene::Update(float dt)
 
 		// L03: DONE 7: Set the window title with map/tileset info
 		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-			app->map->mapData.width, app->map->mapData.height,
-			app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-			app->map->mapData.tilesets.count());
+			app->map->data.width, app->map->data.height,
+			app->map->data.tileWidth, app->map->data.tileHeight,
+			app->map->data.tilesets.count());
 
 		app->win->SetTitle(title.GetString());
 

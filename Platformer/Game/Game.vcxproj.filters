@@ -27,6 +27,7 @@
     <ClCompile Include="Source\EnemySnake.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +79,9 @@
     <ClInclude Include="Source\EnemySnake.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\PQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
