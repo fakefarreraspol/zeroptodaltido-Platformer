@@ -77,7 +77,8 @@ private:
 
 	int health;
 
-	b2Vec2 speed;
+	b2Vec2 agroSpeed;
+	b2Vec2 calmSpeed;
 	b2Vec2 currentSpeed;
 
 	//navegation AI
@@ -96,6 +97,8 @@ private:
 
 
 	bool agroTowardsPlayer;
+	int maxDistanceAgroBase;
+	int maxDistanceAgroActive;
 	int maxDistanceAgro;
 	
 

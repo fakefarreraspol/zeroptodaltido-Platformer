@@ -232,8 +232,8 @@ bool Scene::Start()
 		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 15 - 24, 48 * 13 - 24);
-		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
-		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 24, 48 * 14 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 24, 48 * 14 - 24);
 		marginX = 5;
 		marginX = 5;
 

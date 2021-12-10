@@ -40,7 +40,7 @@ bool EnemyMushroom::Start()
 	posCheckTime = 15;
 	speed.x = 3.f;
 	speed.y = 0.f;
-	maxDistanceAgro = 5;
+	maxDistanceAgro = 6;
 
 
 	//initial values

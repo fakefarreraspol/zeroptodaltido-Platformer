@@ -39,18 +39,24 @@ bool EnemyBird::Start()
 	Hitbox->body->ResetMassData();
 
 	//permanent values
-	posCheckTime = 30;
+	posCheckTime = 8;
 	posCheckTimeAgro = 15;
-	maxDistanceAgro = 8;
-	speed.x = 2.f;
-	speed.y = 2.f;
-	startPosMargin = 48;
+	maxDistanceAgroBase = 8;
+	maxDistanceAgroActive = 14;
 
+	agroSpeed.x = 3.f;
+	agroSpeed.y = 3.f;
+	calmSpeed.x = 1.f;
+	calmSpeed.x = 1.f;
+	startPosMargin = 48;
+	currentSpeed.x = 0;
+	currentSpeed.y = 0;
 
 	//initial values
 	checkTimer = 0;
 	checkTimerAgro = 0;
-	
+	maxDistanceAgro = 0;
+
 
 	return true;
 }
@@ -74,16 +80,36 @@ bool EnemyBird::Update(float dt)
 	
 	
 
-	if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro)
+	if (agroTowardsPlayer)
 	{
-		agroTowardsPlayer = true;
+		if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgroBase)
+		{
+			agroTowardsPlayer = true;
+			maxDistanceAgro = maxDistanceAgroActive;
+		}
+		else {
+			agroTowardsPlayer = false;
+			maxDistanceAgro = maxDistanceAgroBase;
+		}
 	}
-	else {
-		agroTowardsPlayer = false;
-	}
+	else
+	{
+		if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgroBase)
+		{
+			agroTowardsPlayer = true;
+			maxDistanceAgro = maxDistanceAgroActive;
 
-	LOG("agro %i", agroTowardsPlayer);
-	LOG("distance: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
+		}
+		else {
+			agroTowardsPlayer = false;
+			maxDistanceAgro = maxDistanceAgroBase;
+
+		}
+	}
+	LOG("agro distance %i", maxDistanceAgro);
+
+	//LOG("agro %i", agroTowardsPlayer);
+	//LOG("distance: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
 	iPoint myPosMap(app->map->WorldToMap(myPosWorld.x, myPosWorld.y));
 	iPoint playerPosMap(app->map->WorldToMap(playerPosWorld.x, playerPosWorld.y));
 
@@ -95,6 +121,9 @@ bool EnemyBird::Update(float dt)
 			checkTimer = 0;
 			app->pathfinding->CreatePath(myPosMap, playerPosMap);
 
+			LOG("mypos: %i, %i", myPosMap.x, myPosMap.y);
+			LOG("playerpos: %i, %i", playerPosMap.x, playerPosMap.y);
+
 
 
 			
@@ -103,15 +132,19 @@ bool EnemyBird::Update(float dt)
 		}
 		checkTimerAgro++;
 
-		LOG("target pos: %i, %i", nextMovePos.x, nextMovePos.y);
+		//LOG("target pos: %i, %i", nextMovePos.x, nextMovePos.y);
 
 	}
 	else
 	{
 		if (checkTimer == posCheckTime)
 		{
-			//LOG("timer working");
+			LOG("timer working");
 			checkTimerAgro = 0;
+
+
+
+
 			if (!Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().x),spawnPosition.x - startPosMargin, spawnPosition.x + startPosMargin)
 				&& !Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().y), spawnPosition.y - startPosMargin, spawnPosition.y + startPosMargin))
 			{
@@ -119,6 +152,9 @@ bool EnemyBird::Update(float dt)
 			}
 
 
+
+			LOG("mypos: %i, %i", myPosMap.x, myPosMap.y);
+			
 			checkTimer = 0;
 		}
 		checkTimer++;
@@ -137,15 +173,23 @@ bool EnemyBird::Update(float dt)
 		nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
 		nextMovePos.y + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
 	);
-	direction.Normalize();
-	currentSpeed.x = speed.x * direction.x;
-	currentSpeed.y = speed.y * direction.y;
 
+	direction.Normalize();
+	if (agroTowardsPlayer)
+	{
+		currentSpeed.x = agroSpeed.x * direction.x;
+		currentSpeed.y = agroSpeed.y * direction.y;
+	}
+	else {
+		currentSpeed.x = calmSpeed.x * direction.x;
+		currentSpeed.y = calmSpeed.y * direction.y;
+	}
+	LOG("spawn: %i, %i", nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().x), nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
 	Hitbox->body->SetLinearVelocity(currentSpeed);
 
-	LOG("spawn phys: %f, %f", spawnPosition.x, spawnPosition.y);
-	LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
-	LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
+	//LOG("spawn phys: %f, %f", spawnPosition.x, spawnPosition.y);
+	//LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
+	//LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
 
 
 	//draw
