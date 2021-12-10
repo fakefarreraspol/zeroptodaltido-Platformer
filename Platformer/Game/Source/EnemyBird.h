@@ -51,6 +51,7 @@ public:
 		return (abs(dist.x) + abs(dist.y));
 	}
 
+	void DoDamage(int damage);
 
 private:
 

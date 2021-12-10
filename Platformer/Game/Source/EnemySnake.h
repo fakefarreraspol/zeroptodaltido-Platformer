@@ -41,7 +41,7 @@ public:
 		Hitbox->body->SetTransform(v, 0);
 	}
 
-
+	void DoDamage(int damage);
 
 private:
 

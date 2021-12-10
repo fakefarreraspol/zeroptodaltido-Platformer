@@ -186,7 +186,7 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	case ENEMY_BIRD:
 	{
 		b2Vec2 pos(x, y);
-		EnemyBird* newBird = new EnemyBird(pos, 5);
+		EnemyBird* newBird = new EnemyBird(pos, 2);
 		enemiesBird.add(newBird);
 		newBird->Start();
 	}
@@ -195,4 +195,127 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 		break;
 	}
 }
+
+void EnemyHandler::DestroyEnemy(PhysBody* body)
+{
+
+	bool cont = false;
+
+	p2List_item<EnemyMushroom*>* mushroom = enemiesMushroom.getFirst();
+	for (int i = 0; i < enemiesMushroom.count(); i++)
+	{
+		LOG("n: %i", enemiesMushroom.count());
+		if (cont) break;
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+		
+
+
+		if (iteratorMushroom->GetPhysBody() == body)
+		{
+			enemiesMushroom.del(mushroom);
+			app->physics->GetWorld()->DestroyBody(body->body);
+			
+			delete body;
+			cont = true;
+		}
+		mushroom = mushroom->next;
+	}
+
+	p2List_item<EnemyBird*>* bird = enemiesBird.getFirst();
+	for (int i = 0; i < enemiesBird.count(); i++)
+	{
+		if (cont) break;
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+
+		if (iteratorBird->GetPhysBody() == body)
+		{
+			enemiesBird.del(bird);
+			app->physics->GetWorld()->DestroyBody(body->body);
+			delete body;
+			cont = true;
+		}
+		bird = bird->next;
+	}
+
+
+	p2List_item<EnemySnake*>* snake = enemiesSnake.getFirst();
+	for (int i = 0; i < enemiesSnake.count(); i++)
+	{
+		if (cont) break;
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		if (iteratorSnake->GetPhysBody() == body)
+		{
+			enemiesSnake.del(snake);
+			app->physics->GetWorld()->DestroyBody(body->body);
+			delete body;
+			cont = true;
+		}
+		bird = bird->next;
+	}
+}
+
+void EnemyHandler::DamageEnemy(b2Body* body, int damage)
+{
+
+	bool cont = false;
+
+	
+	for (int i = 0; i < enemiesMushroom.count(); i++)
+	{
+		if (cont) break;
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+
+
+		if (iteratorMushroom->GetPhysBody()->body == body)
+		{
+			LOG("found type");	iteratorMushroom->DoDamage(damage);
+			cont = true;
+		}
+	}
+
+
+	for (int i = 0; i < enemiesBird.count(); i++)
+	{
+		if (cont) break;
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+
+
+		if (iteratorBird->GetPhysBody()->body == body)
+		{
+			LOG("found type"); 
+			iteratorBird->DoDamage(damage);
+			cont = true;
+		}
+	}
+
+
+
+	for (int i = 0; i < enemiesSnake.count(); i++)
+	{
+		if (cont) break;
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		if (iteratorSnake->GetPhysBody()->body == body)
+		{
+			LOG("found type");
+			iteratorSnake->DoDamage(damage);
+			cont = true;
+		}
+	}
+}
+
 

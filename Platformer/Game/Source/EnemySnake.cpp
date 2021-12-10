@@ -44,9 +44,6 @@ bool EnemySnake::CleanUp()
 
 bool EnemySnake::Update(float dt)
 {
-
-
-
 	app->render->DrawTexture(app->enemyMaster->textureMushroom, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), NULL);
 
 
@@ -73,4 +70,10 @@ bool EnemySnake::SaveState(pugi::xml_node& data) const
 	//data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
 	//data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
 	return true;
+}
+
+void EnemySnake::DoDamage(int damage)
+{
+	if (health > 0) health -= damage;
+	if (health <= 0) app->enemyMaster->DestroyEnemy(Hitbox);
 }

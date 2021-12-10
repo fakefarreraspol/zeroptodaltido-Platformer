@@ -40,6 +40,8 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
 	void CreateEnemy(EnemyType type, int x, int y);
+	void DestroyEnemy(PhysBody* body);
+	void DamageEnemy(b2Body* body, int damage);
 
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;
@@ -54,6 +56,9 @@ public:
 	SDL_Texture* textureMushroom;
 	SDL_Texture* textureBird;
 	SDL_Texture* texturePath;
+
+
+	
 private:
 
 	bool spawnEnemyRequest = false;

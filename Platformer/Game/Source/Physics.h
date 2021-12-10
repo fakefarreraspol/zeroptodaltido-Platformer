@@ -75,6 +75,10 @@ public:
 		return world;
 	}
 
+	bool GetDebug() const
+	{
+		return debug;
+	}
 
 private:
 

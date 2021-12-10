@@ -10,6 +10,7 @@
 #include"Render.h"
 #include "Window.h"
 #include "Audio.h";
+#include "EnemyHandler.h"
 
 Player::Player() : Module()
 {
@@ -399,8 +400,9 @@ bool Player::Update(float dt)
 					LOG("type stat: %i", b2_staticBody);
 					LOG("type kin: %i", b2_kinematicBody);
 					
-						
+						app->enemyMaster->DamageEnemy(bananaHit, 1);
 						app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+						
 						bananasThrown.del(currentBanana);
 					
 					//switch (bananaHit->type)

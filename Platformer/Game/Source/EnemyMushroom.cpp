@@ -166,6 +166,20 @@ bool EnemyMushroom::Update(float dt)
 	}
 	checkTimer++;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	Hitbox->body->SetLinearVelocity(currentSpeed);
 	//Draw
 	int Yoffset = -28 + 6;
@@ -301,3 +315,9 @@ bool EnemyMushroom::SaveState(pugi::xml_node& data) const
 	//data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
 	return true;
 }
+
+void EnemyMushroom::DoDamage(int damage)
+{
+		if (health > 0) health -= damage;
+		if (health <= 0) app->enemyMaster->DestroyEnemy(Hitbox);
+	}
