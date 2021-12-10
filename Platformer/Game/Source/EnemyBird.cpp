@@ -57,6 +57,14 @@ bool EnemyBird::Start()
 	checkTimerAgro = 0;
 	maxDistanceAgro = 0;
 
+	r_bird[0] = { 0,16,16,16 };
+	r_bird[1] = { 16,16,16,16 };
+	r_bird[2] = { 16*2,16,16,16 };
+	r_bird[3] = { 16*3,16,16,16 };
+	r_bird[4] = { 16*4,16,16,16 };
+	r_bird[5] = { 16*5,16,16,16 };
+	r_bird[6] = { 16*6,16,16,16 };
+	r_bird[7] = { 16*7,16,16,16 };
 
 	return true;
 }
@@ -78,7 +86,7 @@ bool EnemyBird::Update(float dt)
 		METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y)
 	);
 	
-	
+	currentTime = SDL_GetTicks();
 
 	if (agroTowardsPlayer)
 	{
@@ -191,6 +199,14 @@ bool EnemyBird::Update(float dt)
 	//LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
 	//LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
 
+	if (currentSpeed.x >= 0)
+	{
+		birdDirection = true;
+	}
+	else
+	{
+		birdDirection = false;
+	}
 
 	//draw
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
@@ -202,13 +218,78 @@ bool EnemyBird::Update(float dt)
 		app->render->DrawTexture(app->enemyMaster->texturePath, pos.x, pos.y, &pathRect);
 	}
 	
-	app->render->DrawTexture(
-		app->enemyMaster->textureBird,
-		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
-		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
-		&app->enemyMaster->birdTemp
-	);
 
+	if ((lastTime + 100 > currentTime)&&(birdAnim<7))
+	{
+		if (birdDirection)
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim], SDL_FLIP_HORIZONTAL
+			);
+		}
+		else
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim]
+			);
+
+		}
+		
+	}
+	else if((lastTime + 100 < currentTime) && (birdAnim < 7))
+	{
+		lastTime = currentTime;
+		if (birdDirection)
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim], SDL_FLIP_HORIZONTAL
+			);
+		}
+		else
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim]
+			);
+
+		}
+
+		birdAnim++;
+	}
+	else
+	{
+		if (birdDirection)
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim],SDL_FLIP_HORIZONTAL
+			);
+		}
+		else
+		{
+			app->render->DrawTexture(
+				app->enemyMaster->textureBird,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
+				&r_bird[birdAnim]
+			);
+
+		}
+		birdAnim = 0;
+	}
 
 	return true;
 }

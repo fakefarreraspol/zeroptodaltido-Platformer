@@ -74,9 +74,12 @@ private:
 	b2Vec2 spawnPosition;
 	iPoint spawnPos;
 	iPoint spawnPosMap;
-
+	SDL_Rect r_bird[8];
+	unsigned int birdAnim = 0;
+	bool birdDirection = true;
 	int health;
-
+	int lastTime = 0;
+	int currentTime = 0;
 	b2Vec2 agroSpeed;
 	b2Vec2 calmSpeed;
 	b2Vec2 currentSpeed;
