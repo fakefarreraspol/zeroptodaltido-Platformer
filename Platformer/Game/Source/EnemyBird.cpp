@@ -134,8 +134,8 @@ bool EnemyBird::Update(float dt)
 	nextMovePos = app->map->MapToWorld(nextMovePos.x, nextMovePos.y);
 
 	b2Vec2 direction(
-		nextMovePos.x - METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
-		nextMovePos.y - METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
+		nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
+		nextMovePos.y + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
 	);
 	direction.Normalize();
 	currentSpeed.x = speed.x * direction.x;
