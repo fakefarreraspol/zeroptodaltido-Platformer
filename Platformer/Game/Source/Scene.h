@@ -86,7 +86,7 @@ private:
 	int currentTime = 0;
 	int lastTime = 0;
 	bool loadingScreenActive = false;
-	
+	bool whichEnding = true;
 	SDL_Rect r_characterRun[7];
 	SDL_Rect r_characterJump[7];
 
