@@ -25,7 +25,7 @@ bool EnemyHandler::Awake()
 
 bool EnemyHandler::Start()
 {
-	textureMushroom = app->tex->Load("Assets/textures/mushroom_idle.png");
+	textureMushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
 	textureBird = app->tex->Load("Assets/textures/bird.png");
 	attention = app->tex->Load("Assets/textures/attention_sign.png");
 	texturePath = app->tex->Load("Assets/maps/meta.png");

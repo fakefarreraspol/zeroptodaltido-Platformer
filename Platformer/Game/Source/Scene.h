@@ -79,18 +79,14 @@ private:
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
-	SDL_Texture* mushroom = nullptr;
+	
 	bool lastIntro = false;
-	SDL_Rect r_mushroomIdle[9];
-	SDL_Rect r_mushroomWalk[4];
+	
 	p2List<PhysBody*> trespasableElements;
 	int currentTime = 0;
 	int lastTime = 0;
 	bool loadingScreenActive = false;
-	bool isMushroomWalking = false;
-	bool lastMushroomDirection = true;
-	unsigned int currentMushroomWalk = 0;
-	unsigned int currentMushroomIdle = 0;
+	
 	SDL_Rect r_characterRun[7];
 	SDL_Rect r_characterJump[7];
 

@@ -50,6 +50,14 @@ bool EnemyMushroom::Start()
 	agroTowardsPlayer = false;
 	checkTimer = 0;
 
+	r_mushroomWalk[0] = { 0,0,48,48 };
+	r_mushroomWalk[1] = { 48,0,48,48 };
+	r_mushroomWalk[2] = { 48 * 2,0,48,48 };
+	r_mushroomWalk[3] = { 48 * 3,0,48,48 };
+
+	//Mushroom 01
+	
+
 	return true;
 }
 bool EnemyMushroom::CleanUp()
@@ -62,7 +70,7 @@ bool EnemyMushroom::CleanUp()
 bool EnemyMushroom::Update(float dt)
 {
 	//navegation AI
-
+	currentTime = SDL_GetTicks();
 
 	if (checkTimer == posCheckTime)
 	{
@@ -145,8 +153,6 @@ bool EnemyMushroom::Update(float dt)
 				}
 			}
 		}
-		
-
 		//LOG("distance agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
 		//LOG("agro: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro);
 		//LOG("map: %i, %i", lastMapTilePosition.x, lastMapTilePosition.y);
@@ -165,17 +171,110 @@ bool EnemyMushroom::Update(float dt)
 	int Yoffset = -28 + 6;
 	int Xoffset = -24;
 
-	app->render->DrawTexture(app->enemyMaster->textureMushroom,
-		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
-		METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
-		&app->enemyMaster->mushroomTemp);
 	
-	if (agroTowardsPlayer)
+
+	if ((lastTime + 500 > currentTime)&&(currentMushroomWalk<3))
 	{
-		app->render->DrawTexture(app->enemyMaster->attention,
-			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
-			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
-			NULL);
+		if (direction)
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk]);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+		else
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+	}
+	else if ((lastTime + 100 < currentTime) && (currentMushroomWalk < 3))
+	{
+		
+		if (direction)
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk]);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+		else
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+		lastTime = currentTime;
+		currentMushroomWalk++;
+	}
+	else
+	{
+		if (direction)
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk]);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+		else
+		{
+			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
+				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
+				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
+
+			if (agroTowardsPlayer)
+			{
+				app->render->DrawTexture(app->enemyMaster->attention,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
+					NULL);
+			}
+		}
+		currentMushroomWalk=0;
 	}
 
 	return true;

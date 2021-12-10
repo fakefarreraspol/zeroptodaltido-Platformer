@@ -54,8 +54,14 @@ public:
 
 private:
 
-
-
+	int lastTime = 0;
+	int currentTime = 0;
+	SDL_Rect r_mushroomIdle[9];
+	SDL_Rect r_mushroomWalk[4];
+	bool isMushroomWalking = false;
+	bool lastMushroomDirection = true;
+	unsigned int currentMushroomWalk = 0;
+	unsigned int currentMushroomIdle = 0;
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
 

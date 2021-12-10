@@ -223,13 +223,7 @@ bool Scene::Start()
 			r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 			r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
 			*/
-		r_mushroomWalk[0] = { 0,0,48,48 };
-		r_mushroomWalk[1] = { 48,0,48,48 };
-		r_mushroomWalk[2] = { 48 * 2,0,48,48 };
-		r_mushroomWalk[3] = { 48 * 3,0,48,48 };
-
-		//Mushroom 01
-		mushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
+		
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 15 - 24, 48 * 13 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
