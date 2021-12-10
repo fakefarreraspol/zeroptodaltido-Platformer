@@ -68,7 +68,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Source\EnemyHandler.h" />
     <ClInclude Include="Source\EnemyBird.h">
       <Filter>Enemies</Filter>

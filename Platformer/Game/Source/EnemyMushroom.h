@@ -89,6 +89,7 @@ private:
 	bool agroTowardsPlayer;
 	int maxDistanceAgro;
 
+
 };
 
 #endif // __ENEMY_MUSHROOM_H__

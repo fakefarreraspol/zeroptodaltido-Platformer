@@ -14,8 +14,12 @@
 
 EnemyBird::EnemyBird(b2Vec2 startPosition, int health) : Module()
 {
-	spawnPosition = startPosition;
 	name.Create("enemyBird");
+
+	spawnPosition = startPosition;
+	iPoint temp((int)fabs(spawnPosition.x), (int)fabs(spawnPosition.y));
+	spawnPos = temp;
+	spawnPosMap = app->map->WorldToMap(temp.x, temp.y);
 	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 10);
 	Hitbox->body->SetGravityScale(0);
 	this->health = health;
@@ -33,10 +37,19 @@ bool EnemyBird::Awake()
 bool EnemyBird::Start()
 {
 	Hitbox->body->ResetMassData();
-	posCheckTime = 15;
-	
-	
-	
+
+	//permanent values
+	posCheckTime = 30;
+	posCheckTimeAgro = 15;
+	maxDistanceAgro = 8;
+	speed.x = 2.f;
+	speed.y = 2.f;
+	startPosMargin = 48;
+
+
+	//initial values
+	checkTimer = 0;
+	checkTimerAgro = 0;
 	
 
 	return true;
@@ -59,21 +72,80 @@ bool EnemyBird::Update(float dt)
 		METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y)
 	);
 	
-	iPoint myPosMap(app->map->WorldToMap(myPosWorld.x,myPosWorld.y));
+	
+
+	if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgro)
+	{
+		agroTowardsPlayer = true;
+	}
+	else {
+		agroTowardsPlayer = false;
+	}
+
+	LOG("agro %i", agroTowardsPlayer);
+	LOG("distance: %i", CheckDistanceToPhysBody(app->player->GetColHitbox()));
+	iPoint myPosMap(app->map->WorldToMap(myPosWorld.x, myPosWorld.y));
 	iPoint playerPosMap(app->map->WorldToMap(playerPosWorld.x, playerPosWorld.y));
 
-	int ret = app->pathfinding->CreatePath(myPosMap, playerPosMap);
-
-	if (checkTimer == posCheckTime)
+	if (agroTowardsPlayer)
 	{
-		LOG("timer working");
+		if (checkTimerAgro == posCheckTimeAgro)
+		{
+			LOG("agro timer working");
+			checkTimer = 0;
+			app->pathfinding->CreatePath(myPosMap, playerPosMap);
 
 
 
-		checkTimer = 0;
+			
+
+			checkTimerAgro = 0;
+		}
+		checkTimerAgro++;
+
+		LOG("target pos: %i, %i", nextMovePos.x, nextMovePos.y);
+
 	}
-	checkTimer++;
+	else
+	{
+		if (checkTimer == posCheckTime)
+		{
+			//LOG("timer working");
+			checkTimerAgro = 0;
+			if (!Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().x),spawnPosition.x - startPosMargin, spawnPosition.x + startPosMargin)
+				&& !Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().y), spawnPosition.y - startPosMargin, spawnPosition.y + startPosMargin))
+			{
+				app->pathfinding->CreatePath(myPosMap, spawnPosMap);
+			}
 
+
+			checkTimer = 0;
+		}
+		checkTimer++;
+	}
+
+	const DynArray<iPoint>* tempPath = app->pathfinding->GetLastPath();
+	if (tempPath->Count() > 2)
+	{
+		iPoint temp(tempPath->At(1)->x, tempPath->At(1)->y);
+		nextMovePos = temp;
+	}
+
+	nextMovePos = app->map->MapToWorld(nextMovePos.x, nextMovePos.y);
+
+	b2Vec2 direction(
+		nextMovePos.x - METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
+		nextMovePos.y - METERS_TO_PIXELS(Hitbox->body->GetPosition().y)
+	);
+	direction.Normalize();
+	currentSpeed.x = speed.x * direction.x;
+	currentSpeed.y = speed.y * direction.y;
+
+	Hitbox->body->SetLinearVelocity(currentSpeed);
+
+	LOG("spawn phys: %f, %f", spawnPosition.x, spawnPosition.y);
+	LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
+	LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
 
 
 	//draw
@@ -85,10 +157,6 @@ bool EnemyBird::Update(float dt)
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(app->enemyMaster->texturePath, pos.x, pos.y, &pathRect);
 	}
-
-	LOG("paths: %i", ret);
-
-	app->render->DrawTexture(app->enemyMaster->texturePath, myPosWorld.x, myPosWorld.y, &pathRect);
 	
 	app->render->DrawTexture(
 		app->enemyMaster->textureBird,

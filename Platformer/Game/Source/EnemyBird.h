@@ -44,28 +44,60 @@ public:
 		Hitbox->body->SetTransform(v, 0);
 	}
 
+	int CheckDistanceToPhysBody(PhysBody* PhysPos)
+	{
+		b2Vec2 dist = PhysPos->body->GetPosition() - Hitbox->body->GetPosition();
+
+		return (abs(dist.x) + abs(dist.y));
+	}
 
 
 private:
 
-	
+	int RandomRange(int value01, int value02) {
+		if (value01 > value02) {
 
+			int i = value01;
+			value01 = value02;
+			value02 = i;
+
+		}
+		return(rand() % (value02 - value01 + 1) + value01);
+	}
+
+	bool Between(int value, int a, int b)
+	{
+		return (value >= a && value <= b);
+	}
 
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
+	iPoint spawnPos;
+	iPoint spawnPosMap;
 
 	int health;
 
+	b2Vec2 speed;
+	b2Vec2 currentSpeed;
+
 	//navegation AI
+
+	iPoint nextMovePos;
+
 	iPoint currentMapTilePosition;
 	iPoint lastMapTilePosition;
 	bool direction;
 
 	int posCheckTime;
 	int checkTimer;
+	int posCheckTimeAgro;
+	int checkTimerAgro;
+	int startPosMargin;
 
-	PathFinding* pathToPlayer;
-	int pathIndex;
+
+	bool agroTowardsPlayer;
+	int maxDistanceAgro;
+	
 
 
 };
