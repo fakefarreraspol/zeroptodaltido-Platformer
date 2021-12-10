@@ -245,6 +245,7 @@ bool EnemyBird::Update(float dt)
 
 		}
 		
+		
 	}
 	else if((lastTime + 100 < currentTime) && (birdAnim < 7))
 	{
@@ -293,6 +294,13 @@ bool EnemyBird::Update(float dt)
 
 		}
 		birdAnim = 0;
+	}
+	if (agroTowardsPlayer)
+	{
+		app->render->DrawTexture(app->enemyMaster->attention,
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x+10),
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y-20),
+			NULL);
 	}
 
 	return true;
