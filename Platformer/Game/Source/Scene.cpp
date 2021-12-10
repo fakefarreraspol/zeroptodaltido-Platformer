@@ -52,7 +52,7 @@ bool Scene::Start()
 		titleMusic = app->audio->LoadFx("Assets/audio/music/title.wav");
 		//loadingScreen = app->tex->Load("Assets/maps/Loading_screen.png");
 		loadingScreen = app->tex->Load("Assets/maps/mini_Loading_screen.png");
-		
+
 		app->audio->PlayFx(titleMusic, 0);
 	}break;
 	case GAMEPLAY:
@@ -65,14 +65,14 @@ bool Scene::Start()
 			int w, h;
 			uchar* data = NULL;
 
-			if (app->map->CreateWalkabilityMap(w, h, &data)) 
+			if (app->map->CreateWalkabilityMap(w, h, &data))
 				app->pathfinding->SetMap(w, h, data);
 
 			RELEASE_ARRAY(data);
 		}
 
 		jungleMusic = app->audio->LoadFx("Assets/audio/music/videoplayback.ogg");
-		
+
 		//app->audio->PlayMusic("Assets/audio/music/videoplayback.ogg");    Destroy ears
 		app->audio->PlayFx(jungleMusic, 0);
 
@@ -205,8 +205,8 @@ bool Scene::Start()
 
 
 		}
-		
-		
+
+
 		/*
 			r_characterRun[0]= { 0,37, 50, 37*2 };
 			r_characterRun[1] = { 50,37, 100, 37 * 2 };
@@ -223,7 +223,7 @@ bool Scene::Start()
 			r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
 			r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
 			*/
-		
+
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
 		//app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 15 - 24, 48 * 13 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
@@ -231,9 +231,10 @@ bool Scene::Start()
 		marginX = 5;
 		marginX = 5;
 
-		
+
 	}break;
 	}
+	goodEndingScreen = app->tex->Load("Assets/maps/good_ending_screen.png");
 	
 	
 	return true;
@@ -491,9 +492,25 @@ bool Scene::Update(float dt)
 
 		app->win->SetTitle(title.GetString());
 
+		if (app->player->GetColHitbox()->body->GetPosition().x > 80)
+		{
+			
+			app->audio->clearAudio();
+			state = END;
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			Start();
+			
+
+		}
 
 
-
+	}break;
+	case END:
+	{
+		//app->render->DrawTexture(loadingScreen, 55, 800,NULL,SDL_FLIP_NONE,0);
+		app->render->DrawTexture(goodEndingScreen, 55, 100);
+	
 	}break;
 	}
 	

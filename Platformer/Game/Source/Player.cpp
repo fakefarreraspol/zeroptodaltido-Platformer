@@ -104,6 +104,7 @@ bool Player::Update(float dt)
 {
 	if (app->scene->state == app->scene->GAMEPLAY)
 	{
+		//LOG("%f", ColHitbox->body->GetPosition().x);
 		//ColSensor->body->SetTransform(ColHitbox->body->GetPosition(), 0);
 		currentTime = SDL_GetTicks();
 		b2Vec2 pos = { x,y };
@@ -456,7 +457,7 @@ bool Player::Update(float dt)
 	}
 	
 
-
+	
 
 	return true;
 }

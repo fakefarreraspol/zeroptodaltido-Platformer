@@ -76,6 +76,7 @@ private:
 	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
 	SDL_Texture* loadingScreen;
+	SDL_Texture* goodEndingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
