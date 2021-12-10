@@ -40,7 +40,7 @@ bool EnemyMushroom::Start()
 	posCheckTime = 15;
 	speed.x = 3.f;
 	speed.y = 0.f;
-	maxDistanceAgro = 6;
+	maxDistanceAgro = 5;
 
 
 	//initial values
@@ -71,7 +71,7 @@ bool EnemyMushroom::Update(float dt)
 {
 	//navegation AI
 	currentTime = SDL_GetTicks();
-
+	iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
 	if (checkTimer == posCheckTime)
 	{
 		currentMapTilePosition = app->map->WorldToMap(
@@ -83,7 +83,7 @@ bool EnemyMushroom::Update(float dt)
 		{
 			lastMapTilePosition = currentMapTilePosition;
 		}
-		iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
+		
 
 		uint leftCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
 		uint leftDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
@@ -177,7 +177,7 @@ bool EnemyMushroom::Update(float dt)
 
 
 
-
+	if (worldPosIpoint.y > 30 * 48) app->enemyMaster->DestroyEnemy(Hitbox);
 
 
 	Hitbox->body->SetLinearVelocity(currentSpeed);

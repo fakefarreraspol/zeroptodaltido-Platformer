@@ -470,12 +470,6 @@ bool Scene::Update(float dt)
 			trespasableCounter = trespasableCounter->next;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
-		{
-			app->physics->CreateCircle(app->input->GetMouseX() - app->render->camera.x, app->input->GetMouseY() - app->render->camera.y, 23);
-			LOG("circle created");
-		}
-
 		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 		// Draw map
@@ -492,7 +486,7 @@ bool Scene::Update(float dt)
 
 		app->win->SetTitle(title.GetString());
 
-		if (app->player->GetColHitbox()->body->GetPosition().x > 80)
+		if (app->player->GetColHitbox()->body->GetPosition().x > 98)
 		{
 			
 			app->audio->clearAudio();

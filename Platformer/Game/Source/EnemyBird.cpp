@@ -42,7 +42,7 @@ bool EnemyBird::Start()
 	posCheckTime = 8;
 	posCheckTimeAgro = 15;
 	maxDistanceAgroBase = 8;
-	maxDistanceAgroActive = 14;
+	maxDistanceAgroActive = 11;
 
 	agroSpeed.x = 3.f;
 	agroSpeed.y = 3.f;

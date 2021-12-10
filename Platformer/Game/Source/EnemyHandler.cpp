@@ -199,7 +199,7 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 void EnemyHandler::DestroyEnemy(PhysBody* body)
 {
 
-	bool cont = false;
+	bool cont = false; 
 
 	p2List_item<EnemyMushroom*>* mushroom = enemiesMushroom.getFirst();
 	for (int i = 0; i < enemiesMushroom.count(); i++)
