@@ -153,19 +153,19 @@ bool Player::Update(float dt)
 		}
 		if (lastPlayerHP != playerHP)
 		{
-			audioHurt = currentTime % 3;
+			audioHurt = currentTime % 2;
 			if (audioHurt == 0)
 			{
-				app->audio->PlayFx(playerHurt);
+				app->audio->PlayFx(playerHurt3);
 			}
 			else if (audioHurt == 1)
 			{
 				app->audio->PlayFx(playerHurt2);
 			}
-			else
+			/*else
 			{
 				app->audio->PlayFx(playerHurt3);
-			}
+			}*/
 			lastPlayerHP = playerHP;
 		}
 

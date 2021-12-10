@@ -235,8 +235,9 @@ bool Scene::Start()
 	}break;
 	}
 	goodEndingScreen = app->tex->Load("Assets/maps/good_ending_screen.png");
-	
-	
+	badEndingScreen = app->tex->Load("Assets/maps/bad_ending_screen.png");
+	badEnding = app->audio->LoadFx("Assets/audio/fx/bad_ending.wav");
+	goodEnding = app->audio->LoadFx("Assets/audio/fx/good_ending.wav");
 	return true;
 }
 
@@ -486,9 +487,9 @@ bool Scene::Update(float dt)
 
 		app->win->SetTitle(title.GetString());
 
-		if (app->player->GetColHitbox()->body->GetPosition().x > 98)
+		if ((app->player->GetColHitbox()->body->GetPosition().x > 98)||(app->player->GetPlayerLifes()<=0))
 		{
-			
+			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
 			app->audio->clearAudio();
 			state = END;
 			app->render->camera.x = 0;
@@ -503,7 +504,26 @@ bool Scene::Update(float dt)
 	case END:
 	{
 		//app->render->DrawTexture(loadingScreen, 55, 800,NULL,SDL_FLIP_NONE,0);
-		app->render->DrawTexture(goodEndingScreen, 55, 100);
+		if (whichEnding)
+		{
+			if (sound)
+			{
+				app->audio->PlayFx(goodEnding);
+				sound = false;
+			}
+			app->render->DrawTexture(goodEndingScreen, 55, 100);
+			
+		}
+		else
+		{
+			if (sound)
+			{
+				app->audio->PlayFx(badEnding);
+				sound = false;
+			}
+			app->render->DrawTexture(badEndingScreen, 0, 20);
+		}
+		
 	
 	}break;
 	}

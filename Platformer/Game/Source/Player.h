@@ -66,7 +66,10 @@ public:
 		playerLifes--;
 		playerHP = PLAYER_MAX_HP;
 	}
-
+	int GetPlayerLifes()
+	{
+		return playerLifes;
+	}
 	void RestartPlayer()
 	{
 		app->render->camera.x = 0;

@@ -77,6 +77,7 @@ private:
 	SDL_Texture* texBackground;
 	SDL_Texture* loadingScreen;
 	SDL_Texture* goodEndingScreen;
+	SDL_Texture* badEndingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
@@ -87,7 +88,10 @@ private:
 	int currentTime = 0;
 	int lastTime = 0;
 	bool loadingScreenActive = false;
+	uint goodEnding = 0;
+	uint badEnding = 0;
 	bool whichEnding = true;
+	bool sound = true;
 	SDL_Rect r_characterRun[7];
 	SDL_Rect r_characterJump[7];
 
