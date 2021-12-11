@@ -102,7 +102,7 @@ bool EnemyHandler::Update(float dt)
 
 bool EnemyHandler::LoadState(pugi::xml_node& data)
 {
-	DestroyAllEnemies();
+	//DestroyAllEnemies();
 	//pugi::xml_node myself = data.child("EnemyHandler");
 
 	if (data != NULL)
@@ -126,10 +126,12 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 		{
 			EnemyMushroom* temp;
 			enemiesMushroom.at(i, temp);
-			if (temp == nullptr)
+			if (temp == nullptr || enemiesMushroom.count() == 0)
 			{
 				CreateEnemy(EnemyType::ENEMY_MUSHROOM, 0, 0);
+				enemiesMushroom.at(i, temp);
 			}
+			
 			
 			temp->LoadState(prop);
 			i++;
@@ -140,12 +142,14 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 		for (prop = data.child("EnemyBird"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyBird"))
 		{
 			EnemyBird* temp;
+			enemiesBird.at(i, temp);
 			if (temp == nullptr || enemiesBird.count() == 0)
 			{
 				CreateEnemy(EnemyType::ENEMY_BIRD, 0, 0);
+				enemiesBird.at(i, temp);
 			}
 
-			enemiesBird.at(i, temp);
+
 			temp->LoadState(prop);
 			i++;
 
@@ -156,10 +160,12 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 		{
 			EnemySnake* temp;
 			enemiesSnake.at(i, temp);
-			if (temp == nullptr)
+			if (temp == nullptr || enemiesSnake.count() == 0)
 			{
 				CreateEnemy(EnemyType::ENEMY_SNAKE, 0, 0);
+				enemiesSnake.at(i, temp);
 			}
+
 			temp->LoadState(prop);
 			i++;
 
@@ -183,6 +189,22 @@ bool EnemyHandler::SaveState(pugi::xml_node& data) const
 	//myself.append_attribute("MushroomCount").set_value(enemiesMushroom.count());
 	//myself.append_attribute("BirdCount").set_value(enemiesBird.count());
 	//myself.append_attribute("SnakeCount").set_value(enemiesSnake.count());
+
+	pugi::xml_node iteratorRemove = data.first_child();
+
+	while (iteratorRemove.next_sibling())
+	{
+		pugi::xml_node toRemove = iteratorRemove.next_sibling();
+		data.remove_child(toRemove);
+	}
+	data.remove_child(iteratorRemove);
+
+	//for (pugi::xml_node iteratorRemove = data.first_child(); iteratorRemove; iteratorRemove = iteratorRemove.next_sibling())
+	//{
+	//	pugi::xml_node toRemove = iteratorRemove;
+	//	data.remove_child(toRemove);
+	//	data.remove_child(toRemove.next_sibling());
+	//}
 
 	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{

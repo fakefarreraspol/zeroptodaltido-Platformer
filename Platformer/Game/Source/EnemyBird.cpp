@@ -360,14 +360,9 @@ bool EnemyBird::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node myself = data.append_child("EnemyBird");
 
-	/*
-	spawnPos
-	checkTimer = 0;
-	checkTimerAgro = 0;
-	maxDistanceAgro = 0;
-	currentSpeed.x = 0;
-	currentSpeed.y = 0;
-	*/
+	myself.append_attribute("currentSpeed.x").set_value(currentSpeed.x);
+	myself.append_attribute("currentSpeed.y").set_value(currentSpeed.y);
+
 	myself.append_attribute("spawnPos.x").set_value(spawnPos.x);
 	myself.append_attribute("spawnPos.y").set_value(spawnPos.y);
 
@@ -377,9 +372,6 @@ bool EnemyBird::SaveState(pugi::xml_node& data) const
 	myself.append_attribute("checkTimer").set_value(checkTimer);
 	myself.append_attribute("checkTimerAgro").set_value(checkTimerAgro);
 	myself.append_attribute("maxDistanceAgro").set_value(maxDistanceAgro);
-
-	myself.append_attribute("currentSpeed.x").set_value(currentSpeed.x);
-	myself.append_attribute("currentSpeed.y").set_value(currentSpeed.y);
 	
 	myself.append_attribute("agroTowardsPlayer").set_value(agroTowardsPlayer);
 	myself.append_attribute("health").set_value(health);
