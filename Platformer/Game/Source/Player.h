@@ -73,8 +73,6 @@ public:
 	}
 	void RestartPlayer()
 	{
-		app->render->camera.x = 0;
-		app->render->camera.y = -48 * 14;
 
 		b2Vec2 v = { PIXEL_TO_METERS(gorilaStartX), PIXEL_TO_METERS(gorilaStartY) };
 		ColHitbox->body->SetTransform(v, 0);
@@ -84,9 +82,12 @@ public:
 
 	void HurtGorila(int damage)
 	{
-		iFramesActive = true;
-		currentIFrameTime = 0;
-		playerHP -= damage;
+		if (!iFramesActive)
+		{
+			iFramesActive = true;
+			currentIFrameTime = 0;
+			playerHP -= damage;
+		}
 	}
 	/*enum GameState
 	{
@@ -120,7 +121,7 @@ private:
 	float startPosX;
 	float startPosY;
 	int currentIFrameTime = 0;
-	int iFrameReference = 120;
+	int iFrameReference = 180;
 	bool iFramesActive = false;
 	bool drawGorila = true;
 	int currentTime = 0;

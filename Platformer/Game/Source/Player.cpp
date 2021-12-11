@@ -476,6 +476,7 @@ bool Player::LoadState(pugi::xml_node& data)
 	startPosY = data.child("startPos").attribute("y").as_float(0);
 
 	b2Vec2 v = { PIXEL_TO_METERS( startPosX), PIXEL_TO_METERS(startPosY )};
+	RestartPlayer();
 	ColHitbox->body->SetTransform(v, 0);
 
 	return true;

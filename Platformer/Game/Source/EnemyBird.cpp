@@ -223,6 +223,15 @@ bool EnemyBird::Update(float dt)
 	//LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
 	//LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
 
+	if (Hitbox->body->GetContactList() != nullptr)
+	{
+		b2Body* playerB = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
+		if (playerB == app->player->GetColHitbox()->body)
+		{
+			app->player->HurtGorila(1);
+		}
+	}
+
 	if (currentSpeed.x >= 0)
 	{
 		birdDirection = true;
