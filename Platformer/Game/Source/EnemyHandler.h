@@ -45,6 +45,7 @@ public:
 	void DestroyEnemy(PhysBody* body);
 	void DamageEnemy(b2Body* body, int damage);
 	void HandleEnemyDespawn();
+	void DestroyAllEnemies();
 
 	bool PhysBodyIsInMap(PhysBody* phys)
 	{
@@ -58,7 +59,6 @@ public:
 		return app->pathfinding->CheckBoundaries(positionInMap);
 
 	}
-
 
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;

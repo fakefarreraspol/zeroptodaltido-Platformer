@@ -11,7 +11,8 @@
 #include "SDL/include/SDL.h"
 #include "Render.h"
 #include "Animation.h"
-
+#include "Pathfinding.h"
+#include "Map.h"
 
 
 class Player : public Module
@@ -95,6 +96,20 @@ public:
 	};
 	GameState state;
 	*/
+
+	bool PhysBodyIsInMap(PhysBody* phys)
+	{
+		iPoint positionInMap(
+			app->map->WorldToMap(
+				METERS_TO_PIXELS(phys->body->GetPosition().x),
+				METERS_TO_PIXELS(phys->body->GetPosition().y)
+			)
+		);
+
+		return app->pathfinding->CheckBoundaries(positionInMap);
+
+	}
+
 private:
 
 

@@ -382,6 +382,13 @@ bool Player::Update(float dt)
 		p2List_item<PhysBody*>* currentBanana = bananasThrown.getFirst();
 		while (currentBanana != NULL)
 		{
+
+			if (!PhysBodyIsInMap(currentBanana->data))
+			{
+				app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+				bananasThrown.del(currentBanana);
+			}
+
 			if (bananaOnMap)
 			{
 				b2Vec2 v(currentBanana->data->body->GetLinearVelocity().x, -0.408f);

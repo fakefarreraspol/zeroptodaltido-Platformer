@@ -40,7 +40,7 @@ bool EnemyBird::Start()
 
 	//permanent values
 	posCheckTime = 8;
-	posCheckTimeAgro = 8;
+	posCheckTimeAgro = 15;
 	maxDistanceAgroBase = 8;
 	maxDistanceAgroActive = 11;
 
@@ -49,22 +49,24 @@ bool EnemyBird::Start()
 	calmSpeed.x = 3.f;
 	calmSpeed.y = 3.f;
 	startPosMargin = 48 + 24;
-	currentSpeed.x = 0;
-	currentSpeed.y = 0;
+	
 
+	r_bird[0] = { 0,16,16,16 };
+	r_bird[1] = { 16,16,16,16 };
+	r_bird[2] = { 16 * 2,16,16,16 };
+	r_bird[3] = { 16 * 3,16,16,16 };
+	r_bird[4] = { 16 * 4,16,16,16 };
+	r_bird[5] = { 16 * 5,16,16,16 };
+	r_bird[6] = { 16 * 6,16,16,16 };
+	r_bird[7] = { 16 * 7,16,16,16 };
+	
 	//initial values
 	checkTimer = 0;
 	checkTimerAgro = 0;
 	maxDistanceAgro = 0;
-
-	r_bird[0] = { 0,16,16,16 };
-	r_bird[1] = { 16,16,16,16 };
-	r_bird[2] = { 16*2,16,16,16 };
-	r_bird[3] = { 16*3,16,16,16 };
-	r_bird[4] = { 16*4,16,16,16 };
-	r_bird[5] = { 16*5,16,16,16 };
-	r_bird[6] = { 16*6,16,16,16 };
-	r_bird[7] = { 16*7,16,16,16 };
+	currentSpeed.x = 0;
+	currentSpeed.y = 0;
+	
 
 	return true;
 }
@@ -329,12 +331,26 @@ bool EnemyBird::Update(float dt)
 
 bool EnemyBird::LoadState(pugi::xml_node& data)
 {
+	
+	spawnPos.x = data.attribute("spawnPos.x").as_int();
+	spawnPos.y = data.attribute("spawnPos.y").as_int();
 
-	//startPosX = data.child("startPos").attribute("x").as_float(0);
-	//startPosY = data.child("startPos").attribute("y").as_float(0);
+	b2Vec2 currentPos(data.attribute("currentPos.x").as_float(), data.attribute("currentPos.y").as_float());
+	Hitbox->body->SetTransform(currentPos, 0);
 
-	//b2Vec2 v = { PIXEL_TO_METERS(startPosX), PIXEL_TO_METERS(startPosY) };
-	//ColHitbox->body->SetTransform(v, 0);
+	LOG("pos, %i %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().x), METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
+	LOG("pos, %i %i", METERS_TO_PIXELS(currentPos.x), METERS_TO_PIXELS(currentPos.y));
+
+	checkTimer = data.attribute("checkTimer").as_int();
+	checkTimerAgro = data.attribute("checkTimerAgro").as_int();
+
+	maxDistanceAgro = data.attribute("maxDistanceAgro").as_int();
+
+	currentSpeed.x = data.attribute("currentSpeed.x").as_float();
+	currentSpeed.y = data.attribute("currentSpeed.y").as_float();
+
+	agroTowardsPlayer = data.attribute("agroTowardsPlayer").as_bool();
+	health = data.attribute("health").as_int();
 
 	return true;
 }
@@ -342,10 +358,33 @@ bool EnemyBird::LoadState(pugi::xml_node& data)
 
 bool EnemyBird::SaveState(pugi::xml_node& data) const
 {
+	pugi::xml_node myself = data.append_child("EnemyBird");
 
-	//LOG("saving camera pos");
-	//data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
-	//data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
+	/*
+	spawnPos
+	checkTimer = 0;
+	checkTimerAgro = 0;
+	maxDistanceAgro = 0;
+	currentSpeed.x = 0;
+	currentSpeed.y = 0;
+	*/
+	myself.append_attribute("spawnPos.x").set_value(spawnPos.x);
+	myself.append_attribute("spawnPos.y").set_value(spawnPos.y);
+
+	myself.append_attribute("currentPos.x").set_value(Hitbox->body->GetPosition().x);
+	myself.append_attribute("currentPos.y").set_value(Hitbox->body->GetPosition().y);
+
+	myself.append_attribute("checkTimer").set_value(checkTimer);
+	myself.append_attribute("checkTimerAgro").set_value(checkTimerAgro);
+	myself.append_attribute("maxDistanceAgro").set_value(maxDistanceAgro);
+
+	myself.append_attribute("currentSpeed.x").set_value(currentSpeed.x);
+	myself.append_attribute("currentSpeed.y").set_value(currentSpeed.y);
+	
+	myself.append_attribute("agroTowardsPlayer").set_value(agroTowardsPlayer);
+	myself.append_attribute("health").set_value(health);
+	
+	
 	return true;
 }
 

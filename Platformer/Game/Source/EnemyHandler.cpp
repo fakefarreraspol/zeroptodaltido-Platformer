@@ -12,7 +12,7 @@
 
 EnemyHandler::EnemyHandler() : Module()
 {
-	name.Create("enemyHandler");
+	name.Create("EnemyHandler");
 }
 
 EnemyHandler::~EnemyHandler()
@@ -102,32 +102,69 @@ bool EnemyHandler::Update(float dt)
 
 bool EnemyHandler::LoadState(pugi::xml_node& data)
 {
-	
-	for (int i = 0; i < enemiesMushroom.count(); i++)
+	DestroyAllEnemies();
+	//pugi::xml_node myself = data.child("EnemyHandler");
+
+	if (data != NULL)
 	{
+		pugi::xml_node prop;
 
-		EnemyMushroom* iteratorMushroom;
-		enemiesMushroom.at(i, iteratorMushroom);
+		int i = 0;
+		//prop = myself.child("EnemyMushroom");
+		//while (prop.type() == pugi::node_element)
+		//{
+		//	CreateEnemy(EnemyType::ENEMY_MUSHROOM, 0, 0);
+		//	EnemyMushroom* temp;
+		//	enemiesMushroom.at(i, temp);
+		//	temp->LoadState(myself);
+		//	i++;
+		//
+		//	prop = prop.next_sibling("EnemyMushroom");
+		//}
 
-		iteratorMushroom->LoadState(data);
-	}
+		for (prop = data.child("EnemyMushroom"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyMushroom"))
+		{
+			EnemyMushroom* temp;
+			enemiesMushroom.at(i, temp);
+			if (temp == nullptr)
+			{
+				CreateEnemy(EnemyType::ENEMY_MUSHROOM, 0, 0);
+			}
+			
+			temp->LoadState(prop);
+			i++;
+		
+		}
+		i = 0;
 
-	for (int i = 0; i < enemiesBird.count(); i++)
-	{
+		for (prop = data.child("EnemyBird"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyBird"))
+		{
+			EnemyBird* temp;
+			if (temp == nullptr || enemiesBird.count() == 0)
+			{
+				CreateEnemy(EnemyType::ENEMY_BIRD, 0, 0);
+			}
 
-		EnemyBird* iteratorBird;
-		enemiesBird.at(i, iteratorBird);
+			enemiesBird.at(i, temp);
+			temp->LoadState(prop);
+			i++;
 
-		iteratorBird->LoadState(data);
-	}
+		}
+		i = 0;
 
-	for (int i = 0; i < enemiesSnake.count(); i++)
-	{
+		for (prop = data.child("EnemySnake"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemySnake"))
+		{
+			EnemySnake* temp;
+			enemiesSnake.at(i, temp);
+			if (temp == nullptr)
+			{
+				CreateEnemy(EnemyType::ENEMY_SNAKE, 0, 0);
+			}
+			temp->LoadState(prop);
+			i++;
 
-		EnemySnake* iteratorSnake;
-		enemiesSnake.at(i, iteratorSnake);
-
-		iteratorSnake->LoadState(data);
+		}
+		i = 0;
 	}
 
 	return true;
@@ -136,6 +173,16 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 
 bool EnemyHandler::SaveState(pugi::xml_node& data) const
 {
+	//pugi::xml_node myself = data.child("EnemyHandler");
+	//if (myself.type() != pugi::node_element)
+	//{
+	//	pugi::xml_node myself = data.append_child("EnemyHandler");
+	//
+	//}
+
+	//myself.append_attribute("MushroomCount").set_value(enemiesMushroom.count());
+	//myself.append_attribute("BirdCount").set_value(enemiesBird.count());
+	//myself.append_attribute("SnakeCount").set_value(enemiesSnake.count());
 
 	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
@@ -194,6 +241,8 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	default:
 		break;
 	}
+
+	LOG("enemy Created");
 }
 
 void EnemyHandler::DestroyEnemy(PhysBody* body)
@@ -354,4 +403,35 @@ void EnemyHandler::HandleEnemyDespawn()
 	}
 }
 
+void EnemyHandler::DestroyAllEnemies()
+{
+
+	for (int i = 0; i < enemiesMushroom.count(); i++)
+	{
+
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+		
+		DestroyEnemy(iteratorMushroom->GetPhysBody());
+	}
+
+	for (int i = 0; i < enemiesBird.count(); i++)
+	{
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+		
+		DestroyEnemy(iteratorBird->GetPhysBody());
+	}
+
+	for (int i = 0; i < enemiesSnake.count(); i++)
+	{
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+		
+		DestroyEnemy(iteratorSnake->GetPhysBody());
+	}
+
+}
 

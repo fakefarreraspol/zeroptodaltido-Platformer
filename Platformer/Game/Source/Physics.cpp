@@ -17,6 +17,7 @@
 
 Physics::Physics() : Module()
 {
+	name.Create("physics");
 	world = NULL;
 	debug = false;
 }

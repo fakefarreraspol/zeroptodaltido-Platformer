@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+	<app>
+		<title>Game Development Testbed</title>
+		<organization>UPC</organization>
+	</app>
+	<player>
+		<startPos x="4647" y="216" />
+	</player>
+	<renderer>
+		<vsync value="false" />
+		<camera x="-4408" y="-129" />
+	</renderer>
+	<window>
+		<resolution width="1080" height="720" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<Scene />
+	<map>
+		<folder>Assets/maps/</folder>
+	</map>
+</config>
