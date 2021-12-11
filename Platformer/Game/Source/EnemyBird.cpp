@@ -149,7 +149,7 @@ bool EnemyBird::Update(float dt)
 	{
 		if (checkTimer == posCheckTime)
 		{
-			LOG("timer working");
+			//LOG("timer working");
 			checkTimerAgro = 0;
 
 

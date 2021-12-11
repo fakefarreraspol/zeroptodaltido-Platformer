@@ -259,6 +259,9 @@ void EnemyHandler::DestroyEnemy(PhysBody* body)
 		}
 		bird = bird->next;
 	}
+
+	if (cont) 
+		LOG("Enemy destroyed");
 }
 
 void EnemyHandler::DamageEnemy(b2Body* body, int damage)
@@ -315,6 +318,39 @@ void EnemyHandler::DamageEnemy(b2Body* body, int damage)
 			iteratorSnake->DoDamage(damage);
 			cont = true;
 		}
+	}
+}
+
+void EnemyHandler::HandleEnemyDespawn()
+{
+	for (int i = 0; i < enemiesMushroom.count(); i++)
+	{
+
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+		if (PhysBodyIsInMap(iteratorMushroom->GetPhysBody())) 
+			DestroyEnemy(iteratorMushroom->GetPhysBody());
+	}
+
+	for (int i = 0; i < enemiesBird.count(); i++)
+	{
+
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+		if (PhysBodyIsInMap(iteratorBird->GetPhysBody()))
+			DestroyEnemy(iteratorBird->GetPhysBody());
+	}
+
+	for (int i = 0; i < enemiesSnake.count(); i++)
+	{
+
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		if (PhysBodyIsInMap(iteratorSnake->GetPhysBody()))
+			DestroyEnemy(iteratorSnake->GetPhysBody());
 	}
 }
 

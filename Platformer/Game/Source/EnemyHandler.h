@@ -11,6 +11,8 @@
 #include "Render.h"
 #include "Animation.h"
 #include "Log.h"
+#include "Map.h"
+#include "Pathfinding.h"
 
 //enemies
 #include "EnemySnake.h"
@@ -42,6 +44,21 @@ public:
 	void CreateEnemy(EnemyType type, int x, int y);
 	void DestroyEnemy(PhysBody* body);
 	void DamageEnemy(b2Body* body, int damage);
+	void HandleEnemyDespawn();
+
+	bool PhysBodyIsInMap(PhysBody* phys)
+	{
+		iPoint positionInMap(
+			app->map->WorldToMap(
+				METERS_TO_PIXELS(phys->body->GetPosition().x),
+				METERS_TO_PIXELS(phys->body->GetPosition().y)
+			)
+		);
+
+		return app->pathfinding->CheckBoundaries(positionInMap);
+
+	}
+
 
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;
