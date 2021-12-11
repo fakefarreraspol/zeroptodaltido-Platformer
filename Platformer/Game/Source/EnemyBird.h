@@ -104,7 +104,7 @@ private:
 	int maxDistanceAgroBase;
 	int maxDistanceAgroActive;
 	int maxDistanceAgro;
-	
+	bool inSpawnPos = true;
 
 
 };

@@ -487,7 +487,7 @@ bool Scene::Update(float dt)
 
 		app->win->SetTitle(title.GetString());
 
-		if ((app->player->GetColHitbox()->body->GetPosition().x > 98)||(app->player->GetPlayerLifes()<=0))
+		if ((app->player->GetColHitbox()->body->GetPosition().x > 90)||(app->player->GetPlayerLifes()<=0))
 		{
 			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
 			app->audio->clearAudio();

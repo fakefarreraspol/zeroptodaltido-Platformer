@@ -40,15 +40,15 @@ bool EnemyBird::Start()
 
 	//permanent values
 	posCheckTime = 8;
-	posCheckTimeAgro = 15;
+	posCheckTimeAgro = 8;
 	maxDistanceAgroBase = 8;
 	maxDistanceAgroActive = 11;
 
 	agroSpeed.x = 3.f;
 	agroSpeed.y = 3.f;
-	calmSpeed.x = 1.f;
-	calmSpeed.x = 1.f;
-	startPosMargin = 48;
+	calmSpeed.x = 3.f;
+	calmSpeed.y = 3.f;
+	startPosMargin = 48 + 24;
 	currentSpeed.x = 0;
 	currentSpeed.y = 0;
 
@@ -87,6 +87,8 @@ bool EnemyBird::Update(float dt)
 	);
 	
 	currentTime = SDL_GetTicks();
+
+	
 
 	if (agroTowardsPlayer)
 	{
@@ -147,16 +149,19 @@ bool EnemyBird::Update(float dt)
 	{
 		if (checkTimer == posCheckTime)
 		{
-			//LOG("timer working");
+			LOG("timer working");
 			checkTimerAgro = 0;
 
 
-
-
 			if (!Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().x),spawnPosition.x - startPosMargin, spawnPosition.x + startPosMargin)
-				&& !Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().y), spawnPosition.y - startPosMargin, spawnPosition.y + startPosMargin))
+				|| !Between(METERS_TO_PIXELS(Hitbox->body->GetPosition().y), spawnPosition.y - startPosMargin, spawnPosition.y + startPosMargin))
 			{
 				app->pathfinding->CreatePath(myPosMap, spawnPosMap);
+				inSpawnPos = false;
+			}
+			else {
+				inSpawnPos = true;
+
 			}
 
 
@@ -173,7 +178,10 @@ bool EnemyBird::Update(float dt)
 	{
 		iPoint temp(tempPath->At(1)->x, tempPath->At(1)->y);
 		nextMovePos = temp;
+
+
 	}
+
 
 	nextMovePos = app->map->MapToWorld(nextMovePos.x, nextMovePos.y);
 
@@ -190,9 +198,22 @@ bool EnemyBird::Update(float dt)
 		currentSpeed.y = agroSpeed.y * direction.y;
 	}
 	else {
-		currentSpeed.x = calmSpeed.x * direction.x;
-		currentSpeed.y = calmSpeed.y * direction.y;
+		if (!inSpawnPos)
+		{
+			currentSpeed.x = calmSpeed.x * direction.x;
+			currentSpeed.y = calmSpeed.y * direction.y;
+		}
+		else {
+			currentSpeed.x = 0;
+			currentSpeed.y = 0;
+		}
 	}
+	//LOG("next pos world %i", nextMovePos.y + 24);
+	//LOG("pos, %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
+	//LOG("res: %i", nextMovePos.y + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
+	//LOG("res: %i", METERS_TO_PIXELS(direction.y));
+	//LOG("res: %i", METERS_TO_PIXELS(calmSpeed.y));
+	//LOG("res: %i", METERS_TO_PIXELS(currentSpeed.y));
 	//LOG("spawn: %i, %i", nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().x), nextMovePos.x + 24 - METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
 	Hitbox->body->SetLinearVelocity(currentSpeed);
 

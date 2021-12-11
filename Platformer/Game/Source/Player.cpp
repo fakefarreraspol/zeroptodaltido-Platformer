@@ -63,8 +63,8 @@ bool Player::Start()
 		//player stats
 		startPosX = 48 * 4;
 		startPosY = 48 * 22;
-		speed = { 7.f,0 };
-		jumpForce = { 0,-25.f };
+		speed = { 8.f,0 };
+		jumpForce = { 0,-27.f };
 
 
 		ColHitbox = app->physics->CreateCircle(startPosX, startPosY, 23);
@@ -169,11 +169,12 @@ bool Player::Update(float dt)
 			lastPlayerHP = playerHP;
 		}
 
+		//LOG("x: %f", ColHitbox->body->GetPosition().x);
+
 
 		if (iFramesActive)
 		{
 			currentIFrameTime++;
-			LOG("iframes time: %i", currentIFrameTime);
 			int blinkTime = 20;
 			
 			if (currentIFrameTime % blinkTime >= 0 && currentIFrameTime % blinkTime <= blinkTime/2)

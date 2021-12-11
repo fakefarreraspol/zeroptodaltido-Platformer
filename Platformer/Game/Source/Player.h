@@ -37,20 +37,20 @@ public:
 	}
 
 
-	const float getX()
+	const float getX() const
 	{
 		return x;
 	}
-	const float getY()
+	const float getY() const
 	{
 		return y;
 	}
-	const b2Vec2 GetSpeed()
+	const b2Vec2 GetSpeed() const
 	{
 		return speed;
 	}
 
-	const int GetDirection()
+	const int GetDirection() const
 	{
 		return goRight - goLeft;
 	}
@@ -66,7 +66,7 @@ public:
 		playerLifes--;
 		playerHP = PLAYER_MAX_HP;
 	}
-	int GetPlayerLifes()
+	int GetPlayerLifes() const
 	{
 		return playerLifes;
 	}

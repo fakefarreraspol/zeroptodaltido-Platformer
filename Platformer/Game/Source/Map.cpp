@@ -389,7 +389,6 @@ bool Map::Load(const char* filename)
 		MapLayer* lay = new MapLayer();
 
 		ret = LoadLayer(layer, lay);
-		LOG("layer res: %i", ret);
 
 		if (ret == true)
 			data.layers.add(lay);
@@ -605,8 +604,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		{
 			continue;
 		}
-		
-		LOG("passed");
+
 		uchar* map = new uchar[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
 
