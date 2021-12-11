@@ -65,7 +65,6 @@ public:
 	void PlayerDeath()
 	{
 		playerLifes--;
-		playerHP = PLAYER_MAX_HP;
 	}
 	int GetPlayerLifes() const
 	{
@@ -77,16 +76,27 @@ public:
 		b2Vec2 v = { PIXEL_TO_METERS(gorilaStartX), PIXEL_TO_METERS(gorilaStartY) };
 		ColHitbox->body->SetTransform(v, 0);
 		playerHP = PLAYER_MAX_HP;
-		playerLifes = 3;
+		lastPlayerHP = playerHP;
+		
+		b2Vec2 s(0, 0);
+		ColHitbox->body->SetLinearVelocity(s);
+
+		//quit when adding endings
+		//playerLifes = 3;
 	}
+
+	
 
 	void HurtGorila(int damage)
 	{
-		if (!iFramesActive)
+		if (!AdminMode)
 		{
-			iFramesActive = true;
-			currentIFrameTime = 0;
-			playerHP -= damage;
+			if (!iFramesActive)
+			{
+				iFramesActive = true;
+				currentIFrameTime = 0;
+				playerHP -= damage;
+			}
 		}
 	}
 	/*enum GameState
@@ -113,6 +123,7 @@ public:
 
 private:
 
+	bool AdminMode;
 
 	void HitAnimation();
 	p2List<PhysBody*> bananasThrown;

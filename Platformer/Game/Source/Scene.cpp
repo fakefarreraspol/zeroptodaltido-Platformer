@@ -225,9 +225,17 @@ bool Scene::Start()
 			*/
 
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 15 - 24, 48 * 13 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 43 - 24, 48 * 13 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
+
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 24, 48 * 14 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 		marginX = 5;
 		marginX = 5;
 
@@ -284,7 +292,7 @@ bool Scene::Update(float dt)
 
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			loadingScreenActive = true;
 			lastTime = currentTime;
@@ -361,16 +369,25 @@ bool Scene::Update(float dt)
 
 		// L02: DONE 3: Request Load / Save when pressing L/S
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-			app->LoadGameRequest();
-
-		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->SaveGameRequest();
 
-		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+			app->LoadGameRequest();
+
+		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 		{
 			if (!freeCam) freeCam = true;
 			else freeCam = false;
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+		{
+			if (app->GetMaxFrames() == 30) app->SetMaxFrames(60);
+			else if (app->GetMaxFrames() == 60) app->SetMaxFrames(30);
+			//LOG("current: %i", app->GetMaxFrames());
+			
+		}
+
 		playerX = app->player->GetColHitbox()->body->GetPosition().x;
 		playerY = app->player->GetColHitbox()->body->GetPosition().y;
 
@@ -403,7 +420,7 @@ bool Scene::Update(float dt)
 
 
 			if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-				if (app->render->camera.y > (-48 * 14))
+				if (app->render->camera.y > (-48 * 15 + 16))
 				{
 					app->render->camera.y -= cameraSpeed;
 				}
@@ -419,7 +436,7 @@ bool Scene::Update(float dt)
 
 
 			if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT))
-				if (app->render->camera.x > (-48 * 33))
+				if (app->render->camera.x > (-48 * 78 + 24))
 				{
 					app->render->camera.x -= cameraSpeed;
 				}
@@ -494,7 +511,8 @@ bool Scene::Update(float dt)
 			state = END;
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-			Start();
+			//Start();
+			
 			
 
 		}
@@ -523,7 +541,7 @@ bool Scene::Update(float dt)
 			}
 			app->render->DrawTexture(badEndingScreen, 0, 20);
 		}
-		
+		app->enemyMaster->DestroyAllEnemies();
 	
 	}break;
 	}

@@ -116,6 +116,16 @@ public:
 		return dt;
 	}
 
+	void SetMaxFrames(int maxFrames)
+	{
+		limitFrames = maxFrames;
+	}
+
+	int GetMaxFrames() const
+	{
+		return limitFrames;
+	}
+
 private:
 
 	

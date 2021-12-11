@@ -63,7 +63,7 @@ bool Player::Start()
 		//player stats
 		startPosX = 48 * 4;
 		startPosY = 48 * 22;
-		speed = { 8.f,0 };
+		speed = { 8.f,8.f };
 		jumpForce = { 0,-27.f };
 
 
@@ -114,20 +114,55 @@ bool Player::Update(float dt)
 		goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 		goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
-		if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
 			RestartPlayer();
-
+			app->render->camera.x = 0;
+			app->render->camera.y = -48 * 14;
+		
 		}
 
-		
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		{
+			AdminMode = !AdminMode;
+			ColHitbox->body->ResetMassData();
+			if (!ColHitbox->body->IsAwake())
+				ColHitbox->body->SetAwake(true);
+		}
 
-		b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
-		if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
-		else {
-			b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
-			ColHitbox->body->SetLinearVelocity(v);
 
+		if (!AdminMode)
+		{
+			ColHitbox->body->SetGravityScale(1);
+
+			b2Vec2 movement = { (goRight - goLeft) * speed.x, ColHitbox->body->GetLinearVelocity().y };
+			if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
+			else {
+				b2Vec2 v = { 0, ColHitbox->body->GetLinearVelocity().y };
+				ColHitbox->body->SetLinearVelocity(v);
+
+			}
+
+			if (ColHitbox->body->GetFixtureList()->IsSensor())
+			{
+				ColHitbox->body->GetFixtureList()->SetSensor(false);
+			}
+		}
+		else
+		{
+
+			if (!ColHitbox->body->GetFixtureList()->IsSensor())
+			{
+				ColHitbox->body->GetFixtureList()->SetSensor(true);
+			}
+
+			bool goUp = (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT);
+			bool goDown = (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT);
+
+			b2Vec2 movement = { (goRight - goLeft) * speed.x, (goDown - goUp) * speed.y};
+			if (!playerHit) ColHitbox->body->SetLinearVelocity(movement);
+			ColHitbox->body->SetGravityScale(0);
+			
 		}
 
 		b2Body* ground;
@@ -250,7 +285,9 @@ bool Player::Update(float dt)
 		{
 			HurtGorila(1);
 		}
-		int gorilaWalkFrameSpeed = 180;
+
+
+		int gorilaWalkFrameSpeed = 150;
 		if ((!onAir) && (!playerHit))
 		{
 
@@ -260,7 +297,9 @@ bool Player::Update(float dt)
 			{
 				PlayerDeath();
 				app->audio->PlayFx(playerDeath);
-				app->LoadGameRequest();
+				RestartPlayer();
+				app->render->camera.x = 0;
+				app->render->camera.y = -48 * 14;
 			}
 
 			if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE))

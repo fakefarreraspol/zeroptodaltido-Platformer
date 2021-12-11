@@ -160,20 +160,21 @@ bool App::Update()
 	long elapsedTime = (float)(end - init);
 	(float)SDL_GetPerformanceFrequency();
 
-	if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		limitFrames /= 2;
-	}
-	if (input->GetKey(SDL_SCANCODE_L) == KEY_UP)
-	{
-		limitFrames *= 2;
-	}
+	//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	//{
+	//	limitFrames /= 2;
+	//}
+	//if (input->GetKey(SDL_SCANCODE_L) == KEY_UP)
+	//{
+	//	limitFrames *= 2;
+	//}
 
 
 	currentFPS = limitFrames - (float)elapsedTime;
 	float frameSpeed = 1000 / currentFPS;
 	dt = 1.f / currentFPS;
 
+	//LOG("Current FPS: %f", currentFPS);
 
 	//LOG("Current FPS: %f", currentFPS);
 	//LOG("time left: %f", frameSpeed - elapsedTime);
