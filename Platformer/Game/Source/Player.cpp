@@ -272,7 +272,7 @@ bool Player::Update(float dt)
 
 
 		}*/
-		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 		{
 			playerHit = true;
 			
@@ -283,13 +283,13 @@ bool Player::Update(float dt)
 			HitAnimation();
 		}
 
-		//LOG("current time %i", currentTime);
-		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
-		{
-			HurtGorila(1);
-		}
+		////LOG("current time %i", currentTime);
+		//if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
+		//{
+		//	HurtGorila(1);
+		//}
 
-		if ((!healingUsed) && (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)&&(playerHP<5))
+		if ((!healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)&&(playerHP<5))
 		{
 			healingUsed = true;
 			healingCooldown = currentTime;
@@ -297,7 +297,7 @@ bool Player::Update(float dt)
 			lastPlayerHP++;
 			app->audio->PlayFx(healingSound);
 		}
-		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 10000 < currentTime))
+		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 10000 < currentTime))
 		{
 			healingCooldown = currentTime;
 			playerHP++;
@@ -451,21 +451,35 @@ bool Player::Update(float dt)
 				currentBanana->data->body->SetLinearVelocity(v);
 
 			}
+			
 
 			b2Body* bananaHit;
 			if (currentBanana->data->body->GetContactList() != nullptr)
 			{
-				LOG("true");
+				//LOG("true");
 				bananaHit = currentBanana->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
-			
-				if (bananaHit != nullptr && bananaHit != ColHitbox->body)
+				
+				if (bananaHit != nullptr && bananaHit != ColHitbox->body && bananaHit != currentBanana->data->body)
 				{
+					LOG("hit");
 					LOG("type: %i", bananaHit->GetType());
 					LOG("type dynamic: %i", b2_dynamicBody);
-					LOG("type stat: %i", b2_staticBody);
-					LOG("type kin: %i", b2_kinematicBody);
+					//LOG("type stat: %i", b2_staticBody);
+					//LOG("type kin: %i", b2_kinematicBody);
 					
 						app->enemyMaster->DamageEnemy(bananaHit, 1);
+
+						b2Vec2 hitForce(10.f, 0);
+						b2Vec2 hitDir = bananaHit->GetLinearVelocity();
+						hitDir.Normalize();
+						hitForce.x *= hitDir.x;
+						LOG("force %f", hitForce.x);
+						LOG("dir %f", hitDir.x); 
+						b2Vec2 xVel = { 0,bananaHit->GetLinearVelocity().y };
+						bananaHit->SetLinearVelocity(xVel);
+						bananaHit->ApplyLinearImpulse(hitForce, bananaHit->GetPosition(), true);
+						bananaHit->SetLinearDamping(0);
+
 						app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
 						
 						bananasThrown.del(currentBanana);
@@ -561,7 +575,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 void Player::HitAnimation()
 {
 	RestartGorilaIdle();
-	int dist = 48;
+	int dist = 24;
 	if (currentGorilaHit < 2)
 	{
 		

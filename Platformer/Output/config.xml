@@ -5,13 +5,13 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<startPos x="1989" y="1368" />
-		<health value="5" />
+		<startPos x="2858" y="734" />
+		<health value="4" />
 		<attempts value="3" />
 	</player>
 	<renderer>
 		<vsync value="false" />
-		<camera x="-1461" y="-720" />
+		<camera x="-2330" y="-398" />
 	</renderer>
 	<window>
 		<resolution width="1080" height="720" scale="1" />
@@ -25,14 +25,5 @@
 		<folder>Assets/maps/</folder>
 	</map>
 	<EnemyHandler>
-		<EnemyMushroom currentPos.x="14.8330355" currentPos.y="4.57381725" checkTimer="11" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" />
-		<EnemyMushroom currentPos.x="71.6408234" currentPos.y="20.5736389" checkTimer="12" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" />
-		<EnemyMushroom currentPos.x="66.4946594" currentPos.y="27.578373" checkTimer="11" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" />
-		<EnemyMushroom currentPos.x="71.1598587" currentPos.y="7.57478476" checkTimer="12" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" />
-		<EnemyBird currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="456" spawnPos.y="456" currentPos.x="9.5" currentPos.y="9.5" checkTimer="5" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="1320" spawnPos.y="312" currentPos.x="26.8974476" currentPos.y="6.36627769" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="2040" spawnPos.y="600" currentPos.x="43.962841" currentPos.y="12.5008364" checkTimer="6" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="3480" spawnPos.y="1176" currentPos.x="72.5" currentPos.y="24.5" checkTimer="5" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="3528" spawnPos.y="264" currentPos.x="73.5" currentPos.y="5.79666567" checkTimer="5" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-	</EnemyHandler>
+</EnemyHandler>
 </config>

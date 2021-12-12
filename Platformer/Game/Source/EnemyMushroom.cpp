@@ -343,6 +343,7 @@ bool EnemyMushroom::LoadState(pugi::xml_node& data)
 
 	agroTowardsPlayer = data.attribute("agroTowardsPlayer").as_bool();
 	health = data.attribute("health").as_int();
+	direction = data.attribute("direction").as_bool();
 	
 
 	return true;
@@ -365,6 +366,7 @@ bool EnemyMushroom::SaveState(pugi::xml_node& data) const
 
 	myself.append_attribute("agroTowardsPlayer").set_value(agroTowardsPlayer);
 	myself.append_attribute("health").set_value(health);
+	myself.append_attribute("direction").set_value(direction);
 	return true;
 }
 

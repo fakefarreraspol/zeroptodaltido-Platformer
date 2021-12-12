@@ -235,7 +235,7 @@ bool Scene::Start()
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 21 - 24);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 22 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
@@ -397,7 +397,7 @@ bool Scene::Update(float dt)
 		playerX = METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().x);
 		playerY = METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y);
 
-		LOG("pos: %i, %i", playerX, playerY);
+		//LOG("pos: %i, %i", playerX, playerY);
 
 		if (!freeCam)
 		{
