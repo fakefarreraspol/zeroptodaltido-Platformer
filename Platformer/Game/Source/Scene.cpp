@@ -13,6 +13,7 @@
 #include "EnemyMushroom.h"
 #include "EnemySnake.h"
 #include "EnemyBird.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 
 #include "Defs.h"
@@ -507,8 +508,8 @@ bool Scene::Update(float dt)
 			app->map->data.tilesets.count());
 
 		app->win->SetTitle(title.GetString());
-		LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().y);
-		LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().x);
+		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().y);
+		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().x);
 		if ((flagPast == true)&&(!gameCheckpoint))
 		{
 			app->SaveGameRequest();
@@ -522,13 +523,34 @@ bool Scene::Update(float dt)
 		if ((app->player->GetColHitbox()->body->GetPosition().x > 90)||(app->player->GetPlayerLifes()<=0))
 		{
 			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
-			app->audio->clearAudio();
 			
 					
 			state = END;
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-			Start();
+			//Start();
+
+			if (whichEnding)
+			{
+				if (sound)
+				{
+					Mix_CloseAudio();
+					Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048);
+					app->audio->PlayFx(goodEnding);
+					sound = false;
+				}
+
+			}
+			else
+			{
+				if (sound)
+				{
+					Mix_CloseAudio();
+					Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048);
+					app->audio->PlayFx(badEnding);
+					sound = false;
+				}
+			}
 			
 			
 
@@ -542,27 +564,20 @@ bool Scene::Update(float dt)
 	}break;
 	case END:
 	{
+		app->enemyMaster->DestroyAllEnemies();
+
 		//app->render->DrawTexture(loadingScreen, 55, 800,NULL,SDL_FLIP_NONE,0);
 		if (whichEnding)
 		{
-			if (sound)
-			{
-				app->audio->PlayFx(goodEnding);
-				sound = false;
-			}
+			
 			app->render->DrawTexture(goodEndingScreen, 55, 100);
 			
 		}
 		else
 		{
-			if (sound)
-			{
-				app->audio->PlayFx(badEnding);
-				sound = false;
-			}
+			
 			app->render->DrawTexture(badEndingScreen, 0, 20);
 		}
-		app->enemyMaster->DestroyAllEnemies();
 	
 	}break;
 	}
