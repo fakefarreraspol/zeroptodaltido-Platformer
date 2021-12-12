@@ -525,10 +525,17 @@ bool Player::LoadState(pugi::xml_node& data)
 {
 	startPosX = data.child("startPos").attribute("x").as_float(0);
 	startPosY = data.child("startPos").attribute("y").as_float(0);
+	
+	
+	
 
 	b2Vec2 v = { PIXEL_TO_METERS( startPosX), PIXEL_TO_METERS(startPosY )};
 	RestartPlayer();
+
 	ColHitbox->body->SetTransform(v, 0);
+	playerHP = data.child("health").attribute("value").as_int(5);
+	lastPlayerHP = playerHP;
+	playerLifes = data.child("attempts").attribute("value").as_int(3);
 
 	return true;
 }
@@ -540,6 +547,8 @@ bool Player::SaveState(pugi::xml_node& data) const
 	LOG("saving camera pos");
 	data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
 	data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
+	data.child("health").attribute("value").set_value(playerHP);
+	data.child("attempts").attribute("value").set_value(playerLifes);
 	return true;
 }
 
