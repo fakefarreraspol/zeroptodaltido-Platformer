@@ -293,11 +293,33 @@ bool EnemyMushroom::Update(float dt)
 
 	if (Hitbox->body->GetContactList() != nullptr)
 	{
-		b2Body* playerB = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
-		if (playerB == app->player->GetColHitbox()->body)
+		b2Body* playerBox = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
+		if (playerBox == app->player->GetColHitbox()->body)
 		{
-			app->player->HurtGorila(1);
+			float margin = PIXEL_TO_METERS(40);
+
+			if (playerBox->GetPosition().x > Hitbox->body->GetPosition().x - margin &&
+				playerBox->GetPosition().x < Hitbox->body->GetPosition().x + margin &&
+				playerBox->GetPosition().y < Hitbox->body->GetPosition().y)
+			{
+				app->enemyMaster->DestroyEnemy(Hitbox);
+				app->player->RestartGorilaIdle();
+
+				b2Vec2 jumpForce(0, -10.f);
+				b2Vec2 yVel = { playerBox->GetLinearVelocity().x,0 };
+				playerBox->SetLinearVelocity(yVel);
+				playerBox->ApplyLinearImpulse(jumpForce, playerBox->GetPosition(), true);
+				playerBox->SetLinearDamping(0);
+				app->audio->PlayFx(app->player->enemy_death);
+			}
+			else
+			{
+				app->player->HurtGorila(1);
+			}
 		}
+
+
+
 	}
 
 
@@ -348,6 +370,15 @@ bool EnemyMushroom::SaveState(pugi::xml_node& data) const
 
 void EnemyMushroom::DoDamage(int damage)
 {
-		if (health > 0) health -= damage;
-		if (health <= 0) app->enemyMaster->DestroyEnemy(Hitbox);
+	if (health > 0)
+	{
+		health -= damage;
+		app->audio->PlayFx(app->player->kick);
+	}
+	if (health <= 0)
+	{
+		app->enemyMaster->DestroyEnemy(Hitbox);
+		app->audio->PlayFx(app->player->enemy_death);
+
+	}
 	}

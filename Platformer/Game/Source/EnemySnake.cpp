@@ -74,6 +74,15 @@ bool EnemySnake::SaveState(pugi::xml_node& data) const
 
 void EnemySnake::DoDamage(int damage)
 {
-	if (health > 0) health -= damage;
-	if (health <= 0) app->enemyMaster->DestroyEnemy(Hitbox);
+	if (health > 0)
+	{
+		health -= damage;
+		app->audio->PlayFx(app->player->kick);
+	}
+	if (health <= 0)
+	{
+		app->enemyMaster->DestroyEnemy(Hitbox);
+		app->audio->PlayFx(app->player->enemy_death);
+
+	}
 }

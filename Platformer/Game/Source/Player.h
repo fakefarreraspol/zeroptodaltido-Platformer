@@ -120,7 +120,8 @@ public:
 		return app->pathfinding->CheckBoundaries(positionInMap);
 
 	}
-
+	uint kick = 0;
+	uint enemy_death = 0;
 private:
 
 	bool AdminMode;
@@ -152,6 +153,7 @@ private:
 	uint playerHurt = 0;
 	uint playerHurt2 = 0;
 	uint playerHurt3 = 0;
+	
 	unsigned int audioHurt= 0;
 	PhysBody* ColHitbox;
 	PhysBody* BananaBox;

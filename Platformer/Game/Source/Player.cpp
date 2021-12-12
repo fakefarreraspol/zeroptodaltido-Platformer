@@ -35,6 +35,8 @@ bool Player::Start()
 		playerHurt = app->audio->LoadFx("Assets/audio/fx/monkey_hurt.wav");
 		playerHurt2 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_2.wav");
 		playerHurt3 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_3.wav");
+		kick = app->audio->LoadFx("Assets/audio/fx/kick.wav");
+		enemy_death = app->audio->LoadFx("Assets/audio/fx/enemy_death.wav");
 		//textures
 		gorila = app->tex->Load("Assets/textures/gorila.png");
 		panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
@@ -179,7 +181,7 @@ bool Player::Update(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 				{
 					RestartGorilaIdle();
-					b2Vec2 yVel = { ColHitbox->body->GetLinearVelocity().y,0 };
+					b2Vec2 yVel = { ColHitbox->body->GetLinearVelocity().x,0 };
 					ColHitbox->body->SetLinearVelocity(yVel);
 					ColHitbox->body->ApplyLinearImpulse(jumpForce, ColHitbox->body->GetPosition(), true);
 					ColHitbox->body->SetLinearDamping(0);
