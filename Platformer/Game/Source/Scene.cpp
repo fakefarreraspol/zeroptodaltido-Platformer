@@ -244,7 +244,7 @@ bool Scene::Start()
 
 		marginX = 48 * 11;
 		marginY = 48 * 7;
-
+		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
 	}break;
 	}
@@ -536,13 +536,17 @@ bool Scene::Update(float dt)
 
 		if ((flagPast == true)&&(!gameCheckpoint))
 		{
+			app->audio->PlayFx(checkpoint);
 			app->SaveGameRequest();
+			
 			gameCheckpoint = true;
 			
 		}
 		if (((app->player->GetColHitbox()->body->GetPosition().x > 59) && (app->player->GetColHitbox()->body->GetPosition().x < 63)) && ((app->player->GetColHitbox()->body->GetPosition().y > 15)) && (app->player->GetColHitbox()->body->GetPosition().y < 16))
 		{
+			
 			flagPast = true;
+
 		}
 		if ((playerX > 99 * 48)||(app->player->GetPlayerLifes()<=0))
 		{

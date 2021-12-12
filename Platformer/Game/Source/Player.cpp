@@ -31,6 +31,7 @@ bool Player::Start()
 	if (app->scene->state == app->scene->GAMEPLAY)
 	{
 		playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
+		healingSound = app->audio->LoadFx("Assets/audio/fx/healing.wav");
 		bananaThrow = app->audio->LoadFx("Assets/audio/fx/player_shot.wav");
 		playerHurt = app->audio->LoadFx("Assets/audio/fx/monkey_hurt.wav");
 		playerHurt2 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_2.wav");
@@ -294,12 +295,14 @@ bool Player::Update(float dt)
 			healingCooldown = currentTime;
 			playerHP++;
 			lastPlayerHP++;
+			app->audio->PlayFx(healingSound);
 		}
 		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 10000 < currentTime))
 		{
 			healingCooldown = currentTime;
 			playerHP++;
 			lastPlayerHP++;
+			app->audio->PlayFx(healingSound);
 		}
 		int gorilaWalkFrameSpeed = 150;
 		if ((!onAir) && (!playerHit))

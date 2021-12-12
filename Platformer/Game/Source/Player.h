@@ -147,7 +147,7 @@ private:
 
 	int gorilaStartX = 48 * 4;
 	int gorilaStartY = 48 * 22;
-	
+	uint healingSound = 0;
 	uint bananaThrow = 0;
 	uint playerDeath = 0;
 	uint playerHurt = 0;

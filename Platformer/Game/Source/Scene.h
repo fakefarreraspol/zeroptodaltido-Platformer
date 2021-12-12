@@ -82,8 +82,8 @@ private:
 	SDL_Texture* badEndingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
-	SDL_Texture* character = nullptr;
 	
+	uint checkpoint = 0;
 	bool gameCheckpoint = false;
 	bool lastIntro = false;
 	bool flagPast = false;
@@ -95,8 +95,7 @@ private:
 	uint badEnding = 0;
 	bool whichEnding = true;
 	bool sound = true;
-	SDL_Rect r_characterRun[7];
-	SDL_Rect r_characterJump[7];
+	
 
 	int squareGround[44] = {
 		6,7,39,40,42,43,45,46,
