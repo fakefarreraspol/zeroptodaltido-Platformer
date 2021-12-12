@@ -241,8 +241,8 @@ bool Scene::Start()
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
-		marginX = 5;
-		marginX = 5;
+		marginX = 48 * 11;
+		marginY = 48 * 7;
 
 
 	}break;
@@ -393,22 +393,46 @@ bool Scene::Update(float dt)
 			
 		}
 
-		playerX = app->player->GetColHitbox()->body->GetPosition().x;
-		playerY = app->player->GetColHitbox()->body->GetPosition().y;
+		playerX = METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().x);
+		playerY = METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y);
+
+		LOG("pos: %i, %i", playerX, playerY);
 
 		if (!freeCam)
 		{
+			uint w, h;
+			app->win->GetWindowSize(w, h);
 			//app->render->camera.x = -(playerX );
-			if ((playerY < 24) && (playerY > 1))
+
+			if (playerX > marginX)
 			{
-				app->render->camera.y = -(playerY * 30);
+				app->render->camera.x = -(playerX - marginX);
+			}
+			
+
+			if (playerX >= 48 * 100 - w + marginX)
+			{
+				
+				app->render->camera.x = -(48 * 100 - (w));
+			}
+
+			if (playerY > marginY)
+			{
+				app->render->camera.y = -(playerY - marginY);
 			}
 
 
-			if (playerX > marginX && playerX < 100 * 48)
+			if (playerY >= 30 * 48 - h + marginY)
 			{
-				app->render->camera.x = -playerX * 48 * 1.042f + marginX * 48;
+
+				app->render->camera.y = -(30 * 48 - (h));
 			}
+
+
+			//if (playerX > marginX && playerX < 100 * 48)
+			//{
+			//	app->render->camera.x = -playerX * 48 * 1.042f + marginX * 48;
+			//}
 
 
 
@@ -420,8 +444,6 @@ bool Scene::Update(float dt)
 				{
 					app->render->camera.y += cameraSpeed;
 				}
-
-
 
 
 			if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -510,6 +532,7 @@ bool Scene::Update(float dt)
 		app->win->SetTitle(title.GetString());
 		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().y);
 		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().x);
+
 		if ((flagPast == true)&&(!gameCheckpoint))
 		{
 			app->SaveGameRequest();
@@ -520,7 +543,7 @@ bool Scene::Update(float dt)
 		{
 			flagPast = true;
 		}
-		if ((app->player->GetColHitbox()->body->GetPosition().x > 90)||(app->player->GetPlayerLifes()<=0))
+		if ((playerX > 99 * 48)||(app->player->GetPlayerLifes()<=0))
 		{
 			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
 			

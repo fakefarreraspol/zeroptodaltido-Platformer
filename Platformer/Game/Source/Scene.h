@@ -47,8 +47,8 @@ public:
 		temp.body = app->physics->CreateCircle(x, y, size);
 		mushrooms.add(temp.body);
 	}
-	float playerX = 0.0f;
-	float playerY = 0.0f;
+	int playerX = 0;
+	int playerY = 0;
 	bool freeCam = false;
 	enum GameState
 	{
