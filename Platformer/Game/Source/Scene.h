@@ -57,8 +57,8 @@ public:
 		END
 	};
 
-	GameState state = INTRO;
-
+	//GameState state = STATE;
+	GameState state = GAMEPLAY;
 private:
 
 	p2List<PhysBody*> mushrooms;
@@ -76,14 +76,17 @@ private:
 	PhysBody* EnemyMushroomHitbox;
 	SDL_Texture* texBackground;
 	SDL_Texture* loadingScreen;
+	SDL_Texture* flag;
+	SDL_Rect r_flag[2];
 	SDL_Texture* goodEndingScreen;
 	SDL_Texture* badEndingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
 	SDL_Texture* character = nullptr;
 	
+	bool gameCheckpoint = false;
 	bool lastIntro = false;
-	
+	bool flagPast = false;
 	p2List<PhysBody*> trespasableElements;
 	int currentTime = 0;
 	int lastTime = 0;

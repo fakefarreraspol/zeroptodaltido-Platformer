@@ -58,6 +58,10 @@ bool Scene::Start()
 	case GAMEPLAY:
 	{
 		//state == INTRO;
+		flag = app->tex->Load("Assets/maps/Nature_environment_01.png");
+		
+		r_flag[0] = { 672,48,48,48 };
+		r_flag[1] = { 672+(48*3),48,48,48 };
 	// L03: DONE: Load map
 		texBackground = app->tex->Load("Assets/maps/bg.png");
 		if (app->map->Load("platform_test.tmx") == true)
@@ -503,20 +507,37 @@ bool Scene::Update(float dt)
 			app->map->data.tilesets.count());
 
 		app->win->SetTitle(title.GetString());
-
+		LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().y);
+		LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().x);
+		if ((flagPast == true)&&(!gameCheckpoint))
+		{
+			app->SaveGameRequest();
+			gameCheckpoint = true;
+			
+		}
+		if (((app->player->GetColHitbox()->body->GetPosition().x > 59) && (app->player->GetColHitbox()->body->GetPosition().x < 63)) && ((app->player->GetColHitbox()->body->GetPosition().y > 15)) && (app->player->GetColHitbox()->body->GetPosition().y < 16))
+		{
+			flagPast = true;
+		}
 		if ((app->player->GetColHitbox()->body->GetPosition().x > 90)||(app->player->GetPlayerLifes()<=0))
 		{
 			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
 			app->audio->clearAudio();
+			
+					
 			state = END;
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-			//Start();
+			Start();
 			
 			
 
 		}
-
+		if (flagPast)
+		{
+			app->render->DrawTexture(flag, 62 * 48, 15 * 48, &r_flag[0]);
+		}
+		else app->render->DrawTexture(flag, 62*48, 15*48, &r_flag[1]);
 
 	}break;
 	case END:
