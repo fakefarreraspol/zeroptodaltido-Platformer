@@ -57,8 +57,8 @@ public:
 		END
 	};
 
-	//GameState state = STATE;
-	GameState state = GAMEPLAY;
+	GameState state = INTRO;
+	//GameState state = GAMEPLAY;
 private:
 
 	p2List<PhysBody*> mushrooms;
