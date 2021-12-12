@@ -128,7 +128,8 @@ private:
 	void HitAnimation();
 	p2List<PhysBody*> bananasThrown;
 	bool goLeft, goRight;
-
+	bool healingUsed = false;
+	int healingCooldown = 0;
 	float startPosX;
 	float startPosY;
 	int currentIFrameTime = 0;

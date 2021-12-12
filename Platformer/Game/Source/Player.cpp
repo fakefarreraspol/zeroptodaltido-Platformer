@@ -186,7 +186,7 @@ bool Player::Update(float dt)
 				}
 			}
 		}
-		if (lastPlayerHP != playerHP)
+		if (lastPlayerHP > playerHP)
 		{
 			audioHurt = currentTime % 2;
 			if (audioHurt == 0)
@@ -286,7 +286,19 @@ bool Player::Update(float dt)
 			HurtGorila(1);
 		}
 
-
+		if ((!healingUsed) && (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)&&(playerHP<5))
+		{
+			healingUsed = true;
+			healingCooldown = currentTime;
+			playerHP++;
+			lastPlayerHP++;
+		}
+		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 10000 < currentTime))
+		{
+			healingCooldown = currentTime;
+			playerHP++;
+			lastPlayerHP++;
+		}
 		int gorilaWalkFrameSpeed = 150;
 		if ((!onAir) && (!playerHit))
 		{
