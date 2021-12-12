@@ -380,11 +380,11 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 
-		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		{
-			if (!freeCam) freeCam = true;
-			else freeCam = false;
-		}
+		//if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		//{
+		//	if (!freeCam) freeCam = true;
+		//	else freeCam = false;
+		//}
 
 		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 		{

@@ -314,7 +314,7 @@ bool Player::Update(float dt)
 			{
 				PlayerDeath();
 				app->audio->PlayFx(playerDeath);
-				RestartPlayer();
+				app->LoadGameRequest();
 				app->render->camera.x = 0;
 				app->render->camera.y = -48 * 14;
 			}
