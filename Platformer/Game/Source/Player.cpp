@@ -297,7 +297,7 @@ bool Player::Update(float dt)
 			lastPlayerHP++;
 			app->audio->PlayFx(healingSound);
 		}
-		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 10000 < currentTime))
+		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 20000 < currentTime))
 		{
 			healingCooldown = currentTime;
 			playerHP++;

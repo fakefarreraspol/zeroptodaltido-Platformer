@@ -7,7 +7,7 @@ You are a Gorila that can throw bananas at your enemies and restore health out o
  - [A,D] - Horizontal movement.
  - [Space] - Jump.
  - [N] - Throw banana.
- - [M] - Heal 1 (cooldown required after each use).
+ - [M] - Heal 1 (20 seconds cooldown required after each use).
  
  ### Administrator mode
  [W,A,S,D] to move. User does not affect damage or collisions. Can reach out of the map (not recommended), free movement (no gravity).
