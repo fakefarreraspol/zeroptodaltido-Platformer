@@ -82,6 +82,7 @@ private:
 	int posCheckTime;
 	int checkTimer;
 
+
 	int arTilesToCheck[60] = {
 
 		6,7,39,40,42,43,45,46,

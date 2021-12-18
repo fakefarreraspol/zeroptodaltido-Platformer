@@ -142,8 +142,10 @@ private:
 
 	float limitFrames = 60;
 	float init;
+	float start = 0;
 	float end;
 	float currentFPS;
+	double totalFrames = 0;
 
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables

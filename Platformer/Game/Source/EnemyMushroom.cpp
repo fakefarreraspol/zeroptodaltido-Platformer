@@ -38,12 +38,13 @@ bool EnemyMushroom::Start()
 
 	//permanent values
 	posCheckTime = 15;
-	speed.x = 2.f;
-	speed.y = 0.f;
+	speed.x = 2.f ;
+	speed.y = 0.f ;
 	maxDistanceAgro = 5;
 
 
 	//initial values
+	//currentSpeed = { speed.x * (60 * app->DeltaTime()), speed.y * (60 * app->DeltaTime()) };
 	currentSpeed = speed;
 	direction = true;
 	Hitbox->body->SetLinearVelocity(currentSpeed);
@@ -72,7 +73,14 @@ bool EnemyMushroom::Update(float dt)
 	//navegation AI
 	currentTime = SDL_GetTicks();
 	iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
-	if (checkTimer == posCheckTime)
+
+	//float multiplier = (60 * dt);
+
+	//b2Vec2 newSpeed(speed.x * multiplier, speed.y * multiplier);
+
+	//LOG("time: %f", posCheckTime * multiplier);
+
+	if (checkTimer > posCheckTime)
 	{
 		currentMapTilePosition = app->map->WorldToMap(
 			METERS_TO_PIXELS(Hitbox->body->GetPosition().x),
@@ -85,11 +93,21 @@ bool EnemyMushroom::Update(float dt)
 		}
 		
 
-		uint leftCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
-		uint leftDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
+		uint leftCheckPos = 0;
+		uint leftDownCheckPos = 0;
 
-		uint rightCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y);
-		uint rightDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y + 1);
+		uint rightCheckPos = 0;
+		uint rightDownCheckPos = 0;
+
+		
+		if (lastMapTilePosition.y < 30)
+		{
+			leftCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y);
+			leftDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x - 1, lastMapTilePosition.y + 1);
+
+			rightCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y);
+			rightDownCheckPos = app->map->data.layers.start->data->Get(lastMapTilePosition.x + 1, lastMapTilePosition.y + 1);
+		}
 
 		bool leftCheck = false;
 		bool leftDownCheck = false;
@@ -112,6 +130,12 @@ bool EnemyMushroom::Update(float dt)
 		else {
 			agroTowardsPlayer = false;
 		}
+		
+		
+
+
+
+		
 
 		if (!agroTowardsPlayer)
 		{
@@ -163,6 +187,11 @@ bool EnemyMushroom::Update(float dt)
 
 
 		checkTimer = 0;
+		//float interval = (1 / dt);
+		//float interval2 = (1 / app->DeltaTime());
+		//currentSpeed.x *= interval2;
+		//currentSpeed.y *= interval;
+		
 	}
 	checkTimer++;
 
@@ -175,12 +204,14 @@ bool EnemyMushroom::Update(float dt)
 
 
 
-
+	
 
 	if (worldPosIpoint.y > 30 * 48) app->enemyMaster->DestroyEnemy(Hitbox);
 
+	//b2Vec2 spd = { currentSpeed.x * multiplier, currentSpeed.y * multiplier };
 
 	Hitbox->body->SetLinearVelocity(currentSpeed);
+	
 	//Draw
 	int Yoffset = -28 + 6;
 	int Xoffset = -24;

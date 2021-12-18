@@ -37,11 +37,14 @@ public:
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
 
+	bool GetVsync()const { return Vsync; }
+
 private:
 	SString title;
 	uint width;
 	uint height;
 	uint scale;
+	bool Vsync;
 };
 
 #endif // __WINDOW_H__

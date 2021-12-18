@@ -139,6 +139,7 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	totalFrames++;
 	init = SDL_GetTicks();
 	bool ret = true;
 	PrepareUpdate();
@@ -179,10 +180,34 @@ bool App::Update()
 	//LOG("Current FPS: %f", currentFPS);
 	//LOG("time left: %f", frameSpeed - elapsedTime);
 	
+	
+
+	if (win->GetVsync())
+	{
+		SString title("FPS: %f / average FPS: % / Last-frame MS: %f, Vsync: On",
+			limitFrames,
+			currentFPS,
+			(float)(1000.0 * (double(SDL_GetPerformanceCounter() - init) / double(SDL_GetPerformanceFrequency())))
+		);
+		app->win->SetTitle(title.GetString());
+	}
+	if (!win->GetVsync())
+	{
+		SString title("FPS: %.3f / average FPS: %.3f / Last-frame MS: %.3f / Total time MS: %.2f / Vsync: Off",
+			limitFrames,
+			currentFPS,
+			(float)frameSpeed - elapsedTime,
+			SDL_GetTicks() - start
+		);
+		app->win->SetTitle(title.GetString());
+	}
+
+
 	if ((frameSpeed - elapsedTime) > 0.0f)
 	{
 		SDL_Delay(fabs(floor((long)frameSpeed - elapsedTime)));
 	}
+
 
 	FinishUpdate();
 	return ret;
@@ -212,6 +237,15 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+
+	//SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+	//	app->map->data.width, app->map->data.height,
+	//	app->map->data.tileWidth, app->map->data.tileHeight,
+	//	app->map->data.tilesets.count());
+	
+	
+
+
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) 
 		LoadGame();
