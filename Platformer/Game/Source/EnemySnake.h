@@ -22,7 +22,8 @@ public:
 
 	// Called before render is available
 	bool Awake();
-
+	
+	void SnakeAttack();
 	// Called before the first frame
 	bool Start();
 	bool Update(float dt);
@@ -30,6 +31,13 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
 
+	int lastTime = 0;
+	int currentTime = 0;
+	bool snakeDirection = true;
+	int snakeAnim = 0;
+	bool snakeAgro = false;
+	int snakeAttackAnim = 0;
+	int snakeAttackTime = 0;
 	PhysBody* GetPhysBody() const
 	{
 		return Hitbox;
@@ -45,7 +53,8 @@ public:
 
 private:
 
-
+	SDL_Rect r_snakeIdle[6];
+	SDL_Rect r_snakeAttack[4];
 	PhysBody* Hitbox;
 	b2Vec2 spawnPosition;
 

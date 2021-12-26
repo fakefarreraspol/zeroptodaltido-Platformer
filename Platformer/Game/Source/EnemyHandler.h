@@ -72,6 +72,7 @@ public:
 	SDL_Texture* attention;
 	SDL_Texture* textureMushroom;
 	SDL_Texture* textureBird;
+	SDL_Texture* textureSnake;
 	SDL_Texture* texturePath;
 
 

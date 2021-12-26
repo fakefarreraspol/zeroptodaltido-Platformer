@@ -25,7 +25,8 @@ bool EnemyHandler::Awake()
 
 bool EnemyHandler::Start()
 {
-	textureMushroom = app->tex->Load("Assets/textures/mushroom_walk.png");
+	textureMushroom = app->tex->Load("Assets/textures/mushroom_walk.png"); 
+	textureSnake = app->tex->Load("Assets/textures/snake.png");
 	textureBird = app->tex->Load("Assets/textures/bird.png");
 	attention = app->tex->Load("Assets/textures/attention_sign.png");
 	texturePath = app->tex->Load("Assets/maps/meta.png");
@@ -249,9 +250,14 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	}
 		break;
 	case ENEMY_SNAKE:
+	{
+		b2Vec2 pos(x, y);
+		EnemySnake* newSnake = new EnemySnake(pos, 2);
+		enemiesSnake.add(newSnake);
+		newSnake->Start();
 
-		
 		break;
+	}
 	case ENEMY_BIRD:
 	{
 		b2Vec2 pos(x, y);
