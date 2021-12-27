@@ -243,8 +243,8 @@ bool Scene::Start()
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 *20 + 30, 48*26 );
-
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
 		marginX = 48 * 11;
 		marginY = 48 * 7;
 		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
@@ -586,10 +586,13 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(flag, 62 * 48, 15 * 48, &r_flag[0]);
 		}
 		else app->render->DrawTexture(flag, 62*48, 15*48, &r_flag[1]);
+		
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 		{
 			app->enemyMaster->enemiesSnake.getFirst()->data->snakeAgro = true;
 		}
+
+
 	}break;
 	case END:
 	{

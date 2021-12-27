@@ -14,7 +14,7 @@ EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Module()
 {
 	spawnPosition = startPosition;
 	name.Create("enemySnake");
-	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 10);
+	Hitbox = app->physics->CreateStaticCircle(spawnPosition.x, spawnPosition.y, 10);
 	this->health = health;
 
 }
@@ -65,8 +65,36 @@ bool EnemySnake::Update(float dt)
 	{
 		snakeDirection = false;
 	}
+
+	if (snakeAgro)
+	{
+		if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgroBase)
+		{
+			snakeAgro = true;
+			
+		}
+		else {
+			snakeAgro = false;
+			
+		}
+	}
+	else
+	{
+		if (CheckDistanceToPhysBody(app->player->GetColHitbox()) <= maxDistanceAgroBase)
+		{
+			snakeAgro = true;
+			
+
+		}
+		else {
+			snakeAgro = false;
+		
+		}
+	}
+
 	if (!snakeAgro)
 	{
+		snakeAttackAnim = 0;
 		if ((lastTime + 400 > currentTime) && (snakeAnim < 5))
 		{
 			if (snakeDirection)
@@ -142,7 +170,7 @@ bool EnemySnake::Update(float dt)
 	}
 	else if(snakeAgro == true)
 	{
-		if ((snakeAttackTime + 400 > currentTime) && (snakeAttackAnim < 3))
+		if ((snakeAttackTime + 400 > currentTime) && (snakeAttackAnim < 4))
 		{
 			if (snakeDirection)
 			{
@@ -157,7 +185,7 @@ bool EnemySnake::Update(float dt)
 			{
 				app->render->DrawTexture(
 					app->enemyMaster->textureSnake,
-					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 60,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20 ,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeAttack[snakeAttackAnim]
 				);
@@ -182,7 +210,7 @@ bool EnemySnake::Update(float dt)
 			{
 				app->render->DrawTexture(
 					app->enemyMaster->textureSnake,
-					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 60,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20 ,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30,
 					&r_snakeAttack[snakeAttackAnim]
 				);
@@ -206,22 +234,134 @@ bool EnemySnake::Update(float dt)
 			{
 				app->render->DrawTexture(
 					app->enemyMaster->textureSnake,
-					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 60,
+					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30,
 					&r_snakeAttack[snakeAttackAnim]
 				);
 
 			}
-
+			
 			snakeAgro = false;
 			snakeAnim = 0;
 
 			snakeAttackAnim = 0;
 		}
 	}
+	if ((snakeAttackAnim == 2)&&(attackCooldown<currentTime))
+	{
+		attackCooldown = currentTime + 400;
+		acidOnMap = true;
+		if (snakeDirection) {
+			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) - 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 10);
+			lastAcidDirection = false;
+		}
+		else
+		{
+			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) + 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 10);
+			lastAcidDirection = true;
+		}
+		acidBox->body->SetType(b2_dynamicBody);
+		acidBox->type = TYPE_BULLET;
+		b2Vec2 acidMovement{ 12, 0 };
+		if (lastAcidDirection)
+		{
+
+
+			acidBox->body->SetLinearVelocity(acidMovement);
+		}
+		else
+		{
+
+			acidBox->body->SetLinearVelocity(-acidMovement);
+		}
+		acidThrown.add(acidBox);
+		acidBox->body->GetFixtureList()->SetSensor(true);
+	}
 	
+	p2List_item<PhysBody*>* currentAcid = acidThrown.getFirst();
+	while (currentAcid != NULL)
+	{
+
+		if (!PhysBodyIsInMap(currentAcid->data))
+		{
+			app->physics->GetWorld()->DestroyBody(currentAcid->data->body);
+			acidThrown.del(currentAcid);
+		}
+
+		if (acidOnMap)
+		{
+			b2Vec2 v(currentAcid->data->body->GetLinearVelocity().x, -0.408f);
+			currentAcid->data->body->SetLinearVelocity(v);
+
+		}
+		
+
+		b2Body* acidHit;
+		if (currentAcid->data->body->GetContactList() != nullptr)
+		{
+			//LOG("true");
+			acidHit = currentAcid->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
+
+			if (acidHit != nullptr && acidHit != Hitbox->body && acidHit != currentAcid->data->body)
+			{
+				LOG("hit");
+				LOG("type: %i", acidHit->GetType());
+				LOG("type dynamic: %i", b2_dynamicBody);
+				//LOG("type stat: %i", b2_staticBody);
+				//LOG("type kin: %i", b2_kinematicBody);
+				
+				if (acidHit == app->player->GetColHitbox()->body) app->player->HurtGorila(1);
+
+				b2Vec2 hitForce(10.f, 0);
+				b2Vec2 hitDir = acidHit->GetLinearVelocity();
+				hitDir.Normalize();
+				hitForce.x *= hitDir.x;
+				LOG("force %f", hitForce.x);
+				LOG("dir %f", hitDir.x);
+				b2Vec2 xVel = { 0,acidHit->GetLinearVelocity().y };
+				acidHit->SetLinearVelocity(xVel);
+				acidHit->ApplyLinearImpulse(hitForce, acidHit->GetPosition(), true);
+				acidHit->SetLinearDamping(0);
+
+				app->physics->GetWorld()->DestroyBody(currentAcid->data->body);
+
+				acidThrown.del(currentAcid);
+
+				//switch (bananaHit->type)
+				//{
+				//
+				//case TYPE_SOLID_TILE:
+				//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+				//	//banana hit sound
+				//	break;
+				//
+				//	/*
+				//	case ENEMY:
+				//		damage enemy
+				//		destroy banana
+				//		sound
+				//	
+				//	*/
+				//
+				//default:
+				//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
+				//	break;
+				//}
+
+
+			}
+		}
+
+
+		int x, y;
+		currentAcid->data->GetPosition(x, y);
+		//app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+
+		currentAcid = currentAcid->next;
+	}
 	
-	
+
+
 	return true;
 }
 
@@ -262,7 +402,3 @@ void EnemySnake::DoDamage(int damage)
 	}
 }
 
-void EnemySnake::SnakeAttack()
-{
-	
-}

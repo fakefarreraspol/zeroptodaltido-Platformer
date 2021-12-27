@@ -23,6 +23,13 @@ public:
 	// Called before render is available
 	bool Awake();
 	
+	int CheckDistanceToPhysBody(PhysBody* PhysPos)
+	{
+		b2Vec2 dist = PhysPos->body->GetPosition() - Hitbox->body->GetPosition();
+
+		return (abs(dist.x) + abs(dist.y));
+	}
+
 	void SnakeAttack();
 	// Called before the first frame
 	bool Start();
@@ -38,6 +45,7 @@ public:
 	bool snakeAgro = false;
 	int snakeAttackAnim = 0;
 	int snakeAttackTime = 0;
+
 	PhysBody* GetPhysBody() const
 	{
 		return Hitbox;
@@ -52,14 +60,29 @@ public:
 	void DoDamage(int damage);
 
 private:
-
+	p2List<PhysBody*> acidThrown;
 	SDL_Rect r_snakeIdle[6];
 	SDL_Rect r_snakeAttack[4];
 	PhysBody* Hitbox;
+	PhysBody* acidBox;
 	b2Vec2 spawnPosition;
-
+	const int maxDistanceAgroBase = 13;
+	bool lastAcidDirection = true;
 	int health;
+	int attackCooldown = 0;
+	bool acidOnMap = false;
+	bool PhysBodyIsInMap(PhysBody* phys)
+	{
+		iPoint positionInMap(
+			app->map->WorldToMap(
+				METERS_TO_PIXELS(phys->body->GetPosition().x),
+				METERS_TO_PIXELS(phys->body->GetPosition().y)
+			)
+		);
 
+		return app->pathfinding->CheckBoundaries(positionInMap);
+
+	}
 };
 
 #endif // __ENEMY_SNAKE_H__
