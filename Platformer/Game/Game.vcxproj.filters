@@ -29,6 +29,7 @@
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\Scene2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\PQueue.h" />
+    <ClInclude Include="Source\Scene2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

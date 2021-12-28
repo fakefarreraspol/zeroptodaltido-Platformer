@@ -1,5 +1,5 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENE2_H__
+#define __SCENE2_H__
 
 #include "Module.h"
 #include "p2List.h"
@@ -8,14 +8,14 @@
 
 struct SDL_Texture;
 
-class Scene : public Module
+class Scene2:public Module
 {
 public:
 
-	Scene();
+	Scene2();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~Scene2();
 
 	// Called before render is available
 	bool Awake();
@@ -54,8 +54,7 @@ public:
 	{
 		INTRO = 0,
 		GAMEPLAY,
-		END,
-		NONE
+		END
 	};
 
 	GameState state = GAMEPLAY;
@@ -63,11 +62,11 @@ public:
 private:
 
 	p2List<PhysBody*> mushrooms;
-	
-	
+
+
 	int marginX;
 	int marginY;
-	
+
 	struct startMushroom
 	{
 		PhysBody* body;
@@ -83,7 +82,7 @@ private:
 	SDL_Texture* badEndingScreen;
 	SDL_Texture* intro01;
 	SDL_Texture* intro02;
-	
+
 	uint checkpoint = 0;
 	bool gameCheckpoint = false;
 	bool lastIntro = false;
@@ -96,7 +95,7 @@ private:
 	uint badEnding = 0;
 	bool whichEnding = true;
 	bool sound = true;
-	
+
 
 	int squareGround[44] = {
 		6,7,39,40,42,43,45,46,
@@ -104,10 +103,10 @@ private:
 		77,78,79,80,81,82,83,84,
 		85,86,87,88,96,97,100,101,
 		102,103,104,105,206,107,
-		108,109,116,117,119,120 
+		108,109,116,117,119,120
 	};
 
-	int rightSlope_45[6] = 
+	int rightSlope_45[6] =
 	{
 		0,48,
 		48,48,
@@ -133,7 +132,7 @@ private:
 		0,16,
 		48,16
 	};
-		
+
 
 	int rightSlope_30_2[6] =
 	{
@@ -165,4 +164,4 @@ private:
 
 };
 
-#endif // __SCENE_H__
+#endif // __SCENE2_H__

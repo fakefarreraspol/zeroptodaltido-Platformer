@@ -4,7 +4,6 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
 #include "Scene2.h"
 #include "Map.h"
 #include "Pathfinding.h"
@@ -20,18 +19,18 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene2::Scene2() : Module()
 {
-	name.Create("scene");
-	
+	name.Create("scene2");
+
 }
 
 // Destructor
-Scene::~Scene()
+Scene2::~Scene2()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene2::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -40,9 +39,9 @@ bool Scene::Awake()
 }
 
 // Called before the first frame
-bool Scene::Start()
+bool Scene2::Start()
 {
-	
+
 
 
 	switch (state)
@@ -61,10 +60,10 @@ bool Scene::Start()
 	{
 		//state == INTRO;
 		flag = app->tex->Load("Assets/maps/Nature_environment_01.png");
-		
+
 		r_flag[0] = { 672,48,48,48 };
-		r_flag[1] = { 672+(48*3),48,48,48 };
-	// L03: DONE: Load map
+		r_flag[1] = { 672 + (48 * 3),48,48,48 };
+		// L03: DONE: Load map
 		texBackground = app->tex->Load("Assets/maps/bg.png");
 		if (app->map->Load("platform_test.tmx") == true)
 		{
@@ -244,14 +243,11 @@ bool Scene::Start()
 		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 20 + 25, 48 * 25 + 35);
+		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 30, 48 * 13 + 35);
 		marginX = 48 * 11;
 		marginY = 48 * 7;
 		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
-
-
-		
 
 	}break;
 	}
@@ -263,20 +259,20 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool Scene2::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool Scene2::Update(float dt)
 {
 	currentTime = SDL_GetTicks();
 	switch (state)
 	{
 	case INTRO:
 	{
-		if ((lastTime + 300 > currentTime)&&(!loadingScreenActive))
+		if ((lastTime + 300 > currentTime) && (!loadingScreenActive))
 		{
 			app->render->DrawTexture(intro01, -50, 500);
 		}
@@ -313,7 +309,7 @@ bool Scene::Update(float dt)
 	}break;
 	case GAMEPLAY:
 	{
-		
+
 		int cameraSpeed = 10;
 
 
@@ -398,7 +394,7 @@ bool Scene::Update(float dt)
 			if (app->GetMaxFrames() == 30) app->SetMaxFrames(60);
 			else if (app->GetMaxFrames() == 60) app->SetMaxFrames(30);
 			//LOG("current: %i", app->GetMaxFrames());
-			
+
 		}
 
 		playerX = METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().x);
@@ -416,11 +412,11 @@ bool Scene::Update(float dt)
 			{
 				app->render->camera.x = -(playerX - marginX);
 			}
-			
+
 
 			if (playerX >= 48 * 100 - w + marginX)
 			{
-				
+
 				app->render->camera.x = -(48 * 100 - (w));
 			}
 
@@ -532,29 +528,29 @@ bool Scene::Update(float dt)
 		app->map->Draw();
 
 
-		
+
 		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().y);
 		//LOG("PLAYER POS = %f", app->player->GetColHitbox()->body->GetPosition().x);
 
-		if ((flagPast == true)&&(!gameCheckpoint))
+		if ((flagPast == true) && (!gameCheckpoint))
 		{
 			app->audio->PlayFx(checkpoint);
 			app->SaveGameRequest();
-			
+
 			gameCheckpoint = true;
-			
+
 		}
 		if (((app->player->GetColHitbox()->body->GetPosition().x > 59) && (app->player->GetColHitbox()->body->GetPosition().x < 63)) && ((app->player->GetColHitbox()->body->GetPosition().y > 15)) && (app->player->GetColHitbox()->body->GetPosition().y < 16))
 		{
-			
+
 			flagPast = true;
 
 		}
-		if ((playerX > 99 * 48)||(app->player->GetPlayerLifes()<=0))
+		if ((playerX > 99 * 48) || (app->player->GetPlayerLifes() <= 0))
 		{
 			if (app->player->GetPlayerLifes() <= 0) whichEnding = false;
-			
-					
+
+
 			state = END;
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
@@ -581,37 +577,20 @@ bool Scene::Update(float dt)
 					sound = false;
 				}
 			}
-			
-			
+
+
 
 		}
 		if (flagPast)
 		{
 			app->render->DrawTexture(flag, 62 * 48, 15 * 48, &r_flag[0]);
 		}
-		else app->render->DrawTexture(flag, 62*48, 15*48, &r_flag[1]);
-		
+		else app->render->DrawTexture(flag, 62 * 48, 15 * 48, &r_flag[1]);
+
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 		{
 			app->enemyMaster->enemiesSnake.getFirst()->data->snakeAgro = true;
 		}
-
-
-
-
-		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			
-			state = NONE;
-			app->enemyMaster->DestroyAllEnemies();
-			CleanUp();
-			
-			app->AddModule(app->scene2);
-			
-			app->player->Start();
-			
-		}
-
 
 
 	}break;
@@ -622,33 +601,33 @@ bool Scene::Update(float dt)
 		//app->render->DrawTexture(loadingScreen, 55, 800,NULL,SDL_FLIP_NONE,0);
 		if (whichEnding)
 		{
-			
+
 			app->render->DrawTexture(goodEndingScreen, 55, 100);
-			
+
 		}
 		else
 		{
-			
+
 			app->render->DrawTexture(badEndingScreen, 0, 20);
 		}
-	
+
 	}break;
 	}
-	
-	
+
+
 
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool Scene2::PostUpdate()
 {
 	bool ret = true;
 
-	
 
 
-	
+
+
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -657,14 +636,14 @@ bool Scene::PostUpdate()
 }
 
 // Called before quitting
-bool Scene::CleanUp()
+bool Scene2::CleanUp()
 {
 	LOG("Freeing scene");
 
 	return true;
 }
 
-bool Scene::LoadState(pugi::xml_node& data)
+bool Scene2::LoadState(pugi::xml_node& data)
 {
 
 	return true;
@@ -672,7 +651,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 
 // L02: TODO 8: create a method to save the state of the renderer
 // Save Game State
-bool Scene::SaveState(pugi::xml_node& data) const
+bool Scene2::SaveState(pugi::xml_node& data) const
 {
 	//...
 
