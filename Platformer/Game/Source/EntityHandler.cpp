@@ -8,22 +8,22 @@
 #include"Render.h"
 #include "Window.h"
 #include "Audio.h";
-#include "EnemyHandler.h"
+#include "EntityHandler.h"
 
-EnemyHandler::EnemyHandler() : Module()
+EntityHandler::EntityHandler() : Module()
 {
-	name.Create("EnemyHandler");
+	name.Create("EntityHandler");
 }
 
-EnemyHandler::~EnemyHandler()
+EntityHandler::~EntityHandler()
 {}
 
-bool EnemyHandler::Awake()
+bool EntityHandler::Awake()
 {
 	return true;
 }
 
-bool EnemyHandler::Start()
+bool EntityHandler::Start()
 {
 	textureMushroom = app->tex->Load("Assets/textures/mushroom_walk.png"); 
 	textureSnake = app->tex->Load("Assets/textures/snake.png");
@@ -32,7 +32,7 @@ bool EnemyHandler::Start()
 	texturePath = app->tex->Load("Assets/maps/meta.png");
 	return true;
 }
-bool EnemyHandler::CleanUp()
+bool EntityHandler::CleanUp()
 {
 	LOG("Unloading eHandler");
 
@@ -67,7 +67,7 @@ bool EnemyHandler::CleanUp()
 	return true;
 }
 
-bool EnemyHandler::Update(float dt)
+bool EntityHandler::Update(float dt)
 {
 
 	for (int i = 0; i < enemiesMushroom.count(); i++)
@@ -101,10 +101,10 @@ bool EnemyHandler::Update(float dt)
 	return true;
 }
 
-bool EnemyHandler::LoadState(pugi::xml_node& data)
+bool EntityHandler::LoadState(pugi::xml_node& data)
 {
 	//DestroyAllEnemies();
-	//pugi::xml_node myself = data.child("EnemyHandler");
+	//pugi::xml_node myself = data.child("EntityHandler");
 
 	if (data != NULL)
 	{
@@ -114,7 +114,7 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 		//prop = myself.child("EnemyMushroom");
 		//while (prop.type() == pugi::node_element)
 		//{
-		//	CreateEnemy(EnemyType::ENEMY_MUSHROOM, 0, 0);
+		//	CreateEnemy(EntityType::ENEMY_MUSHROOM, 0, 0);
 		//	EnemyMushroom* temp;
 		//	enemiesMushroom.at(i, temp);
 		//	temp->LoadState(myself);
@@ -129,7 +129,7 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 			enemiesMushroom.at(i, temp);
 			if (temp == nullptr || enemiesMushroom.count() == 0)
 			{
-				CreateEnemy(EnemyType::ENEMY_MUSHROOM, 0, 0);
+				CreateEnemy(EntityType::ENEMY_MUSHROOM, 0, 0);
 				enemiesMushroom.at(i, temp);
 			}
 			
@@ -146,7 +146,7 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 			enemiesBird.at(i, temp);
 			if (temp == nullptr || enemiesBird.count() == 0)
 			{
-				CreateEnemy(EnemyType::ENEMY_BIRD, 0, 0);
+				CreateEnemy(EntityType::ENEMY_BIRD, 0, 0);
 				enemiesBird.at(i, temp);
 			}
 
@@ -163,7 +163,7 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 			enemiesSnake.at(i, temp);
 			if (temp == nullptr || enemiesSnake.count() == 0)
 			{
-				CreateEnemy(EnemyType::ENEMY_SNAKE, 0, 0);
+				CreateEnemy(EntityType::ENEMY_SNAKE, 0, 0);
 				enemiesSnake.at(i, temp);
 			}
 
@@ -178,12 +178,12 @@ bool EnemyHandler::LoadState(pugi::xml_node& data)
 }
 
 
-bool EnemyHandler::SaveState(pugi::xml_node& data) const
+bool EntityHandler::SaveState(pugi::xml_node& data) const
 {
-	//pugi::xml_node myself = data.child("EnemyHandler");
+	//pugi::xml_node myself = data.child("EntityHandler");
 	//if (myself.type() != pugi::node_element)
 	//{
-	//	pugi::xml_node myself = data.append_child("EnemyHandler");
+	//	pugi::xml_node myself = data.append_child("EntityHandler");
 	//
 	//}
 
@@ -236,9 +236,9 @@ bool EnemyHandler::SaveState(pugi::xml_node& data) const
 	return true;
 }
 
-void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
+void EntityHandler::CreateEnemy(enum EntityType type, int x, int y)
 {
-	spawnEnemyRequest = true;
+	
 	switch (type)
 	{
 	case ENEMY_MUSHROOM:
@@ -265,6 +265,13 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 		enemiesBird.add(newBird);
 		newBird->Start();
 	}
+	case ITEM_BANANA:
+	{
+		b2Vec2 pos(x, y);
+		Item* newItem = new Item(ItemType::BANANA, pos);
+		//items.add(newItem);
+		newItem->Start();
+	}
 		break;
 	default:
 		break;
@@ -273,7 +280,7 @@ void EnemyHandler::CreateEnemy(EnemyType type, int x, int y)
 	LOG("enemy Created");
 }
 
-void EnemyHandler::DestroyEnemy(PhysBody* body)
+void EntityHandler::DestroyEnemy(PhysBody* body)
 {
 
 	bool cont = false; 
@@ -341,7 +348,7 @@ void EnemyHandler::DestroyEnemy(PhysBody* body)
 		LOG("Enemy destroyed");
 }
 
-void EnemyHandler::DamageEnemy(b2Body* body, int damage)
+void EntityHandler::DamageEnemy(b2Body* body, int damage)
 {
 
 	bool cont = false;
@@ -398,7 +405,7 @@ void EnemyHandler::DamageEnemy(b2Body* body, int damage)
 	}
 }
 
-void EnemyHandler::HandleEnemyDespawn()
+void EntityHandler::HandleEnemyDespawn()
 {
 	for (int i = 0; i < enemiesMushroom.count(); i++)
 	{
@@ -431,7 +438,7 @@ void EnemyHandler::HandleEnemyDespawn()
 	}
 }
 
-void EnemyHandler::DestroyAllEnemies()
+void EntityHandler::DestroyAllEnemies()
 {
 
 	for (int i = 0; i < enemiesMushroom.count(); i++)

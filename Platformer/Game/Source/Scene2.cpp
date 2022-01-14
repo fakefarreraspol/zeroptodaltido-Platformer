@@ -9,7 +9,7 @@
 #include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
-#include "EnemyHandler.h"
+#include "EntityHandler.h"
 #include "EnemyMushroom.h"
 #include "EnemySnake.h"
 #include "EnemyBird.h"
@@ -229,22 +229,22 @@ bool Scene2::Start()
 			r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
 			*/
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 43 - 24, 48 * 13 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 43 - 24, 48 * 13 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 22 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 22 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 
 
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 20 + 25, 48 * 25 + 35);
-		app->enemyMaster->CreateEnemy(EnemyType::ENEMY_SNAKE, 48 * 30, 48 * 13 + 35);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_SNAKE, 48 * 20 + 25, 48 * 25 + 35);
+		app->entityMaster->CreateEnemy(EntityType::ENEMY_SNAKE, 48 * 30, 48 * 13 + 35);
 		marginX = 48 * 11;
 		marginY = 48 * 7;
 		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
@@ -589,14 +589,14 @@ bool Scene2::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 		{
-			app->enemyMaster->enemiesSnake.getFirst()->data->snakeAgro = true;
+			app->entityMaster->enemiesSnake.getFirst()->data->snakeAgro = true;
 		}
 
 
 	}break;
 	case END:
 	{
-		app->enemyMaster->DestroyAllEnemies();
+		app->entityMaster->DestroyAllEnemies();
 
 		//app->render->DrawTexture(loadingScreen, 55, 800,NULL,SDL_FLIP_NONE,0);
 		if (whichEnding)

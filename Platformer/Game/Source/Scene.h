@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Physics.h"
+#include "Item.h"
 
 struct SDL_Texture;
 
@@ -162,6 +163,8 @@ private:
 		48,48,
 		0,48
 	};
+
+	
 
 };
 

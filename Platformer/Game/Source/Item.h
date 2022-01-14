@@ -1,5 +1,5 @@
-#ifndef __ENEMY_SNAKE_H__
-#define __ENEMY_SNAKE_H__
+#ifndef __ITEM_H__
+#define __ITEM_H__
 
 #include "Module.h"
 #include "p2Point.h"
@@ -14,11 +14,17 @@
 #include "EntityHandler.h"
 
 
-class EnemySnake : public Module
+enum ItemType
+{
+	BANANA = 0,
+};
+
+
+class Item : public Module
 {
 public:
-	EnemySnake(b2Vec2 startPosition, int health);
-	virtual ~EnemySnake();
+	Item(ItemType type, b2Vec2 startPosition);
+	virtual ~Item();
 
 	// Called before render is available
 	bool Awake();
@@ -29,8 +35,6 @@ public:
 
 		return (abs(dist.x) + abs(dist.y));
 	}
-
-	void SnakeAttack();
 	// Called before the first frame
 	bool Start();
 	bool Update(float dt);
@@ -40,11 +44,6 @@ public:
 
 	int lastTime = 0;
 	int currentTime = 0;
-	bool snakeDirection = true;
-	int snakeAnim = 0;
-	bool snakeAgro = false;
-	int snakeAttackAnim = 0;
-	int snakeAttackTime = 0;
 
 	PhysBody* GetPhysBody() const
 	{
@@ -56,21 +55,14 @@ public:
 		b2Vec2 v(x, y);
 		Hitbox->body->SetTransform(v, 0);
 	}
+	
 
-	void DoDamage(int damage);
 
 private:
-	p2List<PhysBody*> acidThrown;
-	SDL_Rect r_snakeIdle[6];
-	SDL_Rect r_snakeAttack[4];
+
 	PhysBody* Hitbox;
-	PhysBody* acidBox;
 	b2Vec2 spawnPosition;
-	const int maxDistanceAgroBase = 13;
-	bool lastAcidDirection = true;
-	int health;
-	int attackCooldown = 0;
-	bool acidOnMap = false;
+
 	bool PhysBodyIsInMap(PhysBody* phys)
 	{
 		iPoint positionInMap(
@@ -83,6 +75,14 @@ private:
 		return app->pathfinding->CheckBoundaries(positionInMap);
 
 	}
+
+	ItemType type;
+	iPoint spawnPosIP;
+	iPoint spawnPosMapIP;
+
+	SDL_Texture* TexBanana;
 };
+
+
 
 #endif // __ENEMY_SNAKE_H__

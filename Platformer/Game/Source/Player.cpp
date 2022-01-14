@@ -10,7 +10,7 @@
 #include"Render.h"
 #include "Window.h"
 #include "Audio.h";
-#include "EnemyHandler.h"
+#include "EntityHandler.h"
 
 Player::Player() : Module()
 {
@@ -467,7 +467,7 @@ bool Player::Update(float dt)
 					//LOG("type stat: %i", b2_staticBody);
 					//LOG("type kin: %i", b2_kinematicBody);
 					
-						app->enemyMaster->DamageEnemy(bananaHit, 1);
+						app->entityMaster->DamageEnemy(bananaHit, 1);
 
 						b2Vec2 hitForce(10.f, 0);
 						b2Vec2 hitDir = bananaHit->GetLinearVelocity();

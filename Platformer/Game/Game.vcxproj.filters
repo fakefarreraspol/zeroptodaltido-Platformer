@@ -17,19 +17,22 @@
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Player.cpp" />
-    <ClCompile Include="Source\EnemyHandler.cpp" />
-    <ClCompile Include="Source\EnemyBird.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EnemyMushroom.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EnemySnake.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\EntityHandler.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
+    <ClCompile Include="Source\EnemyBird.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyMushroom.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemySnake.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -69,20 +72,23 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\EnemyHandler.h" />
-    <ClInclude Include="Source\EnemyBird.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EnemyMushroom.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EnemySnake.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\EntityHandler.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Scene2.h" />
+    <ClInclude Include="Source\Item.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemySnake.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyBird.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyMushroom.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -94,8 +100,11 @@
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemies">
+    <Filter Include="Entities">
       <UniqueIdentifier>{38972e11-c0c7-4ef0-99bd-7531f5193225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Enemies">
+      <UniqueIdentifier>{bf2708ce-cfd0-45d2-9b0f-ddb97f5327e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

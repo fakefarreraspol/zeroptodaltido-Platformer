@@ -21,7 +21,7 @@ class Map;
 class PathFinding;
 class Physics;
 class Player;
-class EnemyHandler;
+class EntityHandler;
 class EnemySnake;
 class EnemyMushroom;
 class EnemyBird;
@@ -109,7 +109,7 @@ public:
 	Map* map;
 	Physics* physics;
 	Player* player;
-	EnemyHandler* enemyMaster;
+	EntityHandler* entityMaster;
 	PathFinding* pathfinding;
 
 

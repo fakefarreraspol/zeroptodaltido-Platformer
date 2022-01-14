@@ -250,7 +250,7 @@ bool EnemyBird::Update(float dt)
 		for (uint i = 0; i < path->Count(); ++i)
 		{
 			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(app->enemyMaster->texturePath, pos.x, pos.y, &pathRect);
+			app->render->DrawTexture(app->entityMaster->texturePath, pos.x, pos.y, &pathRect);
 		}
 	}
 	
@@ -260,7 +260,7 @@ bool EnemyBird::Update(float dt)
 		if (birdDirection)
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim], SDL_FLIP_HORIZONTAL
@@ -269,7 +269,7 @@ bool EnemyBird::Update(float dt)
 		else
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim]
@@ -285,7 +285,7 @@ bool EnemyBird::Update(float dt)
 		if (birdDirection)
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim], SDL_FLIP_HORIZONTAL
@@ -294,7 +294,7 @@ bool EnemyBird::Update(float dt)
 		else
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim]
@@ -309,7 +309,7 @@ bool EnemyBird::Update(float dt)
 		if (birdDirection)
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim],SDL_FLIP_HORIZONTAL
@@ -318,7 +318,7 @@ bool EnemyBird::Update(float dt)
 		else
 		{
 			app->render->DrawTexture(
-				app->enemyMaster->textureBird,
+				app->entityMaster->textureBird,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 8,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 8,
 				&r_bird[birdAnim]
@@ -329,7 +329,7 @@ bool EnemyBird::Update(float dt)
 	}
 	if (agroTowardsPlayer)
 	{
-		app->render->DrawTexture(app->enemyMaster->attention,
+		app->render->DrawTexture(app->entityMaster->attention,
 			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x+10),
 			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y-20),
 			NULL);
@@ -398,7 +398,7 @@ void EnemyBird::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->enemyMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox);
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}

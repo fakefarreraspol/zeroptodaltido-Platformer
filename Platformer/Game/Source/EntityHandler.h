@@ -14,23 +14,25 @@
 #include "Map.h"
 #include "Pathfinding.h"
 
-//enemies
+//entities
 #include "EnemySnake.h"
 #include "EnemyBird.h"
 #include "EnemyMushroom.h"
+#include "Item.h"
 
-enum EnemyType
+enum EntityType
 {
 	ENEMY_MUSHROOM = 0,
 	ENEMY_SNAKE,
-	ENEMY_BIRD
+	ENEMY_BIRD,
+	ITEM_BANANA
 };
 
-class EnemyHandler : public Module
+class EntityHandler : public Module
 {
 public:
-	EnemyHandler();
-	virtual ~EnemyHandler();
+	EntityHandler();
+	virtual ~EntityHandler();
 
 	// Called before render is available
 	bool Awake();
@@ -41,7 +43,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
-	void CreateEnemy(EnemyType type, int x, int y);
+	void CreateEnemy(enum EntityType type, int x, int y);
 	void DestroyEnemy(PhysBody* body);
 	void DamageEnemy(b2Body* body, int damage);
 	void HandleEnemyDespawn();
@@ -59,15 +61,12 @@ public:
 		return app->pathfinding->CheckBoundaries(positionInMap);
 
 	}
-
+	
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;
 	p2List<EnemyBird*> enemiesBird;
+	p2List<Item*> items;
 
-
-
-	SDL_Rect mushroomTemp = { 0,0,48,48 };
-	SDL_Rect birdTemp = { 48,16,16,16};
 
 	SDL_Texture* attention;
 	SDL_Texture* textureMushroom;
@@ -79,9 +78,9 @@ public:
 	
 private:
 
-	bool spawnEnemyRequest = false;
-	EnemyType requestType;
-	iPoint requestPoint;
+	
+	
+	
 
 	
 	

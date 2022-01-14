@@ -12,7 +12,7 @@
 #include "Render.h"
 #include "Animation.h"
 #include "Log.h"
-#include "EnemyHandler.h"
+#include "EntityHandler.h"
 #include "Pathfinding.h"
 
 

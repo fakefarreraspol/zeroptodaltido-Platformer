@@ -206,7 +206,7 @@ bool EnemyMushroom::Update(float dt)
 
 	
 
-	if (worldPosIpoint.y > 30 * 48) app->enemyMaster->DestroyEnemy(Hitbox);
+	if (worldPosIpoint.y > 30 * 48) app->entityMaster->DestroyEnemy(Hitbox);
 
 	//b2Vec2 spd = { currentSpeed.x * multiplier, currentSpeed.y * multiplier };
 
@@ -222,14 +222,14 @@ bool EnemyMushroom::Update(float dt)
 	{
 		if (direction)
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk]);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -237,14 +237,14 @@ bool EnemyMushroom::Update(float dt)
 		}
 		else
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -256,14 +256,14 @@ bool EnemyMushroom::Update(float dt)
 		
 		if (direction)
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk]);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -271,14 +271,14 @@ bool EnemyMushroom::Update(float dt)
 		}
 		else
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -291,14 +291,14 @@ bool EnemyMushroom::Update(float dt)
 	{
 		if (direction)
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk]);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -306,14 +306,14 @@ bool EnemyMushroom::Update(float dt)
 		}
 		else
 		{
-			app->render->DrawTexture(app->enemyMaster->textureMushroom,
+			app->render->DrawTexture(app->entityMaster->textureMushroom,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset,
 				METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset,
 				&r_mushroomWalk[currentMushroomWalk],SDL_FLIP_HORIZONTAL);
 
 			if (agroTowardsPlayer)
 			{
-				app->render->DrawTexture(app->enemyMaster->attention,
+				app->render->DrawTexture(app->entityMaster->attention,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) + Xoffset + 25,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) + Yoffset - 5,
 					NULL);
@@ -333,7 +333,7 @@ bool EnemyMushroom::Update(float dt)
 				playerBox->GetPosition().x < Hitbox->body->GetPosition().x + margin &&
 				playerBox->GetPosition().y < Hitbox->body->GetPosition().y)
 			{
-				app->enemyMaster->DestroyEnemy(Hitbox);
+				app->entityMaster->DestroyEnemy(Hitbox);
 				app->player->RestartGorilaIdle();
 
 				b2Vec2 jumpForce(0, -10.f);
@@ -410,7 +410,7 @@ void EnemyMushroom::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->enemyMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox);
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}

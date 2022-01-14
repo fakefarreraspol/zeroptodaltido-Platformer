@@ -10,10 +10,11 @@
 #include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
-#include "EnemyHandler.h"
+#include "EntityHandler.h"
 #include "EnemySnake.h"
 #include "EnemyMushroom.h"
 #include "EnemyBird.h"
+#include "Item.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -37,7 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new PathFinding();
 	physics = new Physics();
 	player = new Player();
-	enemyMaster = new EnemyHandler();
+	entityMaster = new EntityHandler();
 
 
 	// Ordered for awake / Start / Update
@@ -52,7 +53,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(player);
-	AddModule(enemyMaster);
+	AddModule(entityMaster);
 
 	
 	

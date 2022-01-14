@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "Physics.h"
 #include "Textures.h"
-#include"Render.h"
+#include "Render.h"
 #include "Window.h"
 #include "Audio.h";
 #include "EnemySnake.h"
@@ -54,7 +54,7 @@ bool EnemySnake::CleanUp()
 
 bool EnemySnake::Update(float dt)
 {
-	//app->render->DrawTexture(app->enemyMaster->textureSnake, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), &r_snakeIdle[0]);
+	//app->render->DrawTexture(app->entityMaster->textureSnake, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), &r_snakeIdle[0]);
 	currentTime = SDL_GetTicks();
 	
 	if (((app->player->GetColHitbox()->body->GetPosition().x) - (Hitbox->body->GetPosition().x)) < 0)
@@ -100,7 +100,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim], SDL_FLIP_HORIZONTAL
@@ -109,7 +109,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim]
@@ -125,7 +125,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim], SDL_FLIP_HORIZONTAL
@@ -134,7 +134,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim]
@@ -149,7 +149,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim], SDL_FLIP_HORIZONTAL
@@ -158,7 +158,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 30,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeIdle[snakeAnim]
@@ -175,7 +175,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) -60,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeAttack[snakeAttackAnim], SDL_FLIP_HORIZONTAL
@@ -184,7 +184,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20 ,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) - 30,
 					&r_snakeAttack[snakeAttackAnim]
@@ -200,7 +200,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 60,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30,
 					&r_snakeAttack[snakeAttackAnim], SDL_FLIP_HORIZONTAL
@@ -209,7 +209,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20 ,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30,
 					&r_snakeAttack[snakeAttackAnim]
@@ -224,7 +224,7 @@ bool EnemySnake::Update(float dt)
 			if (snakeDirection)
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x) - 60,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30 ,
 					&r_snakeAttack[snakeAttackAnim], SDL_FLIP_HORIZONTAL
@@ -233,7 +233,7 @@ bool EnemySnake::Update(float dt)
 			else
 			{
 				app->render->DrawTexture(
-					app->enemyMaster->textureSnake,
+					app->entityMaster->textureSnake,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x)-20,
 					METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y) -30,
 					&r_snakeAttack[snakeAttackAnim]
@@ -396,7 +396,7 @@ void EnemySnake::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->enemyMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox);
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}
