@@ -1,4 +1,4 @@
-#include "App.h"
+﻿#include "App.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -246,7 +246,11 @@ bool Scene::Start()
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
 
-		
+		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç"};
+
+		font1_gold = app->fonts->Load("Assets/textures/fonts/font1_gold.png", lookupTable1, 6);
+		font1_black = app->fonts->Load("Assets/textures/fonts/font1_black.png", lookupTable1, 6);
+		font1_white = app->fonts->Load("Assets/textures/fonts/font1_white.png", lookupTable1, 6);
 
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
@@ -390,11 +394,11 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 
-		//if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		//{
-		//	if (!freeCam) freeCam = true;
-		//	else freeCam = false;
-		//}
+		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		{
+			if (!freeCam) freeCam = true;
+			else freeCam = false;
+		}
 
 		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 		{
@@ -615,8 +619,9 @@ bool Scene::Update(float dt)
 			
 		}
 
-
-
+		app->fonts->DrawText(20, 100, font1_gold, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]↑→€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç");
+		app->fonts->DrawText(20, 120, font1_gold, "?/abcdefghijklmnopqrstuvwxyz çççç");
+			
 	}break;
 	case END:
 	{

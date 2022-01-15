@@ -20,6 +20,7 @@ class Scene2;
 class Map;
 class PathFinding;
 class Physics;
+class ModuleFonts;
 class Player;
 class EntityHandler;
 class EnemySnake;
@@ -108,6 +109,7 @@ public:
 	Scene2* scene2;
 	Map* map;
 	Physics* physics;
+	ModuleFonts* fonts;
 	Player* player;
 	EntityHandler* entityMaster;
 	PathFinding* pathfinding;

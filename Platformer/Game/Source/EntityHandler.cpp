@@ -273,6 +273,8 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		EnemyBird* newBird = new EnemyBird(pos, 1);
 		enemiesBird.add(newBird);
 		newBird->Start();
+
+		break;
 	}
 	case ITEM_BANANA:
 	{

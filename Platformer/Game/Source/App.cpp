@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Physics.h"
+#include "ModuleFonts.h"
 #include "Player.h"
 #include "EntityHandler.h"
 #include "EnemySnake.h"
@@ -36,6 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	pathfinding = new PathFinding();
 	physics = new Physics();
+	fonts = new ModuleFonts();
 	player = new Player();
 	entityMaster = new EntityHandler();
 
@@ -47,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(physics);
+	AddModule(fonts);
 	AddModule(scene);
 	
 	AddModule(map);

@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Physics.h"
+#include "ModuleFonts.h"
 
 struct SDL_Texture;
 
@@ -97,6 +98,12 @@ private:
 	bool whichEnding = true;
 	bool sound = true;
 	
+	int font1_gold;
+	int font1_black;
+	int font1_white;
+
+	
+
 
 	int squareGround[44] = {
 		6,7,39,40,42,43,45,46,

@@ -33,6 +33,7 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Source\Item.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
