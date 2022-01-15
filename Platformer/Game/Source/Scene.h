@@ -5,7 +5,6 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Physics.h"
-#include "Item.h"
 
 struct SDL_Texture;
 

@@ -232,23 +232,24 @@ bool Scene::Start()
 			r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
 			*/
 
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 43 - 24, 48 * 13 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 43 - 24, 48 * 13 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 73 - 24, 48 * 25 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 74 - 24, 48 * 6 - 24);
 
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 22 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 12 - 24, 48 * 22 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 15 - 22, 48 * 2 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 22, 48 * 20 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
 
 		
 
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
-		app->entityMaster->CreateEnemy(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
 		marginX = 48 * 11;
 		marginY = 48 * 7;
 		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");

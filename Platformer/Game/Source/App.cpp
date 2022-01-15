@@ -14,7 +14,6 @@
 #include "EnemySnake.h"
 #include "EnemyMushroom.h"
 #include "EnemyBird.h"
-#include "Item.h"
 
 #include "Defs.h"
 #include "Log.h"

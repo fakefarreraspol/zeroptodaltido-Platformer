@@ -77,9 +77,6 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Scene2.h" />
-    <ClInclude Include="Source\Item.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EnemySnake.h">
       <Filter>Entities\Enemies</Filter>
     </ClInclude>
@@ -88,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Source\EnemyMushroom.h">
       <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

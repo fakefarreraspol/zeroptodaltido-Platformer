@@ -25,6 +25,7 @@ Item::Item(ItemType type, b2Vec2 startPosition) : Module()
 	spawnPosMapIP = app->map->WorldToMap(temp.x, temp.y);
 
 	Hitbox = app->physics->CreateCircle(spawnPosition.x, spawnPosition.y, 20);
+	Hitbox->body->GetFixtureList()->SetSensor(true);
 	Hitbox->body->SetGravityScale(0);
 
 }
@@ -72,14 +73,16 @@ bool Item::CleanUp()
 }
 bool Item::Update(float dt)
 {
+	currentTime++;
+
 	switch (type)
 	{
 	case BANANA:
 	{
 
 		app->render->DrawTexture(TexBanana,
-			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x),
-			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y),
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x - 10),
+			METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y - 15) + 5 * sin(currentTime * 0.05f),
 			NULL);
 	}
 	break;

@@ -20,6 +20,7 @@
 #include "EnemyMushroom.h"
 #include "Item.h"
 
+
 enum EntityType
 {
 	ENEMY_MUSHROOM = 0,
@@ -27,6 +28,8 @@ enum EntityType
 	ENEMY_BIRD,
 	ITEM_BANANA
 };
+
+class Item;
 
 class EntityHandler : public Module
 {
@@ -43,7 +46,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
-	void CreateEnemy(enum EntityType type, int x, int y);
+	void CreateEntity(enum EntityType type, int x, int y);
 	void DestroyEnemy(PhysBody* body);
 	void DamageEnemy(b2Body* body, int damage);
 	void HandleEnemyDespawn();

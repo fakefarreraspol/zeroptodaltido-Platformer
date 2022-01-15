@@ -97,6 +97,15 @@ bool EntityHandler::Update(float dt)
 		iteratorSnake->Update(dt);
 	}
 
+	for (int i = 0; i < items.count(); i++)
+	{
+
+		Item* iteratorItem;
+		items.at(i, iteratorItem);
+
+		iteratorItem->Update(dt);
+	}
+
 
 	return true;
 }
@@ -114,7 +123,7 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 		//prop = myself.child("EnemyMushroom");
 		//while (prop.type() == pugi::node_element)
 		//{
-		//	CreateEnemy(EntityType::ENEMY_MUSHROOM, 0, 0);
+		//	CreateEntity(EntityType::ENEMY_MUSHROOM, 0, 0);
 		//	EnemyMushroom* temp;
 		//	enemiesMushroom.at(i, temp);
 		//	temp->LoadState(myself);
@@ -129,7 +138,7 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 			enemiesMushroom.at(i, temp);
 			if (temp == nullptr || enemiesMushroom.count() == 0)
 			{
-				CreateEnemy(EntityType::ENEMY_MUSHROOM, 0, 0);
+				CreateEntity(EntityType::ENEMY_MUSHROOM, 0, 0);
 				enemiesMushroom.at(i, temp);
 			}
 			
@@ -146,7 +155,7 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 			enemiesBird.at(i, temp);
 			if (temp == nullptr || enemiesBird.count() == 0)
 			{
-				CreateEnemy(EntityType::ENEMY_BIRD, 0, 0);
+				CreateEntity(EntityType::ENEMY_BIRD, 0, 0);
 				enemiesBird.at(i, temp);
 			}
 
@@ -163,7 +172,7 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 			enemiesSnake.at(i, temp);
 			if (temp == nullptr || enemiesSnake.count() == 0)
 			{
-				CreateEnemy(EntityType::ENEMY_SNAKE, 0, 0);
+				CreateEntity(EntityType::ENEMY_SNAKE, 0, 0);
 				enemiesSnake.at(i, temp);
 			}
 
@@ -236,7 +245,7 @@ bool EntityHandler::SaveState(pugi::xml_node& data) const
 	return true;
 }
 
-void EntityHandler::CreateEnemy(enum EntityType type, int x, int y)
+void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 {
 	
 	switch (type)
@@ -269,7 +278,7 @@ void EntityHandler::CreateEnemy(enum EntityType type, int x, int y)
 	{
 		b2Vec2 pos(x, y);
 		Item* newItem = new Item(ItemType::BANANA, pos);
-		//items.add(newItem);
+		items.add(newItem);
 		newItem->Start();
 	}
 		break;
@@ -277,7 +286,7 @@ void EntityHandler::CreateEnemy(enum EntityType type, int x, int y)
 		break;
 	}
 
-	LOG("enemy Created");
+	LOG("Entity Created");
 }
 
 void EntityHandler::DestroyEnemy(PhysBody* body)
