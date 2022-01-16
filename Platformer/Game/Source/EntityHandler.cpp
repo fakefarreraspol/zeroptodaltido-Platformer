@@ -62,6 +62,14 @@ bool EntityHandler::CleanUp()
 
 		iteratorSnake->CleanUp();
 	}
+	for (int i = 0; i < rockets.count(); i++)
+	{
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+		iteratorRocket->CleanUp();
+	}
 
 
 	return true;
@@ -106,8 +114,60 @@ bool EntityHandler::Update(float dt)
 		iteratorItem->Update(dt);
 	}
 
+	for (int i = 0; i < rockets.count(); i++)
+	{
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+		iteratorRocket->Update(dt);
+	}
 
 	return true;
+}
+
+PhysBody EntityHandler::GetNearestEnemy(PhysBody* Character)
+{
+	PhysBody* NearEnemy;
+	int temp = 1000;
+	
+	for (int i = 0; i < enemiesSnake.count(); i++)
+	{
+		EnemySnake* iteratorSnake;
+		enemiesSnake.at(i, iteratorSnake);
+
+		int j = iteratorSnake->CheckDistanceToPhysBody(Character);
+		if (j<temp)
+		{
+			temp = j;
+			NearEnemy = iteratorSnake->GetPhysBody();
+		}
+	}
+	for (int i = 0; i < enemiesBird.count(); i++)
+	{
+		EnemyBird* iteratorBird;
+		enemiesBird.at(i, iteratorBird);
+
+		int j = iteratorBird->CheckDistanceToPhysBody(Character);
+		if (j < temp)
+		{
+			temp = j;
+			NearEnemy = iteratorBird->GetPhysBody();
+		}
+	}
+	for (int i = 0; i < enemiesMushroom.count(); i++)
+	{
+		EnemyMushroom* iteratorMushroom;
+		enemiesMushroom.at(i, iteratorMushroom);
+
+		int j = iteratorMushroom->CheckDistanceToPhysBody(Character);
+		if (j < temp)
+		{
+			temp = j;
+			NearEnemy = iteratorMushroom->GetPhysBody();
+		}
+	}
+	return *NearEnemy;
 }
 
 bool EntityHandler::LoadState(pugi::xml_node& data)
@@ -282,8 +342,19 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		Item* newItem = new Item(ItemType::BANANA, pos);
 		items.add(newItem);
 		newItem->Start();
-	}
 		break;
+	} 
+	case ROCKET_BANANA:
+	{
+		b2Vec2 pos(x, y);
+		RocketBanana* newRocket = new RocketBanana(pos, 1);
+		
+		rockets.add(newRocket);
+		
+		newRocket->Start();
+		break;
+	} 
+		
 	default:
 		break;
 	}
@@ -352,7 +423,26 @@ void EntityHandler::DestroyEnemy(PhysBody* body)
 			delete body;
 			cont = true;
 		}
-		bird = bird->next;
+		snake = snake->next;
+	}
+
+	p2List_item<RocketBanana*>* rocket = rockets.getFirst();
+	for (int i = 0; i < rockets.count(); i++)
+	{
+		if (cont) break;
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+
+		if (iteratorRocket->GetPhysBody() == body)
+		{
+			rockets.del(rocket);
+			app->physics->GetWorld()->DestroyBody(body->body);
+			delete body;
+			cont = true;
+		}
+		rocket = rocket->next;
 	}
 
 	if (cont) 
@@ -414,6 +504,21 @@ void EntityHandler::DamageEnemy(b2Body* body, int damage)
 			cont = true;
 		}
 	}
+
+	for (int i = 0; i < rockets.count(); i++)
+	{
+		if (cont) break;
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+		if (iteratorRocket->GetPhysBody()->body == body)
+		{
+			LOG("found type");
+			iteratorRocket->DoDamage(damage);
+			cont = true;
+		}
+	}
 }
 
 void EntityHandler::HandleEnemyDespawn()
@@ -447,6 +552,15 @@ void EntityHandler::HandleEnemyDespawn()
 		if (PhysBodyIsInMap(iteratorSnake->GetPhysBody()))
 			DestroyEnemy(iteratorSnake->GetPhysBody());
 	}
+	for (int i = 0; i < rockets.count(); i++)
+	{
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+		if (PhysBodyIsInMap(iteratorRocket->GetPhysBody()))
+			DestroyEnemy(iteratorRocket->GetPhysBody());
+	}
 }
 
 void EntityHandler::DestroyAllEnemies()
@@ -477,6 +591,15 @@ void EntityHandler::DestroyAllEnemies()
 		enemiesSnake.at(i, iteratorSnake);
 		
 		DestroyEnemy(iteratorSnake->GetPhysBody());
+	}
+
+	for (int i = 0; i < rockets.count(); i++)
+	{
+
+		RocketBanana* iteratorRocket;
+		rockets.at(i, iteratorRocket);
+
+		DestroyEnemy(iteratorRocket->GetPhysBody());
 	}
 
 }

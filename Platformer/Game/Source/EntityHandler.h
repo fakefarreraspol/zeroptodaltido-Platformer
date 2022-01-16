@@ -17,6 +17,7 @@
 //entities
 #include "EnemySnake.h"
 #include "EnemyBird.h"
+#include "RocketBanana.h"
 #include "EnemyMushroom.h"
 #include "Item.h"
 
@@ -26,7 +27,8 @@ enum EntityType
 	ENEMY_MUSHROOM = 0,
 	ENEMY_SNAKE,
 	ENEMY_BIRD,
-	ITEM_BANANA
+	ITEM_BANANA,
+	ROCKET_BANANA
 };
 
 class Item;
@@ -65,9 +67,12 @@ public:
 
 	}
 	
+
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;
 	p2List<EnemyBird*> enemiesBird;
+	p2List<RocketBanana*> rockets;
+	
 	p2List<Item*> items;
 
 
@@ -77,7 +82,7 @@ public:
 	SDL_Texture* textureSnake;
 	SDL_Texture* texturePath;
 
-
+	PhysBody  GetNearestEnemy(PhysBody* Character);
 	
 private:
 

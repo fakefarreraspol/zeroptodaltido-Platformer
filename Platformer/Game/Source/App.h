@@ -16,7 +16,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
-class Scene2;
+
 class Map;
 class PathFinding;
 class Physics;
@@ -26,6 +26,7 @@ class EntityHandler;
 class EnemySnake;
 class EnemyMushroom;
 class EnemyBird;
+class RocketBanana;
 
 class App
 {
@@ -106,7 +107,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
-	Scene2* scene2;
+	
 	Map* map;
 	Physics* physics;
 	ModuleFonts* fonts;

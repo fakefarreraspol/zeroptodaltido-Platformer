@@ -5,7 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
-#include "Scene2.h"
+
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Physics.h"
@@ -14,7 +14,7 @@
 #include "EnemyMushroom.h"
 #include "EnemySnake.h"
 #include "EnemyBird.h"
-
+#include "RocketBanana.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 
 
@@ -244,7 +244,9 @@ bool Scene::Start()
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
-		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
+		//app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
+		
+		app->entityMaster->CreateEntity(EntityType::ROCKET_BANANA, 48 * 10 - 24, 48 * 15 - 24);
 
 		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç"};
 
@@ -606,18 +608,7 @@ bool Scene::Update(float dt)
 
 
 
-		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			
-			state = NONE;
-			app->entityMaster->DestroyAllEnemies();
-			CleanUp();
-			
-			app->AddModule(app->scene2);
-			
-			app->player->Start();
-			
-		}
+		
 
 		app->fonts->DrawText(20, 100, font1_gold, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]↑→€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç");
 		app->fonts->DrawText(20, 120, font1_gold, "?/abcdefghijklmnopqrstuvwxyz çççç");
