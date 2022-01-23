@@ -95,6 +95,9 @@
     <ClInclude Include="Source\RocketBanana.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

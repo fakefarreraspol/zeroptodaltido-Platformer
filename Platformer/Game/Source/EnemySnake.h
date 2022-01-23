@@ -1,7 +1,7 @@
 #ifndef __ENEMY_SNAKE_H__
 #define __ENEMY_SNAKE_H__
 
-#include "Module.h"
+#include "Entity.h"
 #include "p2Point.h"
 #include "p2List.h"
 #include "App.h"
@@ -14,7 +14,7 @@
 #include "EntityHandler.h"
 
 
-class EnemySnake : public Module
+class EnemySnake : public Entity
 {
 public:
 	EnemySnake(b2Vec2 startPosition, int health);

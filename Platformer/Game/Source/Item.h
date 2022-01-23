@@ -1,7 +1,7 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include "Module.h"
+#include "Entity.h"
 #include "p2Point.h"
 #include "p2List.h"
 #include "App.h"
@@ -20,7 +20,7 @@ enum ItemType
 };
 
 
-class Item : public Module
+class Item : public Entity
 {
 public:
 	Item(ItemType type, b2Vec2 startPosition);

@@ -2,7 +2,7 @@
 #define __ROCKET_BANANA_H__
 
 
-#include "Module.h"
+#include "Entity.h"
 #include "p2Point.h"
 #include "p2List.h"
 #include "App.h"
@@ -16,7 +16,7 @@
 #include "Pathfinding.h"
 
 
-class RocketBanana : public Module
+class RocketBanana : public Entity
 {
 public:
 	RocketBanana(b2Vec2 startPosition, int health);

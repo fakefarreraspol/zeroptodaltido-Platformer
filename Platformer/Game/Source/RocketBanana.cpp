@@ -12,7 +12,7 @@
 #include "RocketBanana.h"
 
 
-RocketBanana::RocketBanana(b2Vec2 startPosition, int health) : Module()
+RocketBanana::RocketBanana(b2Vec2 startPosition, int health) : Entity()
 {
 	name.Create("rocket");
 

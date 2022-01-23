@@ -105,6 +105,13 @@ bool Player::CleanUp()
 // Update: draw background
 bool Player::Update(float dt)
 {
+	if (ColHitbox->body == NULL)
+	{
+		LOG("%i", ColHitbox->body);
+	}
+
+	
+
 	if (app->scene->state == app->scene->GAMEPLAY)
 	{
 		//LOG("%f", ColHitbox->body->GetPosition().x);

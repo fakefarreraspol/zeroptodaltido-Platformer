@@ -15,6 +15,7 @@
 #include "Pathfinding.h"
 
 //entities
+#include "Entity.h"
 #include "EnemySnake.h"
 #include "EnemyBird.h"
 #include "RocketBanana.h"
@@ -67,6 +68,7 @@ public:
 
 	}
 	
+	p2List<Entity*> allEntities;
 
 	p2List<EnemyMushroom*> enemiesMushroom;
 	p2List<EnemySnake*> enemiesSnake;

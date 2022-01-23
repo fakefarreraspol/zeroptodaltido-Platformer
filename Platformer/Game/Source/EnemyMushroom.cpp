@@ -11,7 +11,7 @@
 #include "EnemyMushroom.h"
 #include "App.h"
 
-EnemyMushroom::EnemyMushroom(b2Vec2 startPosition, int health) : Module()
+EnemyMushroom::EnemyMushroom(b2Vec2 startPosition, int health) : Entity()
 {
 	spawnPosition = startPosition;
 	name.Create("enemyMushroom");

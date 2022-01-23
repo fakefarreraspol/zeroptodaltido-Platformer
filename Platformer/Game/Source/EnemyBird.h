@@ -2,7 +2,7 @@
 #define __ENEMY_BIRD_H__
 
 
-#include "Module.h"
+#include "Entity.h"
 #include "p2Point.h"
 #include "p2List.h"
 #include "App.h"
@@ -16,7 +16,7 @@
 #include "Pathfinding.h"
 
 
-class EnemyBird : public Module
+class EnemyBird : public Entity
 {
 public:
 	EnemyBird(b2Vec2 startPosition, int health);

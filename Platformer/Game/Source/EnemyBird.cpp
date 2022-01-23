@@ -12,7 +12,7 @@
 #include "EnemyBird.h"
 
 
-EnemyBird::EnemyBird(b2Vec2 startPosition, int health) : Module()
+EnemyBird::EnemyBird(b2Vec2 startPosition, int health) : Entity()
 {
 	name.Create("enemyBird");
 
@@ -223,7 +223,7 @@ bool EnemyBird::Update(float dt)
 	//LOG("spawn: %i, %i", spawnPos.x, spawnPos.y);
 	//LOG("spawn map: %i, %i", spawnPosMap.x, spawnPosMap.y);
 
-	if (Hitbox->body->GetContactList() != nullptr)
+	if (Hitbox->body->GetContactList() != NULL)
 	{
 		b2Body* playerB = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
 		if (playerB == app->player->GetColHitbox()->body)

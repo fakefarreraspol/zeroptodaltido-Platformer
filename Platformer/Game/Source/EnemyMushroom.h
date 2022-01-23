@@ -1,7 +1,7 @@
 #ifndef __ENEMY_MUSHROOM_H__
 #define __ENEMY_MUSHROOM_H__
 
-#include "Module.h"
+#include "Entity.h"
 #include "p2Point.h"
 #include "p2List.h"
 #include "App.h"
@@ -16,7 +16,7 @@
 
 
 
-class EnemyMushroom : public Module
+class EnemyMushroom : public Entity
 {
 public:
 	EnemyMushroom(b2Vec2 startPosition, int health);

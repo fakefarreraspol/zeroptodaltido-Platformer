@@ -10,7 +10,7 @@
 #include "Audio.h";
 #include "EnemySnake.h"
 
-EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Module()
+EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Entity()
 {
 	spawnPosition = startPosition;
 	name.Create("enemySnake");

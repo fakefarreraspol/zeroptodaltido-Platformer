@@ -12,7 +12,7 @@
 #include "Textures.h"
 
 
-Item::Item(ItemType type, b2Vec2 startPosition) : Module()
+Item::Item(ItemType type, b2Vec2 startPosition) : Entity()
 {
 	spawnPosition = startPosition;
 	name.Create("item");
