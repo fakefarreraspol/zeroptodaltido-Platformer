@@ -248,11 +248,11 @@ bool Scene::Start()
 		
 		//app->entityMaster->CreateEntity(EntityType::ROCKET_BANANA, 48 * 10 - 24, 48 * 15 - 24);
 
-		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç"};
+		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç"};
 
-		font1_gold = app->fonts->Load("Assets/textures/fonts/font1_gold.png", lookupTable1, 6);
-		font1_black = app->fonts->Load("Assets/textures/fonts/font1_black.png", lookupTable1, 6);
-		font1_white = app->fonts->Load("Assets/textures/fonts/font1_white.png", lookupTable1, 6);
+		font1_gold = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
+		font1_black = app->fonts->Load("Assets/textures/UI/fonts/font1_black_3.png", lookupTable1, 6);
+		font1_white = app->fonts->Load("Assets/textures/UI/fonts/font1_white_3.png", lookupTable1, 6);
 
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
@@ -611,7 +611,11 @@ bool Scene::Update(float dt)
 		
 
 		app->fonts->DrawText(20, 100, font1_gold, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]↑→€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç");
-		app->fonts->DrawText(20, 120, font1_gold, "?/abcdefghijklmnopqrstuvwxyz çççç");
+		app->fonts->DrawText(20, 150, font1_gold, "[£]↑→€!çç$%&'()*+,-.");
+		app->fonts->DrawText(20, 200, font1_gold, "^0123456789:;<=>abcdef");
+		app->fonts->DrawText(20, 250, font1_gold, "ghijklmnopqrstuvwxyz");
+		app->fonts->DrawText(20, 300, font1_gold, "3 Attempts left!");
+
 			
 	}break;
 	case END:
