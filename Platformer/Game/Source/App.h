@@ -27,6 +27,7 @@ class EnemySnake;
 class EnemyMushroom;
 class EnemyBird;
 class RocketBanana;
+class UI_Handler;
 
 class App
 {
@@ -113,6 +114,7 @@ public:
 	ModuleFonts* fonts;
 	Player* player;
 	EntityHandler* entityMaster;
+	UI_Handler* UI_handler;
 	PathFinding* pathfinding;
 
 

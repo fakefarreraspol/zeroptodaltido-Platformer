@@ -88,6 +88,8 @@ bool Player::Start()
 		goLeft = false;
 		goRight = false;
 
+		healingCooldown = 0;
+
 		LOG("Loading player");
 	}
 	
@@ -296,21 +298,40 @@ bool Player::Update(float dt)
 		//	HurtGorila(1);
 		//}
 
-		if ((!healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)&&(playerHP<5))
+
+		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && healingCooldown <= 0)
 		{
-			healingUsed = true;
-			healingCooldown = currentTime;
 			playerHP++;
 			lastPlayerHP++;
 			app->audio->PlayFx(healingSound);
+			healingCooldown = healingCooldownMax;
 		}
-		if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && (healingCooldown + 20000 < currentTime))
+		else
 		{
-			healingCooldown = currentTime;
-			playerHP++;
-			lastPlayerHP++;
-			app->audio->PlayFx(healingSound);
+			healingCooldown--;
 		}
+
+
+		if (healingCooldown <= 0) healingCooldown = 0;
+
+
+
+
+		//if ((!healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)&&(playerHP<3))
+		//{
+		//	healingUsed = true;
+		//	healingCooldown = currentTime;
+		//	playerHP++;
+		//	lastPlayerHP++;
+		//	app->audio->PlayFx(healingSound);
+		//}
+		//if ((healingUsed) && (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 3) && (healingCooldown + healingCooldownMax < currentTime))
+		//{
+		//	healingCooldown = currentTime;
+		//	playerHP++;
+		//	lastPlayerHP++;
+		//	app->audio->PlayFx(healingSound);
+		//}
 		int gorilaWalkFrameSpeed = 150;
 		if ((!onAir) && (!playerHit))
 		{
@@ -524,25 +545,35 @@ bool Player::Update(float dt)
 			currentBanana = currentBanana->next;
 		}
 
-		SDL_Rect panelRec = { 0,0,16,16 };
-		panelRec.w *= 26;
-		panelRec.h *= 5;
-		app->render->DrawTexture(panel, 0, 0, &panelRec, SDL_FLIP_NONE, 0);
-
-		//UI
 		
-		for (int i = 0; i < playerHP; i++)
-		{
-			app->render->DrawTexture(mango, 100 + (48 + 16) * (i), 20, NULL, SDL_FLIP_NONE,0);
-
-		}
-		//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
-		app->render->DrawTexture(gorilaFace, 10, 10, NULL, SDL_FLIP_NONE, 0);
 
 	}
 	
 
 	
+
+	return true;
+}
+
+bool Player::PostUpdate()
+{
+
+	for (int i = 0; i < playerHP; i++)
+	{
+		app->render->DrawTexture(mango, 96 + (48 + 10) * (i), 32, NULL, SDL_FLIP_NONE, 0);
+
+	}
+	//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
+	app->render->DrawTexture(gorilaFace, 8, 32, NULL, SDL_FLIP_NONE, 0);
+
+	float skill_time = (float)healingCooldown;
+
+	float skill_fill_f = (healingCooldownMax - skill_time) / healingCooldownMax * 132;
+	int skill_fill_i = (int)skill_fill_f;
+	app->scene->UI_player_skill_bar_fill->SetRect(180, 148, skill_fill_i, 20);
+	LOG("fill: %i", skill_fill_i);
+	LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
+	LOG("skill: %f", skill_fill_f);
 
 	return true;
 }

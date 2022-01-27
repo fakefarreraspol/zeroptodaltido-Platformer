@@ -12,6 +12,7 @@
 #include "ModuleFonts.h"
 #include "Player.h"
 #include "EntityHandler.h"
+#include "UIHandler.h"
 #include "EnemySnake.h"
 #include "EnemyMushroom.h"
 #include "EnemyBird.h"
@@ -40,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new ModuleFonts();
 	player = new Player();
 	entityMaster = new EntityHandler();
+	UI_handler = new UI_Handler();
 
 
 	// Ordered for awake / Start / Update
@@ -50,12 +52,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(fonts);
+	AddModule(UI_handler);
 	AddModule(scene);
 	
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(player);
 	AddModule(entityMaster);
+	
 
 	
 	

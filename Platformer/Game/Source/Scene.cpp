@@ -215,22 +215,6 @@ bool Scene::Start()
 		}
 
 
-		/*
-			r_characterRun[0]= { 0,37, 50, 37*2 };
-			r_characterRun[1] = { 50,37, 100, 37 * 2 };
-			r_characterRun[2] = { 100,37, 150, 37 * 2 };
-			r_characterRun[3] = { 150,37, 200, 37 * 2 };
-			r_characterRun[4] = { 200,37, 250, 37 * 2 };
-			r_characterRun[5] = { 250,37, 300, 37 * 2 };
-			r_characterRun[6] = { 300,37, 350, 37 * 2 };
-			r_characterJump[0] = { 0,37 * 3, 50, 37 * 4 };
-			r_characterJump[1] = { 50,37 * 3, 100, 37 * 4 };
-			r_characterJump[2] = { 100,37 * 3, 150, 37 * 4 };
-			r_characterJump[3] = { 150,37 * 3, 200, 37 * 4 };
-			r_characterJump[4] = { 200,37 * 3, 250, 37 * 4 };
-			r_characterJump[5] = { 250,37 * 3, 300, 37 * 4 };
-			r_characterJump[6] = { 300,37 * 3, 350, 37 * 4 };
-			*/
 
 		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 10 - 24, 48 * 10 - 24);
 		app->entityMaster->CreateEntity(EntityType::ENEMY_BIRD, 48 * 28 - 24, 48 * 7 - 24);
@@ -246,6 +230,8 @@ bool Scene::Start()
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
 		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
 		
+		
+
 		//app->entityMaster->CreateEntity(EntityType::ROCKET_BANANA, 48 * 10 - 24, 48 * 15 - 24);
 
 		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç"};
@@ -260,8 +246,28 @@ bool Scene::Start()
 		marginY = 48 * 7;
 		checkpoint = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
+		SDL_Rect rec_panel = { 0,188,340,126 };
+		UI_player_lifes = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 0, 5, 0, 0);
+		UI_player_lifes->SetSprite(app->UI_handler->spritesheet);
+		UI_player_lifes->SetRectR(rec_panel);
 
+		rec_panel = { 368, 200, 80, 80 };
+		UI_player_skill_icon = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 16, 150, 0, 0);
+		UI_player_skill_icon->SetSprite(app->UI_handler->spritesheet);
+		UI_player_skill_icon->SetRectR(rec_panel);
+
+		rec_panel = { 176, 120, 140, 24 };
+		UI_player_skill_bar_bg = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 100, 200, 0, 0);
+		UI_player_skill_bar_bg->SetSprite(app->UI_handler->spritesheet);
+		UI_player_skill_bar_bg->SetRectR(rec_panel);
+
+		rec_panel = { 180, 148, 132, 20 };
+		UI_player_skill_bar_fill = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 100 + 4, 200 + 4, 0, 0);
+		UI_player_skill_bar_fill->SetSprite(app->UI_handler->spritesheet);
+		UI_player_skill_bar_fill->SetRectR(rec_panel);
 		
+		//176, 120, 140, 24
+		//180, 124, 132, 20
 
 	}break;
 	}
@@ -282,6 +288,9 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	currentTime = SDL_GetTicks();
+
+	
+
 	switch (state)
 	{
 	case INTRO:
@@ -430,7 +439,7 @@ bool Scene::Update(float dt)
 			if (playerX >= 48 * 100 - w + marginX)
 			{
 				
-				app->render->camera.x = -(48 * 100 - (w));
+				app->render->camera.x = -1*(48 * 100 - (w));
 			}
 
 			if (playerY > marginY)
@@ -442,7 +451,7 @@ bool Scene::Update(float dt)
 			if (playerY >= 30 * 48 - h + marginY)
 			{
 
-				app->render->camera.y = -(30 * 48 - (h));
+				app->render->camera.y = -1*(30 * 48 - (h));
 			}
 
 
@@ -610,11 +619,11 @@ bool Scene::Update(float dt)
 
 		
 
-		app->fonts->DrawText(20, 100, font1_gold, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]↑→€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç");
-		app->fonts->DrawText(20, 150, font1_gold, "[£]↑→€!çç$%&'()*+,-.");
-		app->fonts->DrawText(20, 200, font1_gold, "^0123456789:;<=>abcdef");
-		app->fonts->DrawText(20, 250, font1_gold, "ghijklmnopqrstuvwxyz");
-		app->fonts->DrawText(20, 300, font1_gold, "3 Attempts left!");
+		//app->fonts->DrawText(20, 100, font1_gold, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]↑→€!çç#$%&'%()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz çççç");
+		//app->fonts->DrawText(20, 150, font1_gold, "[£]↑→€!çç$%&'()*+,-.");
+		//app->fonts->DrawText(20, 200, font1_gold, "^0123456789:;<=>abcdef");
+		//app->fonts->DrawText(20, 250, font1_gold, "ghijklmnopqrstuvwxyz");
+		//app->fonts->DrawText(20, 300, font1_gold, "3 Attempts left!");
 
 			
 	}break;
@@ -648,7 +657,6 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	
 
 
 	

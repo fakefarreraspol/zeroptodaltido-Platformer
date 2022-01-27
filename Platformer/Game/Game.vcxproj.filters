@@ -36,6 +36,24 @@
     <ClCompile Include="Source\RocketBanana.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UIElements.h">
+      <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIElements.cpp">
+      <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIHandler.h">
+      <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIHandler.cpp">
+      <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI_Panel.cpp">
+      <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI_Button.cpp">
+      <Filter>UI elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -98,6 +116,12 @@
     <ClInclude Include="Source\Entity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\UI_Panel.h">
+      <Filter>UI elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI_Button.h">
+      <Filter>UI elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -114,6 +138,9 @@
     </Filter>
     <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{bf2708ce-cfd0-45d2-9b0f-ddb97f5327e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI elements">
+      <UniqueIdentifier>{3a721049-e0e7-434d-9564-f355be7ae416}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

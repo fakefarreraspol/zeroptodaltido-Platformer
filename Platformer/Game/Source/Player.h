@@ -1,7 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#define PLAYER_MAX_HP 5
+#define PLAYER_MAX_HP 3
 #include "Module.h"
 #include "p2Point.h"
 #include "p2List.h"
@@ -27,6 +27,7 @@ public:
 	// Called before the first frame
 	bool Start();
 	bool Update(float dt);
+	bool PostUpdate();
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	bool CleanUp();
@@ -122,6 +123,7 @@ public:
 	}
 	uint kick = 0;
 	uint enemy_death = 0;
+	int healingCooldown = 0;
 private:
 
 	bool AdminMode;
@@ -130,7 +132,8 @@ private:
 	p2List<PhysBody*> bananasThrown;
 	bool goLeft, goRight;
 	bool healingUsed = false;
-	int healingCooldown = 0;
+	
+	int healingCooldownMax = 5000;
 	float startPosX;
 	float startPosY;
 	int currentIFrameTime = 0;

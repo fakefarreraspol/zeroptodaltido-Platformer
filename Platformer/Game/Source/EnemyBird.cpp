@@ -400,6 +400,8 @@ void EnemyBird::DoDamage(int damage)
 	{
 		app->entityMaster->DestroyEnemy(Hitbox);
 		app->audio->PlayFx(app->player->enemy_death);
+		
 
 	}
+	app->player->healingCooldown -= 1000;
 }

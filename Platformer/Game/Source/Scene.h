@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "Physics.h"
 #include "ModuleFonts.h"
+#include "UIHandler.h"
 
 struct SDL_Texture;
 
@@ -61,6 +62,15 @@ public:
 
 	GameState state = GAMEPLAY;
 	//GameState state = GAMEPLAY;
+
+	int font1_gold;
+	int font1_black;
+	int font1_white;
+
+	UI_Panel* UI_player_lifes;
+	UI_Panel* UI_player_skill_icon;
+	UI_Panel* UI_player_skill_bar_bg;
+	UI_Panel* UI_player_skill_bar_fill;
 private:
 
 	p2List<PhysBody*> mushrooms;
@@ -98,9 +108,7 @@ private:
 	bool whichEnding = true;
 	bool sound = true;
 	
-	int font1_gold;
-	int font1_black;
-	int font1_white;
+	
 
 	
 

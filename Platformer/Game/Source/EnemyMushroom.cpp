@@ -414,4 +414,5 @@ void EnemyMushroom::DoDamage(int damage)
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}
-	}
+	app->player->healingCooldown -= 1000;
+}
