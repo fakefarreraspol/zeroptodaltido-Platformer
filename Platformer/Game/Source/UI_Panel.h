@@ -16,6 +16,28 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	iPoint GetPosition() const;
+
+	iPoint GetPositionCenter() const;
+
+	void SetPosition(int x, int y);
+
+	void SetPositionCenter(int x, int y);
+
+	void Draw();
+
+	void SetActive(bool isActive);
+
+	bool IsActive() const;
+
+	int Id() const;
+
+	void SetSprite(SDL_Texture* newSprite);
+
+	void SetRectR(SDL_Rect newRect);
+
+	void SetRect(int x, int y, int w, int h);
+
 private:
 
 };

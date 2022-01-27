@@ -107,22 +107,25 @@ bool Player::CleanUp()
 // Update: draw background
 bool Player::Update(float dt)
 {
-	if (ColHitbox->body == NULL)
-	{
-		LOG("%i", ColHitbox->body);
-	}
-
 	
 
 	if (app->scene->state == app->scene->GAMEPLAY)
 	{
-		//LOG("%f", ColHitbox->body->GetPosition().x);
-		//ColSensor->body->SetTransform(ColHitbox->body->GetPosition(), 0);
-		currentTime = SDL_GetTicks();
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			app->SetPause(!app->GameIsPaused());
+		}
+
+		if (app->GameIsPaused()) LOG("GAME PAUSED");
+
+		if (!app->GameIsPaused())
+		{
+			currentTime += 16;
+		}
+		
 		b2Vec2 pos = { x,y };
 
-		//LOG("player X %f", ColHitbox->body->GetPosition().x);
-		//LOG("player y %f", ColHitbox->body->GetPosition().y);
 		goLeft = (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT);
 		goRight = (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT);
 
@@ -281,17 +284,21 @@ bool Player::Update(float dt)
 
 
 		}*/
-		if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
-		{
-			playerHit = true;
-			
 
-		}
-		if (playerHit)
-		{
-			HitAnimation();
-		}
+		
+			if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+			{
+				if (!app->GameIsPaused())
+				{
+					playerHit = true;
+				}
 
+			}
+			if (playerHit)
+			{
+				HitAnimation();
+			}
+		
 		////LOG("current time %i", currentTime);
 		//if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN))
 		//{
@@ -299,20 +306,23 @@ bool Player::Update(float dt)
 		//}
 
 
-		if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && healingCooldown <= 0)
+		if (!app->GameIsPaused())
 		{
-			playerHP++;
-			lastPlayerHP++;
-			app->audio->PlayFx(healingSound);
-			healingCooldown = healingCooldownMax;
-		}
-		else
-		{
-			healingCooldown--;
-		}
+			if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && healingCooldown <= 0)
+			{
+				playerHP++;
+				lastPlayerHP++;
+				app->audio->PlayFx(healingSound);
+				healingCooldown = healingCooldownMax;
+			}
+			else
+			{
+				healingCooldown--;
+			}
 
 
-		if (healingCooldown <= 0) healingCooldown = 0;
+			if (healingCooldown <= 0) healingCooldown = 0;
+		}
 
 
 
@@ -570,10 +580,13 @@ bool Player::PostUpdate()
 
 	float skill_fill_f = (healingCooldownMax - skill_time) / healingCooldownMax * 132;
 	int skill_fill_i = (int)skill_fill_f;
-	app->scene->UI_player_skill_bar_fill->SetRect(180, 148, skill_fill_i, 20);
-	LOG("fill: %i", skill_fill_i);
-	LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
-	LOG("skill: %f", skill_fill_f);
+
+	SDL_Rect r = { 264, 92, skill_fill_i, 20 };
+
+	app->scene->UI_player_skill_bar_fill->rec_sprite = r;
+	//LOG("fill: %i", skill_fill_i);
+	//LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
+	//LOG("skill: %f", skill_fill_f);
 
 	return true;
 }

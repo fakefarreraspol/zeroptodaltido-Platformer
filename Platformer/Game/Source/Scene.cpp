@@ -248,23 +248,58 @@ bool Scene::Start()
 
 		SDL_Rect rec_panel = { 0,188,340,126 };
 		UI_player_lifes = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 0, 5, 0, 0);
-		UI_player_lifes->SetSprite(app->UI_handler->spritesheet);
-		UI_player_lifes->SetRectR(rec_panel);
+		UI_player_lifes->sprite = app->UI_handler->spritesheet;
+		UI_player_lifes->rec_sprite = rec_panel;
 
+		//skill icon
 		rec_panel = { 368, 200, 80, 80 };
 		UI_player_skill_icon = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 16, 150, 0, 0);
-		UI_player_skill_icon->SetSprite(app->UI_handler->spritesheet);
-		UI_player_skill_icon->SetRectR(rec_panel);
+		UI_player_skill_icon->sprite = app->UI_handler->spritesheet;
+		UI_player_skill_icon->rec_sprite = rec_panel;
 
-		rec_panel = { 176, 120, 140, 24 };
+		//player skill_bg
+		rec_panel = { 260, 60, 140, 24 };
 		UI_player_skill_bar_bg = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 100, 200, 0, 0);
-		UI_player_skill_bar_bg->SetSprite(app->UI_handler->spritesheet);
-		UI_player_skill_bar_bg->SetRectR(rec_panel);
+		UI_player_skill_bar_bg->sprite = app->UI_handler->spritesheet;
+		UI_player_skill_bar_bg->rec_sprite = rec_panel;
 
-		rec_panel = { 180, 148, 132, 20 };
+		//player skill fill
+		rec_panel = { 264, 92, 132, 20 };
 		UI_player_skill_bar_fill = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 100 + 4, 200 + 4, 0, 0);
-		UI_player_skill_bar_fill->SetSprite(app->UI_handler->spritesheet);
-		UI_player_skill_bar_fill->SetRectR(rec_panel);
+		UI_player_skill_bar_fill->sprite = app->UI_handler->spritesheet;
+		UI_player_skill_bar_fill->rec_sprite = rec_panel;
+
+		//panel pause
+		rec_panel = { 0, 312, 584, 432 };
+		UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080/2 - 584/2, 720/2 - 432/2, 584, 432);
+		UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
+		UI_panel_pause_menu->rec_sprite = rec_panel;
+
+		//test button
+		rec_panel = { 412, 60, 48, 48 };
+		test_button = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 200, 200, 48, 48);
+		test_button->sprite = app->UI_handler->spritesheet;
+		test_button->rec_sprite = rec_panel;
+
+		//pause open button
+		rec_panel = { 468, 4, 48, 48 };
+		UI_button_open_pause_menu = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 48 - 14, 14, 48, 48);
+		UI_button_open_pause_menu->sprite = app->UI_handler->spritesheet;
+		UI_button_open_pause_menu->rec_sprite = rec_panel;
+		UI_button_open_pause_menu->action = ACTION_PAUSE_OPEN;
+
+		//pause close button
+		rec_panel = { 412, 60, 48, 48 };
+		UI_button_close_pause_menu = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 - 48 - 24,
+			584/2 - 432/4,
+			48,
+			48);
+		UI_button_close_pause_menu->sprite = app->UI_handler->spritesheet;
+		UI_button_close_pause_menu->rec_sprite = rec_panel;
+		UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
+
 		
 		//176, 120, 140, 24
 		//180, 124, 132, 20
@@ -287,8 +322,10 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	currentTime = SDL_GetTicks();
+	currentTime += 16;
 
+	
+	
 	
 
 	switch (state)
@@ -332,7 +369,18 @@ bool Scene::Update(float dt)
 	}break;
 	case GAMEPLAY:
 	{
-		
+		if (app->GameIsPaused())
+		{
+			UI_panel_pause_menu->SetActive(true);
+			UI_button_close_pause_menu->SetActive(true);
+		}
+		else
+		{
+			UI_panel_pause_menu->SetActive(false);
+			UI_button_close_pause_menu->SetActive(false);
+
+		}
+
 		int cameraSpeed = 10;
 
 
@@ -661,8 +709,8 @@ bool Scene::PostUpdate()
 
 	
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	//
+	//
 
 	return ret;
 }

@@ -11,6 +11,8 @@ UI_Handler::~UI_Handler()
 
 }
 
+
+
 bool UI_Handler::Start()
 {
 	total_ids = 0;
@@ -78,8 +80,11 @@ UI_Button* UI_Handler::CreateButton(SDL_Texture* sprite, int x, int y, int width
 
 	button->SetSprite(sprite);
 	button->SetPosition(x, y);
-	button->SetWidth(width);
-	button->SetHeight(height);
+	button->w = width;
+	button->h = height;
+
+	button->Start();
+
 	LOG("created button");
 	return button;
 
@@ -97,9 +102,10 @@ UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, 
 
 	panel->SetSprite(sprite);
 	panel->SetPosition(x, y);
-	panel->SetWidth(width);
-	panel->SetHeight(height);
+	panel->w = width;
+	panel->h = height;
 	
+	panel->Start();
 
 	return panel;
 }

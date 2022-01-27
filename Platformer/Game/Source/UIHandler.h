@@ -11,9 +11,7 @@
 #include "UI_Button.h"
 #include "UI_Panel.h"
 
-class UI_Element;
-class UI_Button;
-class UI_Panel;
+
 
 class UI_Handler : public Module
 {

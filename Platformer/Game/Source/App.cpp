@@ -149,6 +149,7 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+
 	totalFrames++;
 	init = SDL_GetTicks();
 	bool ret = true;

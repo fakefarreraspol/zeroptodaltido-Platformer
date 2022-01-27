@@ -88,7 +88,10 @@ bool EnemyBird::Update(float dt)
 		METERS_TO_PIXELS(app->player->GetColHitbox()->body->GetPosition().y)
 	);
 	
-	currentTime = SDL_GetTicks();
+	if (!app->GameIsPaused())
+	{
+		currentTime += 16;
+	}
 
 	
 
@@ -391,6 +394,7 @@ bool EnemyBird::SaveState(pugi::xml_node& data) const
 
 void EnemyBird::DoDamage(int damage)
 {
+	app->player->healingCooldown -= 1000;
 	if (health > 0)
 	{
 		health -= damage;
@@ -403,5 +407,5 @@ void EnemyBird::DoDamage(int damage)
 		
 
 	}
-	app->player->healingCooldown -= 1000;
+	
 }

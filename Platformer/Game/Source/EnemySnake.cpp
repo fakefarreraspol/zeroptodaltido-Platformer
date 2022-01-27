@@ -55,7 +55,10 @@ bool EnemySnake::CleanUp()
 bool EnemySnake::Update(float dt)
 {
 	//app->render->DrawTexture(app->entityMaster->textureSnake, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), &r_snakeIdle[0]);
-	currentTime = SDL_GetTicks();
+	if (!app->GameIsPaused())
+	{
+		currentTime += 16;
+	}
 	
 	if (((app->player->GetColHitbox()->body->GetPosition().x) - (Hitbox->body->GetPosition().x)) < 0)
 	{

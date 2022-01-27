@@ -62,7 +62,11 @@ bool Physics::Start()
 // 
 bool Physics::PreUpdate()
 {
-	world->Step(app->DeltaTime(), 6, 2);
+	if (!app->GameIsPaused())
+	{
+		world->Step(app->DeltaTime(), 6, 2);
+	}
+	
 	//world->Step(1 / 60.0f, 6, 2);
 
 	// TODO: HomeWork

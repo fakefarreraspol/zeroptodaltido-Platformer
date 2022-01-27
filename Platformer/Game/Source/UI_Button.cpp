@@ -1,4 +1,6 @@
 #include "UI_Button.h"
+#include "Input.h"
+#include "Scene.h"
 
 UI_Button::UI_Button(int id) : UI_Element(id)
 {
@@ -12,6 +14,11 @@ UI_Button::~UI_Button()
 
 bool UI_Button::Start()
 {
+	rec_over = { 612, 112, 56,56 };
+	rec_hold = { 616, 172, 48, 48 };
+
+	clicked_inside = false;
+	action = ACTION_NOTHING;
 	return true;
 }
 
@@ -29,34 +36,184 @@ bool UI_Button::PreUpdate()
 
 bool UI_Button::Update(float dt)
 {
-	Draw();
+	
+
+	
+
+
+
 	return true;
 
 }
 
 bool UI_Button::PostUpdate()
 {
+	if (active)
+	{
+		Draw();
+		int mouse_x, mouse_y;
+		app->input->GetMousePosition(mouse_x, mouse_y);
+
+		//LOG("my x: %i", x);
+		//LOG("my y: %i", y);
+		//LOG("my w: %i", x + w);
+		//LOG("my h: %i", y + h);
+		//
+		//LOG("mouse x: %i", mouse_x);
+		//LOG("mouse y: %i", mouse_y);
+
+
+		if (mouse_x > x && mouse_x < x + w &&
+			mouse_y > y && mouse_y < y + h)
+		{
+			OnMouseOver();
+		}
+	}
+
 	return true;
 
 }
 
 void UI_Button::OnMouseOver()
 {
+	//LOG("mouse over");
+	
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		clicked_inside = true;
+	}
 
-}
 
-void UI_Button::OnMouseNotOver()
-{
+	if (clicked_inside)
+	{
+		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			OnMouseHold();
+		}
+		else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+		{
+			OnMouseRelease();
+			clicked_inside = false;
+		}
+		
+	}
+	else
+	{
+		app->render->DrawTexture(sprite, x - 4, y - 4, &rec_over, SDL_FLIP_NONE, 0, 0, x + w / 2, y + h / 2);
 
+	}
+	
 }
 
 void UI_Button::OnMouseHold()
 {
+	app->render->DrawTexture(sprite, x, y, &rec_hold, SDL_FLIP_NONE, 0, 0, x + w / 2, y + h / 2);
+
+	//LOG("mouse hold");
 
 }
 
 void UI_Button::OnMouseRelease()
 {
+	//LOG("mouse released");
+
+	switch (action)
+	{
+	case ACTION_NOTHING:
+		break;
+	case ACTION_START_GAME:
+		break;
+	case ACTION_PAUSE_OPEN:
+	{
+		app->SetPause(true);
+		active = !active;
+	}
+		break;
+	case ACTION_PAUSE_CLOSE:
+	{
+		app->SetPause(false);
+		app->scene->UI_button_open_pause_menu->SetActive(true);
+	}
+		break;
+	case ACTION_TOGGLE_VSYNC:
+		break;
+	case ACTION_TOGGLE_FULLSCREEN:
+		break;
+	case ACTION_TOGGLE_SOUND:
+		break;
+	case ACTION_SAVE_GAME:
+		break;
+	case ACTION_LOAD_GAME:
+		break;
+	case ACTION_EXIT_GAME:
+		break;
+	default:
+		break;
+	}
+
 
 }
 
+iPoint UI_Button::GetPosition() const
+{
+	iPoint res(x, y);
+
+	return res;
+}
+
+iPoint UI_Button::GetPositionCenter() const
+{
+	iPoint res(x + w / 2, y + h / 2);
+
+	return res;
+}
+
+void UI_Button::SetPosition(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+
+}
+
+void UI_Button::SetPositionCenter(int x, int y)
+{
+	this->x = x - w / 2;
+	this->y = y - h / 2;
+
+}
+
+void UI_Button::Draw()
+{
+	app->render->DrawTexture(sprite, x, y, &rec_sprite, SDL_FLIP_NONE, 0, 0, x + w / 2, y + h / 2);
+}
+
+void UI_Button::SetActive(bool isActive)
+{
+	active = isActive;
+}
+
+bool UI_Button::IsActive() const
+{
+	return active;
+}
+
+int UI_Button::Id() const
+{
+	return id;
+}
+
+void UI_Button::SetSprite(SDL_Texture* newSprite)
+{
+	sprite = newSprite;
+}
+
+void UI_Button::SetRectR(SDL_Rect newRect)
+{
+	rec_sprite = newRect;
+}
+
+void UI_Button::SetRect(int x, int y, int w, int h)
+{
+	SDL_Rect newRect = { x,y,w,h };
+	rec_sprite = newRect;
+}

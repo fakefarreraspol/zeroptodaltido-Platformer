@@ -133,10 +133,21 @@ public:
 		return limitFrames;
 	}
 
+	void SetPause(bool pause)
+	{
+		gamePaused = pause;
+	}
+
+	bool GameIsPaused() const
+	{
+		return gamePaused;
+	}
+
+
 private:
 
 	
-
+	bool gamePaused;
 	int argc;
 	char** args;
 	SString title;

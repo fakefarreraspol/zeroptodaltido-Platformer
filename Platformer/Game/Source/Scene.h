@@ -41,14 +41,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 	SDL_Texture* bTexture = nullptr;
-	void createMushroom(int x, int y, int size)
-	{
-		startMushroom temp;
-		temp.x = x;
-		temp.y = y;
-		temp.body = app->physics->CreateCircle(x, y, size);
-		mushrooms.add(temp.body);
-	}
+
 	int playerX = 0;
 	int playerY = 0;
 	bool freeCam = false;
@@ -71,6 +64,13 @@ public:
 	UI_Panel* UI_player_skill_icon;
 	UI_Panel* UI_player_skill_bar_bg;
 	UI_Panel* UI_player_skill_bar_fill;
+
+	UI_Panel* UI_panel_pause_menu;
+
+	UI_Button* test_button;
+	UI_Button* UI_button_open_pause_menu;
+	UI_Button* UI_button_close_pause_menu;
+
 private:
 
 	p2List<PhysBody*> mushrooms;

@@ -71,7 +71,10 @@ bool EnemyMushroom::CleanUp()
 bool EnemyMushroom::Update(float dt)
 {
 	//navegation AI
-	currentTime = SDL_GetTicks();
+	if (!app->GameIsPaused())
+	{
+		currentTime += 16;
+	}
 	iPoint worldPosIpoint(app->map->MapToWorld(lastMapTilePosition.x, lastMapTilePosition.y));
 
 	//float multiplier = (60 * dt);
@@ -334,6 +337,7 @@ bool EnemyMushroom::Update(float dt)
 				playerBox->GetPosition().y < Hitbox->body->GetPosition().y)
 			{
 				app->entityMaster->DestroyEnemy(Hitbox);
+				app->player->healingCooldown -= 1000;
 				app->player->RestartGorilaIdle();
 
 				b2Vec2 jumpForce(0, -10.f);
@@ -403,6 +407,7 @@ bool EnemyMushroom::SaveState(pugi::xml_node& data) const
 
 void EnemyMushroom::DoDamage(int damage)
 {
+	app->player->healingCooldown -= 1000;
 	if (health > 0)
 	{
 		health -= damage;
@@ -412,7 +417,6 @@ void EnemyMushroom::DoDamage(int damage)
 	{
 		app->entityMaster->DestroyEnemy(Hitbox);
 		app->audio->PlayFx(app->player->enemy_death);
-
 	}
-	app->player->healingCooldown -= 1000;
+	
 }
