@@ -143,8 +143,15 @@ void UI_Button::OnMouseRelease()
 	case ACTION_TOGGLE_SOUND:
 		break;
 	case ACTION_SAVE_GAME:
+	{
+		app->SaveGameRequest();
+	}
 		break;
 	case ACTION_LOAD_GAME:
+	{
+		app->LoadGameRequest();
+		
+	}
 		break;
 	case ACTION_EXIT_GAME:
 	{

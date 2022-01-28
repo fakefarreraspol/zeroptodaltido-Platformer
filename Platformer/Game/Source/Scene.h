@@ -75,6 +75,9 @@ public:
 	UI_Button* UI_button_exit_game_confirm;
 	UI_Button* UI_button_exit_game_deny;
 
+	UI_Button* UI_button_save_game;
+	UI_Button* UI_button_load_game;
+
 private:
 
 	p2List<PhysBody*> mushrooms;

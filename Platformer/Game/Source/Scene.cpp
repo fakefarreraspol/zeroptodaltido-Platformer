@@ -340,6 +340,36 @@ bool Scene::Start()
 		UI_button_exit_game_deny->rec_sprite = rec_panel;
 		UI_button_exit_game_deny->action = ACTION_EXIT_GAME_DENY;
 
+		//save button
+		rec_panel = { 320, 116, 132, 48 };
+		UI_button_save_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			 1080 / 2 - 584 / 2 + 584 / 4,
+			720 / 2 + 432 / 4,
+			132,
+			48
+		);
+		UI_button_save_game->sprite = app->UI_handler->spritesheet;
+		UI_button_save_game->rec_sprite = rec_panel;
+		UI_button_save_game->rec_over = {468,112,140,56};
+		UI_button_save_game->rec_hold = { 472,172,132,48 };
+		UI_button_save_game->action = ACTION_SAVE_GAME;
+
+		//load button
+		rec_panel = { 180, 116, 132, 48 };
+		UI_button_load_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 + 584 / 2 - 584 / 4 - 132,
+			720 / 2 + 432 / 4,
+			132,
+			48
+		);
+		UI_button_load_game->sprite = app->UI_handler->spritesheet;
+		UI_button_load_game->rec_sprite = rec_panel;
+		UI_button_load_game->rec_over = { 468,112,140,56 };
+		UI_button_load_game->rec_hold = { 472,172,132,48 };
+		UI_button_load_game->action = ACTION_LOAD_GAME;
+
 		
 		//176, 120, 140, 24
 		//180, 124, 132, 20
@@ -749,6 +779,8 @@ bool Scene::PostUpdate()
 			UI_button_close_pause_menu->SetActive(true);
 			UI_button_open_pause_menu->SetActive(false);
 			UI_button_exit_game->SetActive(true);
+			UI_button_load_game->SetActive(true);
+			UI_button_save_game->SetActive(true);
 
 		}
 		else
@@ -760,6 +792,8 @@ bool Scene::PostUpdate()
 			UI_button_exit_game->SetActive(false);
 			UI_button_exit_game_confirm->SetActive(false);
 			UI_button_exit_game_deny->SetActive(false);
+			UI_button_load_game->SetActive(false);
+			UI_button_save_game->SetActive(false);
 
 
 		}
