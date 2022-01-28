@@ -15,7 +15,9 @@ enum ButtonAction
 	ACTION_TOGGLE_SOUND,
 	ACTION_SAVE_GAME,
 	ACTION_LOAD_GAME,
-	ACTION_EXIT_GAME
+	ACTION_EXIT_GAME,
+	ACTION_EXIT_GAME_CONFIRM,
+	ACTION_EXIT_GAME_DENY
 };
 
 
@@ -70,7 +72,7 @@ public:
 
 private:
 
-	
+	bool ret;
 
 };
 

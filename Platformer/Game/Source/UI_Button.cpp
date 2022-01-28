@@ -19,6 +19,7 @@ bool UI_Button::Start()
 
 	clicked_inside = false;
 	action = ACTION_NOTHING;
+	ret = true;
 	return true;
 }
 
@@ -70,7 +71,7 @@ bool UI_Button::PostUpdate()
 		}
 	}
 
-	return true;
+	return ret;
 
 }
 
@@ -146,6 +147,23 @@ void UI_Button::OnMouseRelease()
 	case ACTION_LOAD_GAME:
 		break;
 	case ACTION_EXIT_GAME:
+	{
+		app->scene->UI_panel_pause_menu_exit_game->SetActive(true);
+		app->scene->UI_button_exit_game_confirm->SetActive(true);
+		app->scene->UI_button_exit_game_deny->SetActive(true);
+	}
+		break;
+	case ACTION_EXIT_GAME_CONFIRM:
+	{
+		ret = false;
+	}
+		break;
+	case ACTION_EXIT_GAME_DENY:
+	{
+		app->scene->UI_panel_pause_menu_exit_game->SetActive(false);
+		app->scene->UI_button_exit_game_confirm->SetActive(false);
+		app->scene->UI_button_exit_game_deny->SetActive(false);
+	}
 		break;
 	default:
 		break;

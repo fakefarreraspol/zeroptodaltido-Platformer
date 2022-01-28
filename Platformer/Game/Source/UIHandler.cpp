@@ -17,7 +17,7 @@ bool UI_Handler::Start()
 {
 	total_ids = 0;
 	spritesheet = app->tex->Load("Assets/textures/UI/UI_elements.png");
-
+	ret = true;
 	return true;
 }
 
@@ -55,7 +55,7 @@ bool UI_Handler::Update(float dt)
 		element->Update(dt);
 	}
 
-	return true;
+	return ret;
 }
 
 bool UI_Handler::PostUpdate()
@@ -66,9 +66,11 @@ bool UI_Handler::PostUpdate()
 		UI_Element* element;
 		allUI_Elements.at(i, element);
 
-		element->PostUpdate();
+		ret = element->PostUpdate();
+		if (ret == false)
+			break;
 	}
-	return true;
+	return ret;
 }
 
 UI_Button* UI_Handler::CreateButton(SDL_Texture* sprite, int x, int y, int width, int height)

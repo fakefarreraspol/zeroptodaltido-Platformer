@@ -66,10 +66,14 @@ public:
 	UI_Panel* UI_player_skill_bar_fill;
 
 	UI_Panel* UI_panel_pause_menu;
+	UI_Panel* UI_panel_pause_menu_exit_game;
 
-	UI_Button* test_button;
+
 	UI_Button* UI_button_open_pause_menu;
 	UI_Button* UI_button_close_pause_menu;
+	UI_Button* UI_button_exit_game;
+	UI_Button* UI_button_exit_game_confirm;
+	UI_Button* UI_button_exit_game_deny;
 
 private:
 

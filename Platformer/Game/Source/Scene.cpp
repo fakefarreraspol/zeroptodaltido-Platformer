@@ -275,11 +275,11 @@ bool Scene::Start()
 		UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
 		UI_panel_pause_menu->rec_sprite = rec_panel;
 
-		//test button
-		rec_panel = { 412, 60, 48, 48 };
-		test_button = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 200, 200, 48, 48);
-		test_button->sprite = app->UI_handler->spritesheet;
-		test_button->rec_sprite = rec_panel;
+		//panel exit game
+		rec_panel = { 692, 4, 268, 48 };
+		UI_panel_pause_menu_exit_game = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080 / 2 + 14, 720 / 2 + 432/4 + 128, 268, 48);
+		UI_panel_pause_menu_exit_game->sprite = app->UI_handler->spritesheet;
+		UI_panel_pause_menu_exit_game->rec_sprite = rec_panel;
 
 		//pause open button
 		rec_panel = { 468, 4, 48, 48 };
@@ -299,6 +299,46 @@ bool Scene::Start()
 		UI_button_close_pause_menu->sprite = app->UI_handler->spritesheet;
 		UI_button_close_pause_menu->rec_sprite = rec_panel;
 		UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
+
+
+		
+		//exit button
+		rec_panel = { 468, 60, 48, 48 };
+		UI_button_exit_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 - 48 - 24,
+			720 / 2 + 432 / 2 - 64,
+			48,
+			48);
+		UI_button_exit_game->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game->rec_sprite = rec_panel;
+		UI_button_exit_game->action = ACTION_EXIT_GAME;
+
+		//exit button confirm
+		rec_panel = { 412, 4, 48, 48 };
+		UI_button_exit_game_confirm = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 + 4,
+			720 / 2 + 432 / 4 + 128,
+			48,
+			48
+		);
+		UI_button_exit_game_confirm->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game_confirm->rec_sprite = rec_panel;
+		UI_button_exit_game_confirm->action = ACTION_EXIT_GAME_CONFIRM;
+
+		//exit button deny
+		rec_panel = { 468, 60, 48, 48 };
+		UI_button_exit_game_deny = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 + 48 + 16,
+			720 / 2 + 432 / 4 + 128,
+			48,
+			48
+		);
+		UI_button_exit_game_deny->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game_deny->rec_sprite = rec_panel;
+		UI_button_exit_game_deny->action = ACTION_EXIT_GAME_DENY;
 
 		
 		//176, 120, 140, 24
@@ -369,17 +409,7 @@ bool Scene::Update(float dt)
 	}break;
 	case GAMEPLAY:
 	{
-		if (app->GameIsPaused())
-		{
-			UI_panel_pause_menu->SetActive(true);
-			UI_button_close_pause_menu->SetActive(true);
-		}
-		else
-		{
-			UI_panel_pause_menu->SetActive(false);
-			UI_button_close_pause_menu->SetActive(false);
 
-		}
 
 		int cameraSpeed = 10;
 
@@ -705,7 +735,43 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	switch (state)
+	{
+	case Scene::INTRO:
+		break;
+	case Scene::GAMEPLAY:
+	{
+		if (app->GameIsPaused())
+		{
+			app->fonts->DrawText(1080 / 3, 200 - 24, font1_gold, "Game Paused");
 
+			UI_panel_pause_menu->SetActive(true);
+			UI_button_close_pause_menu->SetActive(true);
+			UI_button_open_pause_menu->SetActive(false);
+			UI_button_exit_game->SetActive(true);
+
+		}
+		else
+		{
+			UI_panel_pause_menu->SetActive(false);
+			UI_button_close_pause_menu->SetActive(false);
+			UI_button_open_pause_menu->SetActive(true);
+			UI_panel_pause_menu_exit_game->SetActive(false);
+			UI_button_exit_game->SetActive(false);
+			UI_button_exit_game_confirm->SetActive(false);
+			UI_button_exit_game_deny->SetActive(false);
+
+
+		}
+	}
+		break;
+	case Scene::END:
+		break;
+	case Scene::NONE:
+		break;
+	default:
+		break;
+	}
 
 	
 

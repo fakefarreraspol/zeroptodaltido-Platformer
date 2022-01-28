@@ -35,7 +35,7 @@ private:
 
 	p2List<UI_Element*> allUI_Elements;
 	int total_ids;
-	
+	bool ret;
 
 };
 
