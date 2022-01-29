@@ -37,10 +37,6 @@ bool UI_Button::PreUpdate()
 
 bool UI_Button::Update(float dt)
 {
-	
-
-	
-
 
 
 	return true;

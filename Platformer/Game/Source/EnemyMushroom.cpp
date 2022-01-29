@@ -349,6 +349,7 @@ bool EnemyMushroom::Update(float dt)
 			}
 			else
 			{
+				if (!app->GameIsPaused())
 				app->player->HurtGorila(1);
 			}
 		}

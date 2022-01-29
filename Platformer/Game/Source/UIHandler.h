@@ -10,6 +10,7 @@
 
 #include "UI_Button.h"
 #include "UI_Panel.h"
+#include "UI_Slider.h"
 
 
 
@@ -28,6 +29,7 @@ public:
 
 	UI_Button* CreateButton(SDL_Texture* sprite, int x, int y, int width, int height);
 	UI_Panel* CreatePanel(SDL_Texture* sprite, int x, int y, int width, int height);
+	UI_Slider* CreateSlider(int x, int y, int maxValue, SDL_Texture* sprite, SDL_Rect slider_bg, SDL_Rect slider_fill, SDL_Rect slider_button, SDL_Rect slider_button_hold);
 	
 	SDL_Texture* spritesheet;
 private:

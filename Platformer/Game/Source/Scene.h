@@ -56,9 +56,13 @@ public:
 	GameState state = GAMEPLAY;
 	//GameState state = GAMEPLAY;
 
-	int font1_gold;
-	int font1_black;
-	int font1_white;
+	int font1_gold_1;
+	int font1_black_1;
+	int font1_white_1;
+
+	int font1_black_2;
+
+
 
 	UI_Panel* UI_player_lifes;
 	UI_Panel* UI_player_skill_icon;
@@ -77,6 +81,10 @@ public:
 
 	UI_Button* UI_button_save_game;
 	UI_Button* UI_button_load_game;
+
+	UI_Slider* UI_slider_global_audio;
+	UI_Slider* UI_slider_music_vol;
+	UI_Slider* UI_slider_sfx_vol;
 
 private:
 

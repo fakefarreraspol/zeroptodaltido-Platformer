@@ -33,10 +33,13 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 	void clearAudio();
+
+	List<Mix_Chunk*> fx;
+	float audio_multiplier;
 private:
 
 	_Mix_Music* music;
-	List<Mix_Chunk *>	fx;
+	
 };
 
 #endif // __AUDIO_H__

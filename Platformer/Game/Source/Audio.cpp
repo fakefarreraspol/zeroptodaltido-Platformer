@@ -55,6 +55,8 @@ bool Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	audio_multiplier = 1;
+
 	return ret;
 }
 

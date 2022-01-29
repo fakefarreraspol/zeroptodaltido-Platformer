@@ -231,7 +231,8 @@ bool EnemyBird::Update(float dt)
 		b2Body* playerB = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
 		if (playerB == app->player->GetColHitbox()->body)
 		{
-			app->player->HurtGorila(1);
+			if (!app->GameIsPaused())
+				app->player->HurtGorila(1);
 		}
 	}
 

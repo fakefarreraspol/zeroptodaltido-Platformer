@@ -94,10 +94,7 @@ UI_Button* UI_Handler::CreateButton(SDL_Texture* sprite, int x, int y, int width
 
 UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, int height)
 {
-	LOG("created panel");
-	UI_Panel* panel = nullptr;
-	panel = new UI_Panel(total_ids);
-	LOG("panel %i", panel);
+	UI_Panel* panel = new UI_Panel(total_ids);
 	allUI_Elements.add(panel);
 	total_ids++;
 
@@ -108,9 +105,31 @@ UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, 
 	panel->h = height;
 	
 	panel->Start();
+	LOG("created panel");
 
 	return panel;
 }
+
+UI_Slider* UI_Handler::CreateSlider(int x, int y, int maxValue, SDL_Texture* sprite, SDL_Rect slider_bg, SDL_Rect slider_fill, SDL_Rect slider_button, SDL_Rect slider_button_hold)
+{
+	UI_Slider* slider = new UI_Slider(total_ids, maxValue);
+	allUI_Elements.add(slider);
+	total_ids++;
+
+	slider->sprite = sprite;
+
+	slider->SetPosition(x, y);
+	slider->rec_sprite = slider_bg;
+	slider->rec_body_fill = slider_fill;
+	slider->rec_slider = slider_button;
+	slider->rec_slider_hold = slider_button_hold;
+
+	slider->Start();
+	LOG("created slider");
+
+	return slider;
+}
+
 
  
 

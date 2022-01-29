@@ -54,6 +54,9 @@
     <ClCompile Include="Source\UI_Button.cpp">
       <Filter>UI elements</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UI_Slider.cpp">
+      <Filter>UI elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -120,6 +123,9 @@
       <Filter>UI elements</Filter>
     </ClInclude>
     <ClInclude Include="Source\UI_Button.h">
+      <Filter>UI elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI_Slider.h">
       <Filter>UI elements</Filter>
     </ClInclude>
   </ItemGroup>

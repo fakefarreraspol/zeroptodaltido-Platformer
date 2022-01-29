@@ -117,6 +117,7 @@
     <ClCompile Include="Source\UIHandler.h" />
     <ClCompile Include="Source\UI_Button.cpp" />
     <ClCompile Include="Source\UI_Panel.cpp" />
+    <ClCompile Include="Source\UI_Slider.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\EnemyBird.h" />
     <ClInclude Include="Source\Entity.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\UI_Button.h" />
     <ClInclude Include="Source\UI_Panel.h" />
+    <ClInclude Include="Source\UI_Slider.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />
