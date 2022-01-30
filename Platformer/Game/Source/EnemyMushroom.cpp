@@ -209,7 +209,7 @@ bool EnemyMushroom::Update(float dt)
 
 	
 
-	if (worldPosIpoint.y > 30 * 48) app->entityMaster->DestroyEnemy(Hitbox);
+	if (worldPosIpoint.y > 30 * 48) app->entityMaster->DestroyEnemy(Hitbox->body);
 
 	//b2Vec2 spd = { currentSpeed.x * multiplier, currentSpeed.y * multiplier };
 
@@ -336,7 +336,7 @@ bool EnemyMushroom::Update(float dt)
 				playerBox->GetPosition().x < Hitbox->body->GetPosition().x + margin &&
 				playerBox->GetPosition().y < Hitbox->body->GetPosition().y)
 			{
-				app->entityMaster->DestroyEnemy(Hitbox);
+				app->entityMaster->DestroyEnemy(Hitbox->body);
 				app->player->healingCooldown -= 1000;
 				app->player->RestartGorilaIdle();
 
@@ -368,11 +368,10 @@ bool EnemyMushroom::LoadState(pugi::xml_node& data)
 	b2Vec2 currentPos(data.attribute("currentPos.x").as_float(), data.attribute("currentPos.y").as_float());
 	Hitbox->body->SetTransform(currentPos, 0);
 
-	LOG("pos, %i %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().x), METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
-	LOG("pos, %i %i", METERS_TO_PIXELS(currentPos.x), METERS_TO_PIXELS(currentPos.y));
+	//LOG("pos, %i %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().x), METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
+	//LOG("pos, %i %i", METERS_TO_PIXELS(currentPos.x), METERS_TO_PIXELS(currentPos.y));
 
 	checkTimer = data.attribute("checkTimer").as_int();
-
 	maxDistanceAgro = data.attribute("maxDistanceAgro").as_int();
 
 	currentSpeed.x = data.attribute("currentSpeed.x").as_float();
@@ -418,7 +417,7 @@ void EnemyMushroom::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->entityMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox->body);
 		app->audio->PlayFx(app->player->enemy_death);
 	}
 	

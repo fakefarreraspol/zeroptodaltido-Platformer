@@ -124,6 +124,8 @@ public:
 	uint kick = 0;
 	uint enemy_death = 0;
 	int healingCooldown = 0;
+
+	int bananasCollected;
 private:
 
 	bool AdminMode;
@@ -156,6 +158,7 @@ private:
 	uint playerHurt = 0;
 	uint playerHurt2 = 0;
 	uint playerHurt3 = 0;
+	uint itemPickup = 0;
 	
 	unsigned int audioHurt= 0;
 	PhysBody* ColHitbox;

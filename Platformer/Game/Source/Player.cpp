@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "Audio.h";
 #include "EntityHandler.h"
+#include <string.h>
 
 Player::Player() : Module()
 {
@@ -38,6 +39,7 @@ bool Player::Start()
 		playerHurt3 = app->audio->LoadFx("Assets/audio/fx/monkey_hurt_3.wav");
 		kick = app->audio->LoadFx("Assets/audio/fx/kick.wav");
 		enemy_death = app->audio->LoadFx("Assets/audio/fx/enemy_death.wav");
+		itemPickup = app->audio->LoadFx("Assets/audio/fx/item_pickup.wav");
 		//textures
 		gorila = app->tex->Load("Assets/textures/gorila.png");
 		panel = app->tex->Load("Assets/textures/transparent_black_square_50.png");
@@ -107,7 +109,7 @@ bool Player::CleanUp()
 // Update: draw background
 bool Player::Update(float dt)
 {
-	LOG("attempts: %i", playerLifes);
+	//LOG("attempts: %i", playerLifes);
 
 	if (app->scene->state == GAMEPLAY) 
 	{
@@ -297,9 +299,10 @@ bool Player::Update(float dt)
 		
 			if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 			{
-				if (!app->GameIsPaused())
+				if (!app->GameIsPaused() && bananasCollected > 0)
 				{
 					playerHit = true;
+					bananasCollected--;
 				}
 
 			}
@@ -361,9 +364,11 @@ bool Player::Update(float dt)
 
 			if ((playerHP <= 0) || (ColHitbox->body->GetPosition().y > 35))
 			{
-				PlayerDeath();
+				
 				app->audio->PlayFx(playerDeath);
 				app->LoadGameRequest();
+				PlayerDeath();
+				
 				app->render->camera.x = 0;
 				app->render->camera.y = -48 * 14;
 			}
@@ -485,7 +490,17 @@ bool Player::Update(float dt)
 
 		}
 
-		
+		b2Body* item = nullptr;
+		if (ColHitbox->body != nullptr && ColHitbox->body->GetContactList() != nullptr)
+			item = ColHitbox->body->GetContactList()->contact->GetFixtureA()->GetBody();
+
+		if (app->entityMaster->GetEntityType(item) == ITEM_BANANA)
+		{
+			bananasCollected += 3;
+			app->audio->PlayFx(itemPickup);
+			app->entityMaster->DestroyEnemy(item);
+			
+		}
 
 		p2List_item<PhysBody*>* currentBanana = bananasThrown.getFirst();
 		while (currentBanana != NULL)
@@ -565,6 +580,7 @@ bool Player::Update(float dt)
 			int x, y;
 			currentBanana->data->GetPosition(x, y);
 			app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+			
 
 			currentBanana = currentBanana->next;
 		}
@@ -591,6 +607,18 @@ bool Player::PostUpdate()
 	break;
 	case GAMEPLAY:
 	{
+
+		SDL_Rect leaf = { 0,748,213,126 };
+		app->render->DrawTexture(app->UI_handler->spritesheet, 0, 720 - 140, &leaf, SDL_FLIP_NONE, 0);
+		app->render->DrawTexture(throwBanana, 48, 720 - 90, NULL, SDL_FLIP_NONE, 0);
+
+		char val[4] = { 0 };
+
+		sprintf_s(val, "%i", bananasCollected);
+
+		app->fonts->DrawText(37 + 48 , 720 - 80, app->scene->font1_gold_2, ":");
+		app->fonts->DrawText(37 + 48 + 2 * 16, 720 - 80, app->scene->font1_gold_2, val);
+
 		for (int i = 0; i < playerHP; i++)
 		{
 			app->render->DrawTexture(mango, 96 + (48 + 10) * (i), 32, NULL, SDL_FLIP_NONE, 0);
@@ -599,6 +627,7 @@ bool Player::PostUpdate()
 		//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
 		app->render->DrawTexture(gorilaFace, 8, 32, NULL, SDL_FLIP_NONE, 0);
 
+		//LOG("c : %i", healingCooldown);
 		float skill_time = (float)healingCooldown;
 
 		float skill_fill_f = (healingCooldownMax - skill_time) / healingCooldownMax * 132;
@@ -613,6 +642,7 @@ bool Player::PostUpdate()
 		//LOG("skill: %f", skill_fill_f);
 
 	}
+	break;
 	case END:
 	{
 		app->scene->UI_player_skill_bar_fill->SetActive(false);
@@ -622,7 +652,7 @@ bool Player::PostUpdate()
 		app->scene->UI_button_open_pause_menu->SetActive(false);
 
 	}
-	break;
+	break; 
 	default:
 		break;
 	}
@@ -631,18 +661,30 @@ bool Player::PostUpdate()
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	startPosX = data.child("startPos").attribute("x").as_float(0);
+	data = data.child("Player");
+
+	b2Vec2 currentPos(data.attribute("x").as_float(), data.attribute("y").as_float());
+	ColHitbox->body->SetTransform(currentPos, 0);
+
+	//LOG("pos, %i %i", METERS_TO_PIXELS(Hitbox->body->GetPosition().x), METERS_TO_PIXELS(Hitbox->body->GetPosition().y));
+	//LOG("pos, %i %i", METERS_TO_PIXELS(currentPos.x), METERS_TO_PIXELS(currentPos.y));
+
+	playerHP = data.attribute("health").as_int();
+	healingCooldown = data.attribute("cooldown").as_int();
+	bananasCollected = data.attribute("bananas").as_int();
+	//playerLifes = data.attribute("attempts").as_int();
+
+
+	/*startPosX = data.child("startPos").attribute("x").as_float(0);
 	startPosY = data.child("startPos").attribute("y").as_float(0);
-	
-	
-	
 
 	b2Vec2 v = { PIXEL_TO_METERS( startPosX), PIXEL_TO_METERS(startPosY )};
 	RestartPlayer();
 
 	ColHitbox->body->SetTransform(v, 0);
-	playerHP = data.child("health").attribute("value").as_int(5);
-	lastPlayerHP = playerHP;
+	playerHP = data.child("health").attribute("value").as_int(3);
+	healingCooldown = data.child("cooldown").attribute("value").as_int(20000);
+	lastPlayerHP = playerHP;*/
 	//playerLifes = data.child("attempts").attribute("value").as_int(3);
 
 	return true;
@@ -651,12 +693,31 @@ bool Player::LoadState(pugi::xml_node& data)
 
 bool Player::SaveState(pugi::xml_node& data) const
 {
+	pugi::xml_node iteratorRemove = data.first_child();
 
-	LOG("saving camera pos");
-	data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
-	data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
-	data.child("health").attribute("value").set_value(playerHP);
-	data.child("attempts").attribute("value").set_value(playerLifes);
+	while (iteratorRemove.next_sibling())
+	{
+		pugi::xml_node toRemove = iteratorRemove.next_sibling();
+		data.remove_child(toRemove);
+	}
+	data.remove_child(iteratorRemove);
+
+	pugi::xml_node myself = data.append_child("Player");
+
+	myself.append_attribute("x").set_value(ColHitbox->body->GetPosition().x);
+	myself.append_attribute("y").set_value(ColHitbox->body->GetPosition().y);
+	myself.append_attribute("health").set_value(playerHP);
+	myself.append_attribute("cooldown").set_value(healingCooldown);
+	myself.append_attribute("bananas").set_value(bananasCollected);
+	myself.append_attribute("attempts").set_value(playerLifes);
+
+
+	LOG("saving player");
+	//data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
+	//data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
+	//data.child("health").attribute("value").set_value(playerHP);
+	//data.child("cooldown").attribute("value").set_value(healingCooldown);
+	//data.child("attempts").attribute("value").set_value(playerLifes);
 	return true;
 }
 

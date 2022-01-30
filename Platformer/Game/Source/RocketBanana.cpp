@@ -322,7 +322,7 @@ void RocketBanana::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->entityMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox->body);
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}

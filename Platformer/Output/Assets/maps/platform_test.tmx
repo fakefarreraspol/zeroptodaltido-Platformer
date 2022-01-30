@@ -2150,8 +2150,8 @@
    <tile gid="105"/>
    <tile/>
    <tile/>
-   <tile gid="81"/>
-   <tile gid="88"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2250,8 +2250,8 @@
    <tile gid="105"/>
    <tile/>
    <tile gid="121"/>
-   <tile gid="103"/>
-   <tile gid="105"/>
+   <tile gid="81"/>
+   <tile gid="88"/>
    <tile/>
    <tile/>
    <tile/>
@@ -5158,8 +5158,8 @@
    <tile gid="135"/>
    <tile/>
    <tile/>
-   <tile gid="135"/>
-   <tile gid="135"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>

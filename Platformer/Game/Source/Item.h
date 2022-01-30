@@ -38,8 +38,8 @@ public:
 	// Called before the first frame
 	bool Start();
 	bool Update(float dt);
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
 	bool CleanUp();
 
 	int lastTime = 0;

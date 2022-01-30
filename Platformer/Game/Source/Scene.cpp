@@ -421,7 +421,26 @@ bool Scene::Start()
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 45 - 45, 48 * 22 - 24);
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 27 - 24);
 		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, 48 * 70 - 67, 48 * 7 - 24);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, METERS_TO_PIXELS(25), METERS_TO_PIXELS(25));
+		app->entityMaster->CreateEntity(EntityType::ENEMY_MUSHROOM, METERS_TO_PIXELS(53.6f), METERS_TO_PIXELS(9.5f));
+
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, METERS_TO_PIXELS(39), METERS_TO_PIXELS(21.5f) + 8 );
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, METERS_TO_PIXELS(54.f), METERS_TO_PIXELS(28.5f) + 8);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, METERS_TO_PIXELS(79.5f), METERS_TO_PIXELS(25.5f) + 8);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, METERS_TO_PIXELS(67.5f), METERS_TO_PIXELS(3.5f) + 8);
+		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, METERS_TO_PIXELS(36.5f), METERS_TO_PIXELS(27.5f) + 8);
+
 		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, 48 * 13 - 24, 48 * 22 - 24);
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(33.52f), METERS_TO_PIXELS(24.52f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(3.52f), METERS_TO_PIXELS(3.52f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(39.52f), METERS_TO_PIXELS(14.52f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(37), METERS_TO_PIXELS(21.5f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(37), METERS_TO_PIXELS(22.5f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(47), METERS_TO_PIXELS(28));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(47), METERS_TO_PIXELS(28));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(71), METERS_TO_PIXELS(20));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(6), METERS_TO_PIXELS(28.11f));
+		app->entityMaster->CreateEntity(EntityType::ITEM_BANANA, METERS_TO_PIXELS(15.7f), METERS_TO_PIXELS(28.4f));
 		
 		
 
@@ -959,14 +978,6 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(flag, 62 * 48, 15 * 48, &r_flag[0]);
 		}
 		else app->render->DrawTexture(flag, 62*48, 15*48, &r_flag[1]);
-		
-		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-		{
-			app->entityMaster->enemiesSnake.getFirst()->data->snakeAgro = true;
-		}
-
-
-
 
 		
 

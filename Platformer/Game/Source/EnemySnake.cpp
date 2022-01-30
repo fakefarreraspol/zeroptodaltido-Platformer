@@ -14,7 +14,8 @@ EnemySnake::EnemySnake(b2Vec2 startPosition, int health) : Entity()
 {
 	spawnPosition = startPosition;
 	name.Create("enemySnake");
-	Hitbox = app->physics->CreateStaticCircle(spawnPosition.x, spawnPosition.y, 10);
+	Hitbox = app->physics->CreateStaticCircle(spawnPosition.x, spawnPosition.y, 20);
+	Hitbox->body->SetSleepingAllowed(false);
 	this->health = health;
 
 }
@@ -57,7 +58,7 @@ bool EnemySnake::Update(float dt)
 	//app->render->DrawTexture(app->entityMaster->textureSnake, METERS_TO_PIXELS(this->Hitbox->body->GetPosition().x), METERS_TO_PIXELS(this->Hitbox->body->GetPosition().y), &r_snakeIdle[0]);
 	if (!app->GameIsPaused())
 	{
-		currentTime += 16;
+		currentTime = SDL_GetTicks();
 	}
 	
 	if (((app->player->GetColHitbox()->body->GetPosition().x) - (Hitbox->body->GetPosition().x)) < 0)
@@ -255,17 +256,17 @@ bool EnemySnake::Update(float dt)
 		attackCooldown = currentTime + 400;
 		acidOnMap = true;
 		if (snakeDirection) {
-			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) - 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 10);
+			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) - 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 8);
 			lastAcidDirection = false;
 		}
 		else
 		{
-			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) + 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 10);
+			acidBox = app->physics->CreateCircle(METERS_TO_PIXELS(Hitbox->body->GetPosition().x) + 24, METERS_TO_PIXELS(Hitbox->body->GetPosition().y)-10, 8);
 			lastAcidDirection = true;
 		}
 		acidBox->body->SetType(b2_dynamicBody);
 		acidBox->type = TYPE_BULLET;
-		b2Vec2 acidMovement{ 12, 0 };
+		b2Vec2 acidMovement{ 8, 0 };
 		if (lastAcidDirection)
 		{
 
@@ -278,7 +279,8 @@ bool EnemySnake::Update(float dt)
 			acidBox->body->SetLinearVelocity(-acidMovement);
 		}
 		acidThrown.add(acidBox);
-		acidBox->body->GetFixtureList()->SetSensor(true);
+		//acidBox->body->GetFixtureList()->SetSensor(true);
+		//acidBox->body->SetSleepingAllowed(false);
 	}
 	
 	p2List_item<PhysBody*>* currentAcid = acidThrown.getFirst();
@@ -298,12 +300,39 @@ bool EnemySnake::Update(float dt)
 
 		}
 		
+		b2Body* playerBox = nullptr;
 
-		b2Body* acidHit;
+		if (Hitbox->body->GetContactList() != nullptr)
+		{
+			playerBox = Hitbox->body->GetContactList()->contact->GetFixtureB()->GetBody();
+		}
+
+		if ( playerBox != nullptr && playerBox == app->player->GetColHitbox()->body)
+		{
+			float margin = PIXEL_TO_METERS(40);
+
+			if (playerBox->GetPosition().x > Hitbox->body->GetPosition().x - margin &&
+				playerBox->GetPosition().x < Hitbox->body->GetPosition().x + margin &&
+				playerBox->GetPosition().y < Hitbox->body->GetPosition().y)
+			{
+				app->entityMaster->DestroyEnemy(Hitbox->body);
+				app->player->healingCooldown -= 1000;
+				app->player->RestartGorilaIdle();
+
+				b2Vec2 jumpForce(0, -10.f);
+				b2Vec2 yVel = { playerBox->GetLinearVelocity().x,0 };
+				playerBox->SetLinearVelocity(yVel);
+				playerBox->ApplyLinearImpulse(jumpForce, playerBox->GetPosition(), true);
+				playerBox->SetLinearDamping(0);
+				app->audio->PlayFx(app->player->enemy_death);
+			}
+		}
+
+		b2Body* acidHit = nullptr;
 		if (currentAcid->data->body->GetContactList() != nullptr)
 		{
 			//LOG("true");
-			acidHit = currentAcid->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
+			acidHit = currentAcid->data->body->GetContactList()->contact->GetFixtureB()->GetBody();
 
 			if (acidHit != nullptr && acidHit != Hitbox->body && acidHit != currentAcid->data->body)
 			{
@@ -312,7 +341,7 @@ bool EnemySnake::Update(float dt)
 				LOG("type dynamic: %i", b2_dynamicBody);
 				//LOG("type stat: %i", b2_staticBody);
 				//LOG("type kin: %i", b2_kinematicBody);
-				
+
 				if (acidHit == app->player->GetColHitbox()->body) app->player->HurtGorila(1);
 
 				b2Vec2 hitForce(10.f, 0);
@@ -330,27 +359,36 @@ bool EnemySnake::Update(float dt)
 
 				acidThrown.del(currentAcid);
 
-				//switch (bananaHit->type)
-				//{
-				//
-				//case TYPE_SOLID_TILE:
-				//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
-				//	//banana hit sound
-				//	break;
-				//
-				//	/*
-				//	case ENEMY:
-				//		damage enemy
-				//		destroy banana
-				//		sound
-				//	
-				//	*/
-				//
-				//default:
-				//	app->physics->GetWorld()->DestroyBody(currentBanana->data->body);
-				//	break;
-				//}
+			}
 
+			
+		}
+		if (currentAcid->data->body->GetContactList() != nullptr)
+		{
+			acidHit = currentAcid->data->body->GetContactList()->contact->GetFixtureA()->GetBody();
+
+			if (acidHit != nullptr && acidHit != Hitbox->body && acidHit != currentAcid->data->body)
+			{
+				LOG("hit");
+				LOG("type: %i", acidHit->GetType());
+				LOG("type dynamic: %i", b2_dynamicBody);
+				//LOG("type stat: %i", b2_staticBody);
+				//LOG("type kin: %i", b2_kinematicBody);
+
+				b2Vec2 hitForce(10.f, 0);
+				b2Vec2 hitDir = acidHit->GetLinearVelocity();
+				hitDir.Normalize();
+				hitForce.x *= hitDir.x;
+				LOG("force %f", hitForce.x);
+				LOG("dir %f", hitDir.x);
+				b2Vec2 xVel = { 0,acidHit->GetLinearVelocity().y };
+				acidHit->SetLinearVelocity(xVel);
+				acidHit->ApplyLinearImpulse(hitForce, acidHit->GetPosition(), true);
+				acidHit->SetLinearDamping(0);
+
+				app->physics->GetWorld()->DestroyBody(currentAcid->data->body);
+
+				acidThrown.del(currentAcid);
 
 			}
 		}
@@ -358,7 +396,17 @@ bool EnemySnake::Update(float dt)
 
 		int x, y;
 		currentAcid->data->GetPosition(x, y);
-		//app->render->DrawTexture(throwBanana, x / app->win->GetScale() - 17, y / app->win->GetScale() - 17, NULL);
+		SDL_Rect rec_acid = { 167, 214,24,9 };
+
+		if (snakeDirection)
+		{
+			app->render->DrawTexture(app->entityMaster->textureSnake, x / app->win->GetScale() - 5, y / app->win->GetScale() - 2, &rec_acid, SDL_FLIP_HORIZONTAL);
+		}
+		else 
+		{
+			app->render->DrawTexture(app->entityMaster->textureSnake, x / app->win->GetScale() - 5, y / app->win->GetScale() - 2, &rec_acid);
+
+		}
 
 		currentAcid = currentAcid->next;
 	}
@@ -370,12 +418,10 @@ bool EnemySnake::Update(float dt)
 
 bool EnemySnake::LoadState(pugi::xml_node& data)
 {
+	id = data.attribute("id").as_int();
+	b2Vec2 currentPos(data.attribute("currentPos.x").as_float(), data.attribute("currentPos.y").as_float());
+	Hitbox->body->SetTransform(currentPos, 0);
 
-	//startPosX = data.child("startPos").attribute("x").as_float(0);
-	//startPosY = data.child("startPos").attribute("y").as_float(0);
-
-	//b2Vec2 v = { PIXEL_TO_METERS(startPosX), PIXEL_TO_METERS(startPosY) };
-	//ColHitbox->body->SetTransform(v, 0);
 
 	return true;
 }
@@ -383,10 +429,22 @@ bool EnemySnake::LoadState(pugi::xml_node& data)
 
 bool EnemySnake::SaveState(pugi::xml_node& data) const
 {
+	pugi::xml_node myself = data.append_child("EnemySnake");
 
-	//LOG("saving camera pos");
-	//data.child("startPos").attribute("x").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().x));
-	//data.child("startPos").attribute("y").set_value(METERS_TO_PIXELS(ColHitbox->body->GetPosition().y));
+	myself.append_attribute("id").set_value(id);
+	myself.append_attribute("currentPos.x").set_value(Hitbox->body->GetPosition().x);
+	myself.append_attribute("currentPos.y").set_value(Hitbox->body->GetPosition().y);
+
+	//myself.append_attribute("checkTimer").set_value(checkTimer);
+	//myself.append_attribute("maxDistanceAgro").set_value(maxDistanceAgro);
+	//
+	//myself.append_attribute("currentSpeed.x").set_value(currentSpeed.x);
+	//myself.append_attribute("currentSpeed.y").set_value(currentSpeed.y);
+	//
+	//myself.append_attribute("agroTowardsPlayer").set_value(agroTowardsPlayer);
+	//myself.append_attribute("health").set_value(health);
+	//myself.append_attribute("direction").set_value(direction);
+
 	return true;
 }
 
@@ -399,7 +457,11 @@ void EnemySnake::DoDamage(int damage)
 	}
 	if (health <= 0)
 	{
-		app->entityMaster->DestroyEnemy(Hitbox);
+		app->entityMaster->DestroyEnemy(Hitbox->body);
+
+		
+
+
 		app->audio->PlayFx(app->player->enemy_death);
 
 	}
