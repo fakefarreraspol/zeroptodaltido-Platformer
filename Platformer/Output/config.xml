@@ -5,11 +5,11 @@
 		<organization>UPC</organization>
 	</app>
 	<player>
-		<Player x="60.8483696" y="15.217845" health="2" cooldown="0" bananas="1" attempts="2" />
+		<Player x="4" y="21.5158367" health="3" cooldown="0" bananas="0" attempts="3" />
 	</player>
 	<renderer>
 		<vsync value="false" />
-		<camera x="-2392" y="-394" />
+		<camera x="0" y="-696" />
 	</renderer>
 	<window>
 		<resolution width="1080" height="720" scale="1" />
@@ -23,21 +23,28 @@
 		<folder>Assets/maps/</folder>
 	</map>
 	<EntityHandler>
-		<EnemyMushroom id="6" currentPos.x="14.8451262" currentPos.y="4.57633972" checkTimer="15" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
-		<EnemyMushroom id="7" currentPos.x="69.518158" currentPos.y="20.5783596" checkTimer="16" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" direction="true" />
-		<EnemyMushroom id="8" currentPos.x="44.1633492" currentPos.y="22.5737591" checkTimer="16" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
-		<EnemyMushroom id="9" currentPos.x="66.7056732" currentPos.y="27.5734959" checkTimer="16" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
-		<EnemyMushroom id="10" currentPos.x="69.7555771" currentPos.y="7.57344151" checkTimer="16" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" direction="true" />
-		<EnemyBird id="47" currentSpeed.x="2.97941208" currentSpeed.y="0.350861132" spawnPos.x="456" spawnPos.y="456" currentPos.x="11.4798594" currentPos.y="9.73340225" checkTimer="8" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird id="48" currentSpeed.x="-2.78484249" currentSpeed.y="-1.11564028" spawnPos.x="3480" spawnPos.y="1176" currentPos.x="70.7708282" currentPos.y="24.4246998" checkTimer="8" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemyBird id="49" currentSpeed.x="-2.90567183" currentSpeed.y="0.746371567" spawnPos.x="3528" spawnPos.y="264" currentPos.x="71.5692902" currentPos.y="6.29327393" checkTimer="8" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
-		<EnemySnake id="13" currentPos.x="39" currentPos.y="20.6666679" />
+		<EnemyMushroom id="5" currentPos.x="15.8351364" currentPos.y="21.5749569" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
+		<EnemyMushroom id="6" currentPos.x="15.9321756" currentPos.y="4.57443666" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
+		<EnemyMushroom id="7" currentPos.x="70.9558411" currentPos.y="20.5791683" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
+		<EnemyMushroom id="8" currentPos.x="46.6149063" currentPos.y="22.5783405" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" direction="true" />
+		<EnemyMushroom id="9" currentPos.x="67.9398651" currentPos.y="27.5746384" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" direction="true" />
+		<EnemyMushroom id="10" currentPos.x="70.0234528" currentPos.y="7.57446814" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
+		<EnemyMushroom id="11" currentPos.x="24.9260941" currentPos.y="25.5741444" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="2" currentSpeed.y="0" agroTowardsPlayer="false" health="2" direction="true" />
+		<EnemyMushroom id="12" currentPos.x="50.1779213" currentPos.y="9.57833481" checkTimer="9" maxDistanceAgro="5" currentSpeed.x="-2" currentSpeed.y="-0" agroTowardsPlayer="false" health="2" direction="false" />
+		<EnemyBird id="0" currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="456" spawnPos.y="456" currentPos.x="9.5" currentPos.y="9.5" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
+		<EnemyBird id="1" currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="1320" spawnPos.y="312" currentPos.x="27.5" currentPos.y="6.5" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
+		<EnemyBird id="2" currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="2040" spawnPos.y="600" currentPos.x="42.5" currentPos.y="12.5" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
+		<EnemyBird id="3" currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="3480" spawnPos.y="1176" currentPos.x="72.5" currentPos.y="24.5" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
+		<EnemyBird id="4" currentSpeed.x="0" currentSpeed.y="0" spawnPos.x="3528" spawnPos.y="264" currentPos.x="73.5" currentPos.y="5.79666567" checkTimer="1" checkTimerAgro="0" maxDistanceAgro="8" agroTowardsPlayer="false" health="1" />
+		<EnemySnake id="13" currentPos.x="39" currentPos.y="21.6666679" />
 		<EnemySnake id="14" currentPos.x="54" currentPos.y="28.6666679" />
 		<EnemySnake id="15" currentPos.x="79.5" currentPos.y="25.6666679" />
 		<EnemySnake id="16" currentPos.x="67.5" currentPos.y="3.66666675" />
 		<EnemySnake id="17" currentPos.x="36.5" currentPos.y="27.6666679" />
 		<EnemySnake id="29" currentPos.x="20.520834" currentPos.y="25.7291679" />
 		<EnemySnake id="30" currentPos.x="30" currentPos.y="13.729167" />
+		<Item id="18" currentPos.x="12.5" currentPos.y="21.5" />
+		<Item id="19" currentPos.x="33.5" currentPos.y="24.5" />
 		<Item id="20" currentPos.x="3.5" currentPos.y="3.5" />
 		<Item id="21" currentPos.x="39.5" currentPos.y="14.5" />
 		<Item id="22" currentPos.x="37" currentPos.y="21.5" />
