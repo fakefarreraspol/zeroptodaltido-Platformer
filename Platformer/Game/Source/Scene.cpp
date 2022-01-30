@@ -1019,7 +1019,6 @@ bool Scene::PostUpdate()
 			UI_panel_pause_menu->SetActive(false);
 		}
 
-		LOG("%i", menuOpen);
 		if (UI_panel_pause_menu->IsActive())
 		{
 			app->fonts->DrawText(1080 / 3 + 50, 200 - 24, font1_gold_2, "Settings");

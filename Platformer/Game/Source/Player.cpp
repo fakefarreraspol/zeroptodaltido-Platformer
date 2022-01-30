@@ -107,7 +107,7 @@ bool Player::CleanUp()
 // Update: draw background
 bool Player::Update(float dt)
 {
-	
+	LOG("attempts: %i", playerLifes);
 
 	if (app->scene->state == GAMEPLAY) 
 	{
@@ -351,6 +351,8 @@ bool Player::Update(float dt)
 		//	lastPlayerHP++;
 		//	app->audio->PlayFx(healingSound);
 		//}
+
+		
 		int gorilaWalkFrameSpeed = 150;
 		if ((!onAir) && (!playerHit))
 		{
@@ -611,6 +613,15 @@ bool Player::PostUpdate()
 		//LOG("skill: %f", skill_fill_f);
 
 	}
+	case END:
+	{
+		app->scene->UI_player_skill_bar_fill->SetActive(false);
+		app->scene->UI_player_skill_bar_bg->SetActive(false);
+		app->scene->UI_player_lifes->SetActive(false);
+		app->scene->UI_player_skill_icon->SetActive(false);
+		app->scene->UI_button_open_pause_menu->SetActive(false);
+
+	}
 	break;
 	default:
 		break;
@@ -632,7 +643,7 @@ bool Player::LoadState(pugi::xml_node& data)
 	ColHitbox->body->SetTransform(v, 0);
 	playerHP = data.child("health").attribute("value").as_int(5);
 	lastPlayerHP = playerHP;
-	playerLifes = data.child("attempts").attribute("value").as_int(3);
+	//playerLifes = data.child("attempts").attribute("value").as_int(3);
 
 	return true;
 }
