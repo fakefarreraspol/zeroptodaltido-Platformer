@@ -10,6 +10,15 @@
 
 struct SDL_Texture;
 
+
+enum GameState
+{
+	INTRO = 0,
+	GAMEPLAY,
+	END,
+	NONE
+};
+
 class Scene : public Module
 {
 public:
@@ -45,15 +54,9 @@ public:
 	int playerX = 0;
 	int playerY = 0;
 	bool freeCam = false;
-	enum GameState
-	{
-		INTRO = 0,
-		GAMEPLAY,
-		END,
-		NONE
-	};
+	
 
-	GameState state = GAMEPLAY;
+	GameState state = INTRO;
 	//GameState state = GAMEPLAY;
 
 	int font1_gold_1;
@@ -61,9 +64,20 @@ public:
 	int font1_white_1;
 
 	int font1_black_2;
+	int font1_gold_2;
+	int font1_white_2;
 
+	int font1_gold_3;
+	int font1_black_3;
+	int font1_white_3;
 
+	//start
+	UI_Panel* UI_panel_title;
 
+	UI_Button* UI_button_start_game;
+	UI_Button* UI_button_quit_game;
+
+	//gameplay
 	UI_Panel* UI_player_lifes;
 	UI_Panel* UI_player_skill_icon;
 	UI_Panel* UI_player_skill_bar_bg;
@@ -71,7 +85,6 @@ public:
 
 	UI_Panel* UI_panel_pause_menu;
 	UI_Panel* UI_panel_pause_menu_exit_game;
-
 
 	UI_Button* UI_button_open_pause_menu;
 	UI_Button* UI_button_close_pause_menu;
@@ -86,6 +99,9 @@ public:
 	UI_Slider* UI_slider_music_vol;
 	UI_Slider* UI_slider_sfx_vol;
 
+	bool loadingScreenActive = false;
+	int currentTime = 0;
+	int lastTime = 0;
 private:
 
 	p2List<PhysBody*> mushrooms;
@@ -115,9 +131,7 @@ private:
 	bool lastIntro = false;
 	bool flagPast = false;
 	p2List<PhysBody*> trespasableElements;
-	int currentTime = 0;
-	int lastTime = 0;
-	bool loadingScreenActive = false;
+	
 	uint goodEnding = 0;
 	uint badEnding = 0;
 	bool whichEnding = true;

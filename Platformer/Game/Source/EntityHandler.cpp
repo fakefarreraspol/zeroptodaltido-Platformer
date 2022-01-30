@@ -31,6 +31,8 @@ bool EntityHandler::Start()
 	attention = app->tex->Load("Assets/textures/attention_sign.png");
 	texturePath = app->tex->Load("Assets/maps/meta.png");
 
+	all_ids = 0;
+
 	return true;
 }
 bool EntityHandler::CleanUp()
@@ -194,6 +196,8 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 	//DestroyAllEnemies();
 	//pugi::xml_node myself = data.child("EntityHandler");
 
+	DestroyAllEnemies();
+
 	if (data != NULL)
 	{
 		pugi::xml_node prop;
@@ -211,24 +215,43 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 		//	prop = prop.next_sibling("EnemyMushroom");
 		//}
 
+		for (prop = data.child("EnemySnake"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemySnake"))
+		{
+			CreateEntity(ENEMY_SNAKE, 0, 0);
+			EnemySnake* ent = nullptr;
+			enemiesSnake.at(i, ent);
+			ent->LoadState(prop);
+
+			i++;
+
+		}
+		i = 0;
+
+		for (prop = data.child("EnemyBird"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyBird"))
+		{
+			CreateEntity(ENEMY_BIRD, 0, 0);
+			EnemyBird* ent = nullptr;
+			enemiesBird.at(i, ent);
+			ent->LoadState(prop);
+
+			i++;
+
+		}
+		i = 0;
+
 		for (prop = data.child("EnemyMushroom"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyMushroom"))
 		{
-			EnemyMushroom* temp;
-			enemiesMushroom.at(i, temp);
-			if (temp == nullptr || enemiesMushroom.count() == 0)
-			{
-				CreateEntity(EntityType::ENEMY_MUSHROOM, 0, 0);
-				enemiesMushroom.at(i, temp);
-			}
-			
-			
-			temp->LoadState(prop);
+			CreateEntity(ENEMY_MUSHROOM, 0, 0);
+			EnemyMushroom* ent = nullptr;
+			enemiesMushroom.at(i,ent);
+			ent->LoadState(prop);
+
 			i++;
 		
 		}
 		i = 0;
 
-		for (prop = data.child("EnemyBird"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyBird"))
+		/*for (prop = data.child("EnemyBird"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemyBird"))
 		{
 			EnemyBird* temp;
 			enemiesBird.at(i, temp);
@@ -243,7 +266,7 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 			i++;
 
 		}
-		i = 0;
+		
 
 		for (prop = data.child("EnemySnake"); prop.type() == pugi::node_element; prop = prop.next_sibling("EnemySnake"))
 		{
@@ -258,8 +281,8 @@ bool EntityHandler::LoadState(pugi::xml_node& data)
 			temp->LoadState(prop);
 			i++;
 
-		}
-		i = 0;
+		}*/
+		
 	}
 
 	return true;
@@ -338,6 +361,8 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		enemiesMushroom.add(newMushroom);
 		allEntities.add(newMushroom);
 		newMushroom->Start();
+		newMushroom->SetID(all_ids);
+		all_ids++;
 	}
 		break;
 	case ENEMY_SNAKE:
@@ -347,6 +372,8 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		enemiesSnake.add(newSnake);
 		allEntities.add(newSnake);
 		newSnake->Start();
+		newSnake->SetID(all_ids);
+		all_ids++;
 
 		break;
 	}
@@ -357,6 +384,8 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		enemiesBird.add(newBird);
 		allEntities.add(newBird);
 		newBird->Start();
+		newBird->SetID(all_ids);
+		all_ids++;
 
 		break;
 	}
@@ -367,6 +396,9 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		items.add(newItem);
 		allEntities.add(newItem);
 		newItem->Start();
+		newItem->SetID(all_ids);
+		all_ids++;
+
 		break;
 	} 
 	case ROCKET_BANANA:
@@ -376,8 +408,9 @@ void EntityHandler::CreateEntity(enum EntityType type, int x, int y)
 		
 		rockets.add(newRocket);
 		allEntities.add(newRocket);
-		
 		newRocket->Start();
+		newRocket->SetID(all_ids);
+		all_ids++;
 		break;
 	} 
 		

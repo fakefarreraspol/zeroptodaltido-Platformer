@@ -89,7 +89,7 @@ public:
 private:
 
 	
-	
+	int all_ids;
 	
 
 	

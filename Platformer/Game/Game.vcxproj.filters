@@ -17,7 +17,6 @@
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Player.cpp" />
-    <ClCompile Include="Source\EntityHandler.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\EnemyBird.cpp">
@@ -56,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="Source\UI_Slider.cpp">
       <Filter>UI elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityHandler.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +98,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\EntityHandler.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\PQueue.h" />
@@ -128,6 +129,9 @@
     <ClInclude Include="Source\UI_Slider.h">
       <Filter>UI elements</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EntityHandler.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -148,5 +152,13 @@
     <Filter Include="UI elements">
       <UniqueIdentifier>{3a721049-e0e7-434d-9564-f355be7ae416}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{16ee8875-e9e8-40ca-8a9e-8f75d1df6dee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Output\config.xml">
+      <Filter>xml</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

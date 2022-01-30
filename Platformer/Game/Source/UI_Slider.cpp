@@ -174,8 +174,8 @@ bool UI_Slider::PostUpdate()
 		}
 		
 	}
-	LOG("id: %i", id);
-	LOG("value: %i", value);
+	//LOG("id: %i", id);
+	//LOG("value: %i", value);
 
 	return true;
 }

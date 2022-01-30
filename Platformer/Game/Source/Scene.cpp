@@ -46,13 +46,17 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	
-
 
 	switch (state)
 	{
 	case INTRO:
 	{
+		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç" };
+
+		font1_gold_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_1.png", lookupTable1, 6);
+		font1_black_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_1.png", lookupTable1, 6);
+		font1_white_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_1.png", lookupTable1, 6);
+
 		intro01 = app->tex->Load("Assets/maps/intro_1.png");
 		intro02 = app->tex->Load("Assets/maps/intro_2.png");
 		titleMusic = app->audio->LoadFx("Assets/audio/music/title.wav");
@@ -60,6 +64,29 @@ bool Scene::Start()
 		loadingScreen = app->tex->Load("Assets/maps/mini_Loading_screen.png");
 
 		app->audio->PlayFx(titleMusic, 0);
+
+		//player lifes
+		SDL_Rect rec_panel = { 674,60,200,580};
+		UI_panel_title = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 580/2 - 80, -180, 0, 0, 90);
+		UI_panel_title->sprite = app->UI_handler->spritesheet;
+		UI_panel_title->rec_sprite = rec_panel;
+
+		rec_panel = { 679,654,327,72 };
+		UI_button_start_game = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 327 - 48 , 720 - 72*2 - 48 - 12, 327, 72);
+		UI_button_start_game->sprite = app->UI_handler->spritesheet;
+		UI_button_start_game->rec_sprite = rec_panel;
+		UI_button_start_game->rec_over = { 676,801,334,79 };
+		UI_button_start_game->rec_hold = { 679,882,327,72 };
+		UI_button_start_game->action = ACTION_START_GAME;
+
+		rec_panel = { 679,729,327,72 };
+		UI_button_quit_game = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 327 - 48, 720 - 72 - 48 , 327, 72);
+		UI_button_quit_game->sprite = app->UI_handler->spritesheet;
+		UI_button_quit_game->rec_sprite = rec_panel;
+		UI_button_quit_game->rec_over = { 676,801,334,79 };
+		UI_button_quit_game->rec_hold = { 679,882,327,72 };
+		UI_button_quit_game->action = ACTION_EXIT_GAME_CONFIRM;
+
 	}break;
 	case GAMEPLAY:
 	{
@@ -240,13 +267,15 @@ bool Scene::Start()
 
 		//app->entityMaster->CreateEntity(EntityType::ROCKET_BANANA, 48 * 10 - 24, 48 * 15 - 24);
 
-		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç"};
+		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç" };
 
-		font1_gold_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
-		font1_black_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_3.png", lookupTable1, 6);
-		font1_white_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_3.png", lookupTable1, 6);
+		font1_gold_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
+		font1_black_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_3.png", lookupTable1, 6);
+		font1_white_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_3.png", lookupTable1, 6);
 
-		font1_black_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_1.png", lookupTable1, 6);
+		font1_black_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_2.png", lookupTable1, 6);
+		font1_gold_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
+		font1_white_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_2.png", lookupTable1, 6);
 
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
@@ -279,8 +308,8 @@ bool Scene::Start()
 		UI_player_skill_bar_fill->rec_sprite = rec_panel;
 
 		//panel pause
-		rec_panel = { 0, 312, 584, 432 };
-		UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080/2 - 584/2, 720/2 - 432/2, 584, 432);
+		rec_panel = { 0, 312, 672, 432 };
+		UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080/2 - 672 /2, 720/2 - 432/2, 672, 432);
 		UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
 		UI_panel_pause_menu->rec_sprite = rec_panel;
 
@@ -301,7 +330,7 @@ bool Scene::Start()
 		rec_panel = { 412, 60, 48, 48 };
 		UI_button_close_pause_menu = app->UI_handler->CreateButton(
 			app->UI_handler->spritesheet,
-			1080 / 2 - 584 / 2 + 584 - 48 - 24,
+			1080 / 2 + 584/2 -28,
 			584/2 - 432/4,
 			48,
 			48);
@@ -309,54 +338,13 @@ bool Scene::Start()
 		UI_button_close_pause_menu->rec_sprite = rec_panel;
 		UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
 
-		//global audio slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_global_audio = app->UI_handler->CreateSlider(475, 320, 100, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_global_audio->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_global_audio->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_global_audio->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_global_audio->rec_slider = rec_panel;
-		UI_slider_global_audio->w = 256;
-		UI_slider_global_audio->h = 24;
-		UI_slider_global_audio->set = SET_GLOBAL_VOLUME;
-
-
-		//music volume slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_music_vol = app->UI_handler->CreateSlider(475, 370, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_music_vol->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_music_vol->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_music_vol->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_music_vol->rec_slider = rec_panel;
-		UI_slider_music_vol->w = 256;
-		UI_slider_music_vol->h = 24;
-		UI_slider_music_vol->set = SET_MUSIC_VOLUME;
-
-		//sfx volume slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_sfx_vol = app->UI_handler->CreateSlider(475, 420, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_sfx_vol->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_sfx_vol->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_sfx_vol->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_sfx_vol->rec_slider = rec_panel;
-		UI_slider_sfx_vol->w = 256;
-		UI_slider_sfx_vol->h = 24;
-		UI_slider_sfx_vol->set = SET_SFX_VOLUME;
+		
 		
 		//exit button
 		rec_panel = { 468, 60, 48, 48 };
 		UI_button_exit_game = app->UI_handler->CreateButton(
 			app->UI_handler->spritesheet,
-			1080 / 2 - 584 / 2 + 584 - 48 - 24,
+			1080 / 2 + 584 / 2 - 28,
 			720 / 2 + 432 / 2 - 64,
 			48,
 			48);
@@ -395,7 +383,7 @@ bool Scene::Start()
 		UI_button_save_game = app->UI_handler->CreateButton(
 			app->UI_handler->spritesheet,
 			 1080 / 2 - 584 / 2 + 584 / 4,
-			720 / 2 + 432 / 4,
+			720 / 2 + 432 / 4 + 24,
 			132,
 			48
 		);
@@ -410,7 +398,7 @@ bool Scene::Start()
 		UI_button_load_game = app->UI_handler->CreateButton(
 			app->UI_handler->spritesheet,
 			1080 / 2 + 584 / 2 - 584 / 4 - 132,
-			720 / 2 + 432 / 4,
+			720 / 2 + 432 / 4 + 24,
 			132,
 			48
 		);
@@ -420,7 +408,49 @@ bool Scene::Start()
 		UI_button_load_game->rec_hold = { 472,172,132,48 };
 		UI_button_load_game->action = ACTION_LOAD_GAME;
 
-		
+		//sfx volume slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_sfx_vol = app->UI_handler->CreateSlider(450, 420, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_sfx_vol->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_sfx_vol->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_sfx_vol->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_sfx_vol->rec_slider = rec_panel;
+		UI_slider_sfx_vol->w = 256;
+		UI_slider_sfx_vol->h = 24;
+		UI_slider_sfx_vol->set = SET_SFX_VOLUME;
+
+		//global audio slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_global_audio = app->UI_handler->CreateSlider(450, 320, 100, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_global_audio->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_global_audio->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_global_audio->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_global_audio->rec_slider = rec_panel;
+		UI_slider_global_audio->w = 256;
+		UI_slider_global_audio->h = 24;
+		UI_slider_global_audio->set = SET_GLOBAL_VOLUME;
+
+
+		//music volume slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_music_vol = app->UI_handler->CreateSlider(450, 370, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_music_vol->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_music_vol->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_music_vol->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_music_vol->rec_slider = rec_panel;
+		UI_slider_music_vol->w = 256;
+		UI_slider_music_vol->h = 24;
+		UI_slider_music_vol->set = SET_MUSIC_VOLUME;
+
 		//176, 120, 140, 24
 		//180, 124, 132, 20
 
@@ -452,11 +482,16 @@ bool Scene::Update(float dt)
 	{
 	case INTRO:
 	{
-		if ((lastTime + 300 > currentTime)&&(!loadingScreenActive))
+		/*if ((lastTime + 300 > currentTime)&&(!loadingScreenActive))
 		{
 			app->render->DrawTexture(intro01, -50, 500);
 		}
 		else if ((lastTime + 300 < currentTime) && (lastTime + 600 > currentTime) && (!loadingScreenActive))
+		{
+			app->render->DrawTexture(intro02, -50, 500);
+		}*/
+
+		if (!loadingScreenActive)
 		{
 			app->render->DrawTexture(intro02, -50, 500);
 		}
@@ -481,6 +516,10 @@ bool Scene::Update(float dt)
 
 			}
 		}
+		app->fonts->DrawText(14, 720 - 24 - 20, font1_white_1, "Made by Pol Farreras");
+		app->fonts->DrawText(14, 720 - 24, font1_white_1, "& Brandon Arandia");
+
+
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			loadingScreenActive = true;
@@ -817,40 +856,44 @@ bool Scene::PostUpdate()
 
 	switch (state)
 	{
-	case Scene::INTRO:
-		break;
-	case Scene::GAMEPLAY:
+	case INTRO:
 	{
+	}
+		break;
+	case GAMEPLAY:
+	{
+
+
 		if (app->GameIsPaused())
 		{
-			app->fonts->DrawText(1080 / 3, 200 - 24, font1_gold_1, "Game Paused");
+			app->fonts->DrawText(1080 / 3, 200 - 24, font1_gold_2, "Game Paused");
 
 
 			char val[4];
 
-			app->fonts->DrawText(335, 320 - 8, font1_black_2, "Global");
-			app->fonts->DrawText(335, 320 + 8, font1_black_2, "Vol:");
+			app->fonts->DrawText(310, 320 - 8, font1_black_1, "Global");
+			app->fonts->DrawText(310, 320 + 8, font1_black_1, "Vol:");
 			
 			sprintf_s(val, "%i", UI_slider_global_audio->GetValue());
 
-			app->fonts->DrawText(335 + 4 * 16, 320 + 8, font1_black_2, val);
-			app->fonts->DrawText(335 + (4 + strlen(val))*16, 320 + 8, font1_black_2, "%");
+			app->fonts->DrawText(310 + 4 * 16, 320 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val))*16, 320 + 8, font1_black_1, "%");
 
-			app->fonts->DrawText(335, 370 - 8, font1_black_2, "Music");
-			app->fonts->DrawText(335, 370 + 8, font1_black_2, "Vol:");
+			app->fonts->DrawText(310, 370 - 8, font1_black_1, "Music");
+			app->fonts->DrawText(310, 370 + 8, font1_black_1, "Vol:");
 
 			sprintf_s(val, "%i", (int)((float)UI_slider_music_vol->GetValue() / 128.f * 100));
 
-			app->fonts->DrawText(335 + 4 * 16, 370 + 8, font1_black_2, val);
-			app->fonts->DrawText(335 + (4 + strlen(val)) * 16, 370 + 8, font1_black_2, "%");
+			app->fonts->DrawText(310 + 4 * 16, 370 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val)) * 16, 370 + 8, font1_black_1, "%");
 
-			app->fonts->DrawText(335, 420 - 8, font1_black_2, "SFX");
-			app->fonts->DrawText(335, 420 + 8, font1_black_2, "Vol:");
+			app->fonts->DrawText(310, 420 - 8, font1_black_1, "SFX");
+			app->fonts->DrawText(310, 420 + 8, font1_black_1, "Vol:");
 			
 			sprintf_s(val, "%i", (int)((float)UI_slider_sfx_vol->GetValue() / 128.f * 100));
 
-			app->fonts->DrawText(335 + 4 * 16, 420 + 8, font1_black_2, val);
-			app->fonts->DrawText(335 + (4 + strlen(val)) * 16, 420 + 8, font1_black_2, "%");
+			app->fonts->DrawText(310 + 4 * 16, 420 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val)) * 16, 420 + 8, font1_black_1, "%");
 
 
 			UI_panel_pause_menu->SetActive(true);
@@ -883,9 +926,9 @@ bool Scene::PostUpdate()
 		}
 	}
 		break;
-	case Scene::END:
+	case END:
 		break;
-	case Scene::NONE:
+	case NONE:
 		break;
 	default:
 		break;

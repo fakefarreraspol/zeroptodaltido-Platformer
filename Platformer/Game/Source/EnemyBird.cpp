@@ -373,6 +373,7 @@ bool EnemyBird::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node myself = data.append_child("EnemyBird");
 
+	myself.append_attribute("id").set_value(id);
 	myself.append_attribute("currentSpeed.x").set_value(currentSpeed.x);
 	myself.append_attribute("currentSpeed.y").set_value(currentSpeed.y);
 

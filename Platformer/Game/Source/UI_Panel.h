@@ -38,6 +38,8 @@ public:
 
 	void SetRect(int x, int y, int w, int h);
 
+	float angle;
+
 private:
 
 };

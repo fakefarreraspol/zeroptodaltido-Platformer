@@ -12,7 +12,21 @@ public:
 	~Entity()
 	{}
 
+	void SetID(int id)
+	{
+		this->id = id;
+	}
+
+	int Id() const
+	{
+		return id;
+	}
+
 private:
+
+protected:
+
+	int id;
 
 };
 

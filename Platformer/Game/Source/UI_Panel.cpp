@@ -74,7 +74,7 @@ void UI_Panel::SetPositionCenter(int x, int y)
 
 void UI_Panel::Draw()
 {
-	app->render->DrawTexture(sprite, x, y, &rec_sprite, SDL_FLIP_NONE, 0, 0, x + w / 2, y + h / 2);
+	app->render->DrawTexture(sprite, x, y, &rec_sprite, SDL_FLIP_NONE, 0, angle);
 }
 
 void UI_Panel::SetActive(bool isActive)

@@ -92,7 +92,7 @@ UI_Button* UI_Handler::CreateButton(SDL_Texture* sprite, int x, int y, int width
 
 }
 
-UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, int height)
+UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, int height, float angle)
 {
 	UI_Panel* panel = new UI_Panel(total_ids);
 	allUI_Elements.add(panel);
@@ -103,7 +103,8 @@ UI_Panel* UI_Handler::CreatePanel(SDL_Texture* sprite, int x, int y, int width, 
 	panel->SetPosition(x, y);
 	panel->w = width;
 	panel->h = height;
-	
+	panel->angle = angle;
+
 	panel->Start();
 	LOG("created panel");
 

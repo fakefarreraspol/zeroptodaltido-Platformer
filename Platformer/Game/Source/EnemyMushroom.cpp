@@ -364,6 +364,7 @@ bool EnemyMushroom::Update(float dt)
 
 bool EnemyMushroom::LoadState(pugi::xml_node& data)
 {
+	id = data.attribute("id").as_int();
 	b2Vec2 currentPos(data.attribute("currentPos.x").as_float(), data.attribute("currentPos.y").as_float());
 	Hitbox->body->SetTransform(currentPos, 0);
 
@@ -391,6 +392,7 @@ bool EnemyMushroom::SaveState(pugi::xml_node& data) const
 
 	pugi::xml_node myself = data.append_child("EnemyMushroom");
 
+	myself.append_attribute("id").set_value(id);
 	myself.append_attribute("currentPos.x").set_value(Hitbox->body->GetPosition().x);
 	myself.append_attribute("currentPos.y").set_value(Hitbox->body->GetPosition().y);
 

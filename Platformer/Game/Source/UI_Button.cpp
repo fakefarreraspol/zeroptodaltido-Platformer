@@ -1,6 +1,8 @@
 #include "UI_Button.h"
 #include "Input.h"
 #include "Scene.h"
+#include "Player.h"
+#include "Audio.h"
 
 UI_Button::UI_Button(int id) : UI_Element(id)
 {
@@ -65,6 +67,13 @@ bool UI_Button::PostUpdate()
 		{
 			OnMouseOver();
 		}
+		else
+		{
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			{
+				clicked_inside = false;
+			}
+		}
 	}
 
 	return ret;
@@ -119,6 +128,19 @@ void UI_Button::OnMouseRelease()
 	case ACTION_NOTHING:
 		break;
 	case ACTION_START_GAME:
+	{
+		app->scene->loadingScreenActive = true;
+		app->scene->lastTime = app->scene->currentTime;
+
+		//app->audio->clearAudio();
+		//app->scene->state= GAMEPLAY;
+		//app->scene->Start();
+		//app->player->Start();
+
+		app->scene->UI_button_start_game->SetActive(false);
+		app->scene->UI_button_quit_game->SetActive(false);
+		app->scene->UI_panel_title->SetActive(false);
+	}
 		break;
 	case ACTION_PAUSE_OPEN:
 	{

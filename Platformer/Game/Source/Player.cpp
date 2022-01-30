@@ -28,7 +28,7 @@ bool Player::Awake()
 // Load assets
 bool Player::Start()
 {
-	if (app->scene->state == app->scene->GAMEPLAY)
+	if (app->scene->state == GAMEPLAY)
 	{
 		playerDeath = app->audio->LoadFx("Assets/audio/fx/player_death.wav");
 		healingSound = app->audio->LoadFx("Assets/audio/fx/healing.wav");
@@ -109,7 +109,7 @@ bool Player::Update(float dt)
 {
 	
 
-	if (app->scene->state == app->scene->GAMEPLAY)
+	if (app->scene->state == GAMEPLAY) 
 	{
 
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -595,7 +595,8 @@ bool Player::PostUpdate()
 
 	SDL_Rect r = { 264, 92, skill_fill_i, 20 };
 
-	app->scene->UI_player_skill_bar_fill->rec_sprite = r;
+	if (app->scene->UI_player_skill_bar_fill != nullptr)
+		app->scene->UI_player_skill_bar_fill->rec_sprite = r;
 	//LOG("fill: %i", skill_fill_i);
 	//LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
 	//LOG("skill: %f", skill_fill_f);
