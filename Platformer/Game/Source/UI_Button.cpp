@@ -129,7 +129,6 @@ void UI_Button::OnMouseRelease()
 		break;
 	case ACTION_START_GAME:
 	{
-		app->scene->loadingScreenActive = true;
 		app->scene->lastTime = app->scene->currentTime;
 
 		//app->audio->clearAudio();
@@ -140,6 +139,9 @@ void UI_Button::OnMouseRelease()
 		app->scene->UI_button_start_game->SetActive(false);
 		app->scene->UI_button_quit_game->SetActive(false);
 		app->scene->UI_panel_title->SetActive(false);
+		app->scene->loadingScreenActive = true;
+
+		
 	}
 		break;
 	case ACTION_PAUSE_OPEN:
@@ -150,15 +152,43 @@ void UI_Button::OnMouseRelease()
 		break;
 	case ACTION_PAUSE_CLOSE:
 	{
-		app->SetPause(false);
-		app->scene->UI_button_open_pause_menu->SetActive(true);
+		
+		if (app->scene->state == INTRO)
+		{
+			app->scene->UI_button_settings->SetActive(true);
+			app->scene->UI_panel_pause_menu->SetActive(false);
+			app->scene->UI_button_settings->SetActive(true);
+
+			app->scene->UI_button_start_game->SetActive(true);
+			app->scene->UI_button_quit_game->SetActive(true);
+
+			
+
+		}
+		else if (app->scene->state == GAMEPLAY)
+		{
+			app->SetPause(false);
+			app->scene->UI_button_open_pause_menu->SetActive(true);
+		}
+	}
+	break;
+	case ACTION_SETTINGS_OPEN:
+	{
+		app->scene->menuOpen = true;
+		app->scene->UI_panel_pause_menu->SetActive(true);
+		app->scene->UI_button_start_game->SetActive(false);
+		app->scene->UI_button_quit_game->SetActive(false);
+		active = !active;
+	}
+	break;
+	case ACTION_SETTINGS_CLOSE:
+	{
+		
 	}
 		break;
 	case ACTION_TOGGLE_VSYNC:
 		break;
 	case ACTION_TOGGLE_FULLSCREEN:
-		break;
-	case ACTION_TOGGLE_SOUND:
 		break;
 	case ACTION_SAVE_GAME:
 	{

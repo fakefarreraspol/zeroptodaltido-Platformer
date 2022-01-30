@@ -57,6 +57,14 @@ bool Scene::Start()
 		font1_black_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_1.png", lookupTable1, 6);
 		font1_white_1 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_1.png", lookupTable1, 6);
 
+		font1_black_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_2.png", lookupTable1, 6);
+		font1_gold_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
+		font1_white_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_2.png", lookupTable1, 6);
+
+		font1_gold_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
+		font1_black_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_3.png", lookupTable1, 6);
+		font1_white_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_3.png", lookupTable1, 6);
+
 		intro01 = app->tex->Load("Assets/maps/intro_1.png");
 		intro02 = app->tex->Load("Assets/maps/intro_2.png");
 		titleMusic = app->audio->LoadFx("Assets/audio/music/title.wav");
@@ -65,12 +73,13 @@ bool Scene::Start()
 
 		app->audio->PlayFx(titleMusic, 0);
 
-		//player lifes
+		//title
 		SDL_Rect rec_panel = { 674,60,200,580};
 		UI_panel_title = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 580/2 - 80, -180, 0, 0, 90);
 		UI_panel_title->sprite = app->UI_handler->spritesheet;
 		UI_panel_title->rec_sprite = rec_panel;
 
+		
 		rec_panel = { 679,654,327,72 };
 		UI_button_start_game = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 327 - 48 , 720 - 72*2 - 48 - 12, 327, 72);
 		UI_button_start_game->sprite = app->UI_handler->spritesheet;
@@ -86,6 +95,157 @@ bool Scene::Start()
 		UI_button_quit_game->rec_over = { 676,801,334,79 };
 		UI_button_quit_game->rec_hold = { 679,882,327,72 };
 		UI_button_quit_game->action = ACTION_EXIT_GAME_CONFIRM;
+
+		//settings
+		rec_panel = { 636,4,48,48 };
+		UI_button_settings = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 48 - 12, 12, 48, 48);
+		UI_button_settings->sprite = app->UI_handler->spritesheet;
+		UI_button_settings->rec_sprite = rec_panel;
+		UI_button_settings->action = ACTION_SETTINGS_OPEN;
+
+		//panel pause
+		rec_panel = { 0, 312, 672, 432 };
+		UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080 / 2 - 672 / 2, 720 / 2 - 432 / 2, 672, 432);
+		UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
+		UI_panel_pause_menu->rec_sprite = rec_panel;
+
+		//panel exit game
+		rec_panel = { 692, 4, 268, 48 };
+		UI_panel_pause_menu_exit_game = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080 / 2 + 14, 720 / 2 + 432 / 4 + 128, 268, 48);
+		UI_panel_pause_menu_exit_game->sprite = app->UI_handler->spritesheet;
+		UI_panel_pause_menu_exit_game->rec_sprite = rec_panel;
+
+		////pause open button
+		//rec_panel = { 468, 4, 48, 48 };
+		//UI_button_open_pause_menu = app->UI_handler->CreateButton(app->UI_handler->spritesheet, 1080 - 48 - 14, 14, 48, 48);
+		//UI_button_open_pause_menu->sprite = app->UI_handler->spritesheet;
+		//UI_button_open_pause_menu->rec_sprite = rec_panel;
+		//UI_button_open_pause_menu->action = ACTION_PAUSE_OPEN;
+
+		//pause close button
+		rec_panel = { 412, 60, 48, 48 };
+		UI_button_close_pause_menu = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 + 584 / 2 - 28,
+			584 / 2 - 432 / 4,
+			48,
+			48);
+		UI_button_close_pause_menu->sprite = app->UI_handler->spritesheet;
+		UI_button_close_pause_menu->rec_sprite = rec_panel;
+		UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
+
+
+
+		//exit button
+		rec_panel = { 468, 60, 48, 48 };
+		UI_button_exit_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 + 584 / 2 - 28,
+			720 / 2 + 432 / 2 - 64,
+			48,
+			48);
+		UI_button_exit_game->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game->rec_sprite = rec_panel;
+		UI_button_exit_game->action = ACTION_EXIT_GAME;
+
+		//exit button confirm
+		rec_panel = { 412, 4, 48, 48 };
+		UI_button_exit_game_confirm = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 + 4,
+			720 / 2 + 432 / 4 + 128,
+			48,
+			48
+		);
+		UI_button_exit_game_confirm->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game_confirm->rec_sprite = rec_panel;
+		UI_button_exit_game_confirm->action = ACTION_EXIT_GAME_CONFIRM;
+
+		//exit button deny
+		rec_panel = { 468, 60, 48, 48 };
+		UI_button_exit_game_deny = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 + 48 + 16,
+			720 / 2 + 432 / 4 + 128,
+			48,
+			48
+		);
+		UI_button_exit_game_deny->sprite = app->UI_handler->spritesheet;
+		UI_button_exit_game_deny->rec_sprite = rec_panel;
+		UI_button_exit_game_deny->action = ACTION_EXIT_GAME_DENY;
+
+		//save button
+		rec_panel = { 320, 116, 132, 48 };
+		UI_button_save_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 - 584 / 2 + 584 / 4,
+			720 / 2 + 432 / 4 + 24,
+			132,
+			48
+		);
+		UI_button_save_game->sprite = app->UI_handler->spritesheet;
+		UI_button_save_game->rec_sprite = rec_panel;
+		UI_button_save_game->rec_over = { 468,112,140,56 };
+		UI_button_save_game->rec_hold = { 472,172,132,48 };
+		UI_button_save_game->action = ACTION_SAVE_GAME;
+
+		//load button
+		rec_panel = { 180, 116, 132, 48 };
+		UI_button_load_game = app->UI_handler->CreateButton(
+			app->UI_handler->spritesheet,
+			1080 / 2 + 584 / 2 - 584 / 4 - 132,
+			720 / 2 + 432 / 4 + 24,
+			132,
+			48
+		);
+		UI_button_load_game->sprite = app->UI_handler->spritesheet;
+		UI_button_load_game->rec_sprite = rec_panel;
+		UI_button_load_game->rec_over = { 468,112,140,56 };
+		UI_button_load_game->rec_hold = { 472,172,132,48 };
+		UI_button_load_game->action = ACTION_LOAD_GAME;
+
+		//sfx volume slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_sfx_vol = app->UI_handler->CreateSlider(450, 420, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_sfx_vol->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_sfx_vol->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_sfx_vol->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_sfx_vol->rec_slider = rec_panel;
+		UI_slider_sfx_vol->w = 256;
+		UI_slider_sfx_vol->h = 24;
+		UI_slider_sfx_vol->set = SET_SFX_VOLUME;
+
+		//global audio slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_global_audio = app->UI_handler->CreateSlider(450, 320, 100, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_global_audio->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_global_audio->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_global_audio->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_global_audio->rec_slider = rec_panel;
+		UI_slider_global_audio->w = 256;
+		UI_slider_global_audio->h = 24;
+		UI_slider_global_audio->set = SET_GLOBAL_VOLUME;
+
+
+		//music volume slider
+		rec_panel = { 0, 60, 256, 24 };
+		UI_slider_music_vol = app->UI_handler->CreateSlider(450, 370, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		UI_slider_music_vol->rec_sprite = rec_panel;
+		rec_panel = { 4, 92, 244, 16 };
+		UI_slider_music_vol->rec_body_fill = rec_panel;
+		rec_panel = { 0, 0, 116, 60 };
+		UI_slider_music_vol->rec_slider_hold = rec_panel;
+		rec_panel = { 120, 0, 120, 60 };
+		UI_slider_music_vol->rec_slider = rec_panel;
+		UI_slider_music_vol->w = 256;
+		UI_slider_music_vol->h = 24;
+		UI_slider_music_vol->set = SET_MUSIC_VOLUME;
 
 	}break;
 	case GAMEPLAY:
@@ -269,13 +429,6 @@ bool Scene::Start()
 
 		char lookupTable1[] = { "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[£]çç€!ççç%&'()*+,-.^0123456789:;<=>?/abcdefghijklmnopqrstuvwxyz ççççççç" };
 
-		font1_gold_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
-		font1_black_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_3.png", lookupTable1, 6);
-		font1_white_3 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_3.png", lookupTable1, 6);
-
-		font1_black_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_black_2.png", lookupTable1, 6);
-		font1_gold_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_gold_2.png", lookupTable1, 6);
-		font1_white_2 = app->fonts->Load("Assets/textures/UI/fonts/font1_white_2.png", lookupTable1, 6);
 
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 *20 + 25, 48*25+35 );
 		app->entityMaster->CreateEntity(EntityType::ENEMY_SNAKE, 48 * 30 , 48 * 13+35);
@@ -307,17 +460,17 @@ bool Scene::Start()
 		UI_player_skill_bar_fill->sprite = app->UI_handler->spritesheet;
 		UI_player_skill_bar_fill->rec_sprite = rec_panel;
 
-		//panel pause
-		rec_panel = { 0, 312, 672, 432 };
-		UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080/2 - 672 /2, 720/2 - 432/2, 672, 432);
-		UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
-		UI_panel_pause_menu->rec_sprite = rec_panel;
+		////panel pause
+		//rec_panel = { 0, 312, 672, 432 };
+		//UI_panel_pause_menu = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080/2 - 672 /2, 720/2 - 432/2, 672, 432);
+		//UI_panel_pause_menu->sprite = app->UI_handler->spritesheet;
+		//UI_panel_pause_menu->rec_sprite = rec_panel;
 
-		//panel exit game
-		rec_panel = { 692, 4, 268, 48 };
-		UI_panel_pause_menu_exit_game = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080 / 2 + 14, 720 / 2 + 432/4 + 128, 268, 48);
-		UI_panel_pause_menu_exit_game->sprite = app->UI_handler->spritesheet;
-		UI_panel_pause_menu_exit_game->rec_sprite = rec_panel;
+		////panel exit game
+		//rec_panel = { 692, 4, 268, 48 };
+		//UI_panel_pause_menu_exit_game = app->UI_handler->CreatePanel(app->UI_handler->spritesheet, 1080 / 2 + 14, 720 / 2 + 432/4 + 128, 268, 48);
+		//UI_panel_pause_menu_exit_game->sprite = app->UI_handler->spritesheet;
+		//UI_panel_pause_menu_exit_game->rec_sprite = rec_panel;
 
 		//pause open button
 		rec_panel = { 468, 4, 48, 48 };
@@ -326,130 +479,130 @@ bool Scene::Start()
 		UI_button_open_pause_menu->rec_sprite = rec_panel;
 		UI_button_open_pause_menu->action = ACTION_PAUSE_OPEN;
 
-		//pause close button
-		rec_panel = { 412, 60, 48, 48 };
-		UI_button_close_pause_menu = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			1080 / 2 + 584/2 -28,
-			584/2 - 432/4,
-			48,
-			48);
-		UI_button_close_pause_menu->sprite = app->UI_handler->spritesheet;
-		UI_button_close_pause_menu->rec_sprite = rec_panel;
-		UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
+		////pause close button
+		//rec_panel = { 412, 60, 48, 48 };
+		//UI_button_close_pause_menu = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	1080 / 2 + 584/2 -28,
+		//	584/2 - 432/4,
+		//	48,
+		//	48);
+		//UI_button_close_pause_menu->sprite = app->UI_handler->spritesheet;
+		//UI_button_close_pause_menu->rec_sprite = rec_panel;
+		//UI_button_close_pause_menu->action = ACTION_PAUSE_CLOSE;
 
-		
-		
-		//exit button
-		rec_panel = { 468, 60, 48, 48 };
-		UI_button_exit_game = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			1080 / 2 + 584 / 2 - 28,
-			720 / 2 + 432 / 2 - 64,
-			48,
-			48);
-		UI_button_exit_game->sprite = app->UI_handler->spritesheet;
-		UI_button_exit_game->rec_sprite = rec_panel;
-		UI_button_exit_game->action = ACTION_EXIT_GAME;
+		//
+		//
+		////exit button
+		//rec_panel = { 468, 60, 48, 48 };
+		//UI_button_exit_game = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	1080 / 2 + 584 / 2 - 28,
+		//	720 / 2 + 432 / 2 - 64,
+		//	48,
+		//	48);
+		//UI_button_exit_game->sprite = app->UI_handler->spritesheet;
+		//UI_button_exit_game->rec_sprite = rec_panel;
+		//UI_button_exit_game->action = ACTION_EXIT_GAME;
 
-		//exit button confirm
-		rec_panel = { 412, 4, 48, 48 };
-		UI_button_exit_game_confirm = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			1080 / 2 - 584 / 2 + 584 + 4,
-			720 / 2 + 432 / 4 + 128,
-			48,
-			48
-		);
-		UI_button_exit_game_confirm->sprite = app->UI_handler->spritesheet;
-		UI_button_exit_game_confirm->rec_sprite = rec_panel;
-		UI_button_exit_game_confirm->action = ACTION_EXIT_GAME_CONFIRM;
+		////exit button confirm
+		//rec_panel = { 412, 4, 48, 48 };
+		//UI_button_exit_game_confirm = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	1080 / 2 - 584 / 2 + 584 + 4,
+		//	720 / 2 + 432 / 4 + 128,
+		//	48,
+		//	48
+		//);
+		//UI_button_exit_game_confirm->sprite = app->UI_handler->spritesheet;
+		//UI_button_exit_game_confirm->rec_sprite = rec_panel;
+		//UI_button_exit_game_confirm->action = ACTION_EXIT_GAME_CONFIRM;
 
-		//exit button deny
-		rec_panel = { 468, 60, 48, 48 };
-		UI_button_exit_game_deny = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			1080 / 2 - 584 / 2 + 584 + 48 + 16,
-			720 / 2 + 432 / 4 + 128,
-			48,
-			48
-		);
-		UI_button_exit_game_deny->sprite = app->UI_handler->spritesheet;
-		UI_button_exit_game_deny->rec_sprite = rec_panel;
-		UI_button_exit_game_deny->action = ACTION_EXIT_GAME_DENY;
+		////exit button deny
+		//rec_panel = { 468, 60, 48, 48 };
+		//UI_button_exit_game_deny = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	1080 / 2 - 584 / 2 + 584 + 48 + 16,
+		//	720 / 2 + 432 / 4 + 128,
+		//	48,
+		//	48
+		//);
+		//UI_button_exit_game_deny->sprite = app->UI_handler->spritesheet;
+		//UI_button_exit_game_deny->rec_sprite = rec_panel;
+		//UI_button_exit_game_deny->action = ACTION_EXIT_GAME_DENY;
 
-		//save button
-		rec_panel = { 320, 116, 132, 48 };
-		UI_button_save_game = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			 1080 / 2 - 584 / 2 + 584 / 4,
-			720 / 2 + 432 / 4 + 24,
-			132,
-			48
-		);
-		UI_button_save_game->sprite = app->UI_handler->spritesheet;
-		UI_button_save_game->rec_sprite = rec_panel;
-		UI_button_save_game->rec_over = {468,112,140,56};
-		UI_button_save_game->rec_hold = { 472,172,132,48 };
-		UI_button_save_game->action = ACTION_SAVE_GAME;
+		////save button
+		//rec_panel = { 320, 116, 132, 48 };
+		//UI_button_save_game = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	 1080 / 2 - 584 / 2 + 584 / 4,
+		//	720 / 2 + 432 / 4 + 24,
+		//	132,
+		//	48
+		//);
+		//UI_button_save_game->sprite = app->UI_handler->spritesheet;
+		//UI_button_save_game->rec_sprite = rec_panel;
+		//UI_button_save_game->rec_over = {468,112,140,56};
+		//UI_button_save_game->rec_hold = { 472,172,132,48 };
+		//UI_button_save_game->action = ACTION_SAVE_GAME;
 
-		//load button
-		rec_panel = { 180, 116, 132, 48 };
-		UI_button_load_game = app->UI_handler->CreateButton(
-			app->UI_handler->spritesheet,
-			1080 / 2 + 584 / 2 - 584 / 4 - 132,
-			720 / 2 + 432 / 4 + 24,
-			132,
-			48
-		);
-		UI_button_load_game->sprite = app->UI_handler->spritesheet;
-		UI_button_load_game->rec_sprite = rec_panel;
-		UI_button_load_game->rec_over = { 468,112,140,56 };
-		UI_button_load_game->rec_hold = { 472,172,132,48 };
-		UI_button_load_game->action = ACTION_LOAD_GAME;
+		////load button
+		//rec_panel = { 180, 116, 132, 48 };
+		//UI_button_load_game = app->UI_handler->CreateButton(
+		//	app->UI_handler->spritesheet,
+		//	1080 / 2 + 584 / 2 - 584 / 4 - 132,
+		//	720 / 2 + 432 / 4 + 24,
+		//	132,
+		//	48
+		//);
+		//UI_button_load_game->sprite = app->UI_handler->spritesheet;
+		//UI_button_load_game->rec_sprite = rec_panel;
+		//UI_button_load_game->rec_over = { 468,112,140,56 };
+		//UI_button_load_game->rec_hold = { 472,172,132,48 };
+		//UI_button_load_game->action = ACTION_LOAD_GAME;
 
-		//sfx volume slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_sfx_vol = app->UI_handler->CreateSlider(450, 420, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_sfx_vol->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_sfx_vol->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_sfx_vol->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_sfx_vol->rec_slider = rec_panel;
-		UI_slider_sfx_vol->w = 256;
-		UI_slider_sfx_vol->h = 24;
-		UI_slider_sfx_vol->set = SET_SFX_VOLUME;
+		////sfx volume slider
+		//rec_panel = { 0, 60, 256, 24 };
+		//UI_slider_sfx_vol = app->UI_handler->CreateSlider(450, 420, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		//UI_slider_sfx_vol->rec_sprite = rec_panel;
+		//rec_panel = { 4, 92, 244, 16 };
+		//UI_slider_sfx_vol->rec_body_fill = rec_panel;
+		//rec_panel = { 0, 0, 116, 60 };
+		//UI_slider_sfx_vol->rec_slider_hold = rec_panel;
+		//rec_panel = { 120, 0, 120, 60 };
+		//UI_slider_sfx_vol->rec_slider = rec_panel;
+		//UI_slider_sfx_vol->w = 256;
+		//UI_slider_sfx_vol->h = 24;
+		//UI_slider_sfx_vol->set = SET_SFX_VOLUME;
 
-		//global audio slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_global_audio = app->UI_handler->CreateSlider(450, 320, 100, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_global_audio->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_global_audio->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_global_audio->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_global_audio->rec_slider = rec_panel;
-		UI_slider_global_audio->w = 256;
-		UI_slider_global_audio->h = 24;
-		UI_slider_global_audio->set = SET_GLOBAL_VOLUME;
+		////global audio slider
+		//rec_panel = { 0, 60, 256, 24 };
+		//UI_slider_global_audio = app->UI_handler->CreateSlider(450, 320, 100, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		//UI_slider_global_audio->rec_sprite = rec_panel;
+		//rec_panel = { 4, 92, 244, 16 };
+		//UI_slider_global_audio->rec_body_fill = rec_panel;
+		//rec_panel = { 0, 0, 116, 60 };
+		//UI_slider_global_audio->rec_slider_hold = rec_panel;
+		//rec_panel = { 120, 0, 120, 60 };
+		//UI_slider_global_audio->rec_slider = rec_panel;
+		//UI_slider_global_audio->w = 256;
+		//UI_slider_global_audio->h = 24;
+		//UI_slider_global_audio->set = SET_GLOBAL_VOLUME;
 
 
-		//music volume slider
-		rec_panel = { 0, 60, 256, 24 };
-		UI_slider_music_vol = app->UI_handler->CreateSlider(450, 370, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
-		UI_slider_music_vol->rec_sprite = rec_panel;
-		rec_panel = { 4, 92, 244, 16 };
-		UI_slider_music_vol->rec_body_fill = rec_panel;
-		rec_panel = { 0, 0, 116, 60 };
-		UI_slider_music_vol->rec_slider_hold = rec_panel;
-		rec_panel = { 120, 0, 120, 60 };
-		UI_slider_music_vol->rec_slider = rec_panel;
-		UI_slider_music_vol->w = 256;
-		UI_slider_music_vol->h = 24;
-		UI_slider_music_vol->set = SET_MUSIC_VOLUME;
+		////music volume slider
+		//rec_panel = { 0, 60, 256, 24 };
+		//UI_slider_music_vol = app->UI_handler->CreateSlider(450, 370, 128, app->UI_handler->spritesheet, { 0 }, { 0 }, { 0 }, { 0 });
+		//UI_slider_music_vol->rec_sprite = rec_panel;
+		//rec_panel = { 4, 92, 244, 16 };
+		//UI_slider_music_vol->rec_body_fill = rec_panel;
+		//rec_panel = { 0, 0, 116, 60 };
+		//UI_slider_music_vol->rec_slider_hold = rec_panel;
+		//rec_panel = { 120, 0, 120, 60 };
+		//UI_slider_music_vol->rec_slider = rec_panel;
+		//UI_slider_music_vol->w = 256;
+		//UI_slider_music_vol->h = 24;
+		//UI_slider_music_vol->set = SET_MUSIC_VOLUME;
 
 		//176, 120, 140, 24
 		//180, 124, 132, 20
@@ -507,6 +660,7 @@ bool Scene::Update(float dt)
 				app->render->DrawTexture(loadingScreen, 55, 800);
 				if (lastTime + 300 <= currentTime)
 				{
+					app->scene->UI_button_settings->SetActive(false);
 					app->audio->clearAudio();
 					state = GAMEPLAY;
 					Start();
@@ -858,10 +1012,87 @@ bool Scene::PostUpdate()
 	{
 	case INTRO:
 	{
+
+
+		if (!menuOpen)
+		{
+			UI_panel_pause_menu->SetActive(false);
+		}
+
+		LOG("%i", menuOpen);
+		if (UI_panel_pause_menu->IsActive())
+		{
+			app->fonts->DrawText(1080 / 3 + 50, 200 - 24, font1_gold_2, "Settings");
+
+
+			char val[4];
+
+			app->fonts->DrawText(310, 320 - 8, font1_black_1, "Global");
+			app->fonts->DrawText(310, 320 + 8, font1_black_1, "Vol:");
+
+			sprintf_s(val, "%i", UI_slider_global_audio->GetValue());
+
+			app->fonts->DrawText(310 + 4 * 16, 320 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val)) * 16, 320 + 8, font1_black_1, "%");
+
+			app->fonts->DrawText(310, 370 - 8, font1_black_1, "Music");
+			app->fonts->DrawText(310, 370 + 8, font1_black_1, "Vol:");
+
+			sprintf_s(val, "%i", (int)((float)UI_slider_music_vol->GetValue() / 128.f * 100));
+
+			app->fonts->DrawText(310 + 4 * 16, 370 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val)) * 16, 370 + 8, font1_black_1, "%");
+
+			app->fonts->DrawText(310, 420 - 8, font1_black_1, "SFX");
+			app->fonts->DrawText(310, 420 + 8, font1_black_1, "Vol:");
+
+			sprintf_s(val, "%i", (int)((float)UI_slider_sfx_vol->GetValue() / 128.f * 100));
+
+			app->fonts->DrawText(310 + 4 * 16, 420 + 8, font1_black_1, val);
+			app->fonts->DrawText(310 + (4 + strlen(val)) * 16, 420 + 8, font1_black_1, "%");
+
+
+
+			UI_button_close_pause_menu->SetActive(true);
+			//UI_button_exit_game->SetActive(true);
+			//UI_button_load_game->SetActive(true);
+			//UI_button_save_game->SetActive(true);
+			UI_slider_global_audio->SetActive(true);
+			UI_slider_music_vol->SetActive(true);
+			UI_slider_sfx_vol->SetActive(true);
+
+		}
+		else
+		{
+			UI_panel_pause_menu->SetActive(false);
+			UI_button_close_pause_menu->SetActive(false);
+			
+			if (!loadingScreenActive)
+				UI_button_settings->SetActive(true);
+			else {
+				UI_button_settings->SetActive(false);
+
+			}
+
+			UI_panel_pause_menu_exit_game->SetActive(false);
+			UI_button_exit_game->SetActive(false);
+			UI_button_exit_game_confirm->SetActive(false);
+			UI_button_exit_game_deny->SetActive(false);
+			UI_button_load_game->SetActive(false);
+			UI_button_save_game->SetActive(false);
+			UI_slider_global_audio->SetActive(false);
+			UI_slider_music_vol->SetActive(false);
+			UI_slider_sfx_vol->SetActive(false);
+
+
+
+		}
 	}
 		break;
 	case GAMEPLAY:
 	{
+
+
 
 
 		if (app->GameIsPaused())

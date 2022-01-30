@@ -317,7 +317,7 @@ bool Player::Update(float dt)
 
 		if (!app->GameIsPaused())
 		{
-			if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 5) && healingCooldown <= 0)
+			if ((app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) && (playerHP < 3) && healingCooldown <= 0)
 			{
 				playerHP++;
 				lastPlayerHP++;
@@ -580,27 +580,41 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 
-	for (int i = 0; i < playerHP; i++)
+	switch (app->scene->state)
 	{
-		app->render->DrawTexture(mango, 96 + (48 + 10) * (i), 32, NULL, SDL_FLIP_NONE, 0);
+	case INTRO:
+	{
 
 	}
-	//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
-	app->render->DrawTexture(gorilaFace, 8, 32, NULL, SDL_FLIP_NONE, 0);
+	break;
+	case GAMEPLAY:
+	{
+		for (int i = 0; i < playerHP; i++)
+		{
+			app->render->DrawTexture(mango, 96 + (48 + 10) * (i), 32, NULL, SDL_FLIP_NONE, 0);
 
-	float skill_time = (float)healingCooldown;
+		}
+		//app->render->DrawTexture(mango, 100, 20, NULL, SDL_FLIP_NONE, 0);
+		app->render->DrawTexture(gorilaFace, 8, 32, NULL, SDL_FLIP_NONE, 0);
 
-	float skill_fill_f = (healingCooldownMax - skill_time) / healingCooldownMax * 132;
-	int skill_fill_i = (int)skill_fill_f;
+		float skill_time = (float)healingCooldown;
 
-	SDL_Rect r = { 264, 92, skill_fill_i, 20 };
+		float skill_fill_f = (healingCooldownMax - skill_time) / healingCooldownMax * 132;
+		int skill_fill_i = (int)skill_fill_f;
 
-	if (app->scene->UI_player_skill_bar_fill != nullptr)
-		app->scene->UI_player_skill_bar_fill->rec_sprite = r;
-	//LOG("fill: %i", skill_fill_i);
-	//LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
-	//LOG("skill: %f", skill_fill_f);
+		SDL_Rect r = { 264, 92, skill_fill_i, 20 };
 
+		if (app->scene->UI_player_skill_bar_fill != nullptr)
+			app->scene->UI_player_skill_bar_fill->rec_sprite = r;
+		//LOG("fill: %i", skill_fill_i);
+		//LOG("fill: %f", (healingCooldownMax - skill_time) / healingCooldownMax);
+		//LOG("skill: %f", skill_fill_f);
+
+	}
+	break;
+	default:
+		break;
+	}
 	return true;
 }
 

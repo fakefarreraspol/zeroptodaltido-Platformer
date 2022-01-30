@@ -77,6 +77,8 @@ public:
 	UI_Button* UI_button_start_game;
 	UI_Button* UI_button_quit_game;
 
+	UI_Button* UI_button_settings;
+
 	//gameplay
 	UI_Panel* UI_player_lifes;
 	UI_Panel* UI_player_skill_icon;
@@ -102,7 +104,13 @@ public:
 	bool loadingScreenActive = false;
 	int currentTime = 0;
 	int lastTime = 0;
+
+	bool menuOpen = false;
+
 private:
+
+	
+
 
 	p2List<PhysBody*> mushrooms;
 	
